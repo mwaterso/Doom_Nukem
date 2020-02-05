@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 void	clear_im(t_input *data)
 {

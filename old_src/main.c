@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "../includes/doom.h"
+# include "doom.h"
 int		main(int argc, char **argv)
 {
 	t_input inputs;

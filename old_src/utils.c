@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 double	dist(t_fdot p1, t_fdot p2)
 {

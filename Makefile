@@ -3,66 +3,102 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+      #
+#    By: beduroul <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
-#    Created: 2019/06/25 16:00:03 by calin        #+#   ##    ##    #+#        #
-#    Updated: 2020/02/04 17:24:40 by mwaterso    ###    #+. /#+    ###.fr      #
+#    Created: 2020/02/05 19:45:26 by beduroul     #+#   ##    ##    #+#        #
+#    Updated: 2020/02/05 19:45:31 by beduroul    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
-NAME = doom
+NAME = doom_nuken
 
-SRCS = ./src/main.c\
-			./src/math.c\
-			./src/Projection.c\
-			./src/trace.c\
-			./src/map.c\
-			./src/hooks.c\
-			./src/matrix.c\
-			./src/parsing/parsing_poly.c\
-			./src/parsing/parsing_error.c\
-			./src/parsing/parsing_list.c\
-			./src/parsing/parsing_error2.c\
-			./src/parsing/parsing_other.c\
+#Color
+ERASE = \033[2K\r
+BLUE = \033[36m
+GREEN = \033[0;32m
+RED = \033[0;31m
+YELLOW = \033[0;33m
+END = \033[0m
 
-OBJ = $(SRCS:%.c=%.o)
+#Dir
+OBJ_PATH = obj
+SRC_PATH = srcs
+INC_PATH = ./include/
 
-INC = doom.h
+#file
+SRC_NAME = 	main.c
 
-FLAGS =  -Wall -Wextra -Werror
+SRC_NAME += Engine/math.c\
+			Engine/Projection.c\
+			Engine/trace.c\
+			Engine/map.c\
+			Engine/hooks.c\
+			Engine/matrix.c\
 
-LIBFT = libft/libft.a
+SRC_NAME += Parsing/parsing_poly.c Parsing/parsing_error.c \
+			Parsing/parsing_list.c Parsing/parsing_error2.c \
+			Parsing/parsing_other.c
 
-LIBMLX = minilibx_macos/libmlx.a
+#SRC_NAME += Sound/init_s.c Sound/parsing_wav.c
 
-OPENGL = -framework OpenGL -framework AppKit
+# mlx library
+MLX        = ./miniLibx_macos/
+MLX_LIB    = $(addprefix $(MLX),libmlx.a)
+MLX_INC    = -I ./miniLibx_macos
+MLX_LNK    = -L ./miniLibx_macos -l mlx -framework OpenGL -framework AppKit -framework OpenAL
 
-all: $(NAME)
+# ft library
+FT        = ./libft/
+FT_LIB    = $(addprefix $(FT),libft.a)
+FT_INC    = -I ./libft
+FT_LNK    = -L ./libft -l ft
 
-$(NAME): $(LIBMLX) $(LIBFT) $(OBJ)
-		gcc $(FLAGS) $^ $(OPENGL) -o $@ -g
+CPPFLAGS = -I include -I libft/includes
+LDFLAGS = -L libft
+LDLIBS = libft/libft.a
 
-%.o: %.c $(INC)
-		gcc $(FLAGS) -c $< -o $@
+SRC_SUP = {Parsing,Engine}
 
-$(LIBFT):
-		make -C libft/
+OBJ_NAME = $(SRC_NAME:.c=.o)
+SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-$(LIBMLX):
-		make -C minilibx_macos/
+#compil
+CC = gcc
+CFLAGS = -Werror -Wextra -Wall -g -O3
 
+all: lib $(MLX_LIB) $(NAME)
+	@printf "$(BLUE)> $(NAME) : $(YELLOW)Project ready !$(END)\n"
+
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(MLX_LNK) $(LDFLAGS) $(MINILIBX) $(LDLIBS) $^ -o $@
+	@printf "$(ERASE)$(BLUE)> $@ : $(GREEN)Success !$(END)\n\n"
+lib:
+	@make -C libft
+
+$(MLX_LIB):
+	@make -C $(MLX)
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c include/doom.h libft/libft.a
+	@mkdir -p $(OBJ_PATH) $(OBJ_PATH)/$(SRC_SUP)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+	@printf "$(ERASE)$(BLUE)> Compilation :$(END) $<"
 clean:
-		make clean -C libft/
-		make clean -C minilibx_macos/
-		rm -rf $(OBJ)
+	@make -C libft clean
+	@make -C $(MLX) clean
+	@rm -rf $(OBJ_PATH)
+	@printf "$(BLUE)> Deleted : $(RED)$(OBJ_PATH)$(END)\n"
 
 fclean: clean
-		make fclean -C libft/
-		rm -rf $(NAME)
+	@make -C libft fclean
+	@make -C $(MLX) fclean
+	@rm -rf $(NAME)
+	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
 
 re: fclean all
-		make re -C minilibx_macos/
 
-.PHONY: all clean fclean re
-
+norme:
+	@norminette $(SRC) $(INC_PATH)
+	
+.PHONY: all, clean, fclean, re

@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../includes/doom.h"
+#include "doom.h"
 
 int		count_lines(t_input *data)
 {
