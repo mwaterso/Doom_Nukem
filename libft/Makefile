@@ -1,0 +1,89 @@
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: beduroul <marvin@le-101.fr>                +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2018/10/04 12:26:16 by beduroul     #+#   ##    ##    #+#        #
+#    Updated: 2018/10/24 22:31:25 by beduroul    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
+
+#Color
+GREEN 	= \e[92m
+BLUE 	= \033[2K\r\033[36m
+WITHE 	= \033[37m
+END 	= \033[0m
+YELLOW	= \033[33m
+
+#Compil
+CC 		= gcc
+CFLAGS 	= -Wall -Werror -Wextra -g -I./include
+
+#Dir
+OBJ_PATH = ./obj
+SRC_PATH = ./src
+INC_PATH = ./include
+
+#File
+NAME	 = libft.a
+INC_NAME = libft.h get_next_line.h
+SRC_NAME =	ft_atoi.c			ft_strcmp.c			ft_strcpy.c 		\
+			ft_strlen.c			ft_strncmp.c		ft_strncpy.c 		\
+			ft_memcpy.c			ft_memset.c			ft_bzero.c			\
+ 	  		ft_memccpy.c		ft_memmove.c		ft_memchr.c			\
+ 	  		ft_memcmp.c			ft_strdup.c			ft_strcat.c			\
+ 	 		ft_strncat.c 		ft_strlcat.c		ft_strchr.c			\
+ 	  		ft_isalpha.c		ft_isdigit.c		ft_isalnum.c		\
+ 	  		ft_strrchr.c		ft_strstr.c			ft_isascii.c 		\
+ 	  		ft_isprint.c		ft_toupper.c		ft_tolower.c		\
+ 	  		ft_putchar.c		ft_putstr.c 		ft_strnstr.c		\
+ 	  		ft_strclr.c			ft_putnbr.c			ft_putendl.c		\
+ 	  		ft_striter.c		ft_striteri.c		ft_memdel.c			\
+ 	  		ft_strnew.c 		ft_memalloc.c		ft_putchar_fd.c		\
+ 	  		ft_putendl_fd.c		ft_putnbr_fd.c 		ft_putstr_fd.c		\
+ 	  		ft_strdel.c			ft_strmap.c			ft_strmapi.c 		\
+ 	 	 	ft_strequ.c			ft_strnequ.c		ft_strsub.c			\
+ 	 	 	ft_strjoin.c		ft_strtrim.c		ft_strsplit.c		\
+ 	 	 	ft_itoa.c			ft_lstnew.c			ft_intsize.c		\
+ 	  		ft_lstdelone.c		ft_lstdel.c			ft_lstadd.c 		\
+ 	 	 	ft_lstiter.c		ft_lstmap.c			ft_strrev.c			\
+ 	  		ft_foreach.c		ft_factorial.c		ft_power.c			\
+ 	  		ft_is_prime.c		ft_swap.c			ft_range.c 			\
+ 		  	ft_intsize.c 		get_next_line.c		ft_sqrt.c			\
+			ft_strcchr.c		ft_putspace.c		ft_avlen.c			\
+			ft_color_txt.c		ft_putendl_color.c	rspace.c 			\
+			ft_putstr_color.c 	ft_avswap.c 		ft_up_rounded.c		\
+			ft_2dstrdel.c		ft_tablen.c			first_word.c		\
+			ft_ispace.c			ft_strnchr.c		ft_putstr_hexa.c	\
+			ft_putendl_hexa.c	ft_putnbr_hexa.c	ft_atof.c
+
+INC = $(addprefix $(INC_PATH)/, $(INC_NAME))
+OBJ	= $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))
+SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
+
+all: obj $(NAME)
+
+$(NAME): $(OBJ)
+	@ar -rcs $(NAME) $?
+	@printf "\n$(YELLOW)libft$(END)		$(GREEN)[COMPILED]$(END)\n"
+
+obj:
+	@mkdir -p $(OBJ_PATH)
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c include/get_next_line.h include/libft.h
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@printf "$(BLUE)>>Compiling $(WITHE) $< $(END)"
+
+clean:
+	@rm -f $(OBJ)
+	@rm -rf $(OBJ_PATH)
+	@printf "$(YELLOW)libft$(END)		$(GREEN)[remove object]$(END)\n"
+
+fclean: clean
+	@rm -f $(NAME)
+	@printf "$(YELLOW)libft$(END)		$(GREEN)[remove libft]$(END)\n"
+
+re: fclean all

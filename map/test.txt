@@ -1,0 +1,51 @@
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:650, z:220, X:200, Y:100
+    dot = x:200, y:750, z:230, X:300, Y:200
+    dot = x:300, y:850, z:50, X:801, 
+    dot = x:400, y:95x0, z:50, X:500, Y:1
+    texture = Brique.xpm
+}
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:650, z:300, X:200, Y:100
+    dot = x:900, y:160, z:800, X:300, Y:200
+    dot = x:800, y:170, z:90, X:400, Y:300
+    dot = x:700, y:680, z:50, X:500, Y:1
+    texture = cuocud.xpm8
+}
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:650, z:200, X:200, Y:100
+    dot = x:100, y:150, z:200, X:300, Y:200
+    dot = x:100, y:150, z:50, X:400, Y:100
+    dot = x:100, y:650, z:50, X:500, Y:1
+    texture = plafond.xpm
+        dot = x:100, y:650, z:200, X:200, Y:100
+    dot = x:100, y:150, z:200, X:300, Y:200
+    dot = x:100, y:150, z:50, X:400, Y:100
+    dot = x:100, y:650, z:50, X:500, Y:1
+    texture = plafond.x1pm
+Polygon                                 //Mur entier 1
+{
+    = x:100, y:650, z:300, X:200, Y:100
+    dot = x:900, y:160, z:800, X:300, Y:200
+    dot = x:800, y:170, z:90, X:400, Y:300
+    dot = x:700, y:680, z:50, X:500, Y:1
+    texture = 
+}
+Polygon                                 //Mur entier 1
+    dot = x:100, y:650, z:220, X:200, Y:100
+    dot = x:200, y:750 z:230, X:300, Y:200
+    dot = x:300, y:850, z:50, X:801, 
+    dot = x:400, y:95x0, z:50, X:500, Y:1
+    texture = Brique.xpm
+}
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:650, z:220, X:200, Y:100
+    dot = x:200, y:750 z:230, X:300, Y:200
+    dot = x:300, y:850, z:50, X:801, 
+    dot = x:400, y:95x0, z:50, X:500, Y:1
+    texture = Brique.xpm
+}
