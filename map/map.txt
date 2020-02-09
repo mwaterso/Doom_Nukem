@@ -49,3 +49,27 @@ Polygon                                 //Mur entier 1
     dot = x:430, y:950, z:400, X:500, Y:1
     texture = Brique.xpm
 }
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:200, z:300, X:400, Y:500
+    dot = x:600, y:750, z:830, X:900, Y:200
+    dot = x:300, y:850, z:50, X:801, Y:300
+    dot = x:430, y:950, z:400, X:500, Y:1
+    texture = plafond.xpm
+}
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:200, z:300, X:400, Y:500
+    dot = x:600, y:750, z:830, X:900, Y:200
+    dot = x:300, y:850, z:50, X:801, Y:300
+    dot = x:430, y:950, z:400, X:500, Y:1
+    texture = wow.xpm
+}
+Polygon                                 //Mur entier 1
+{
+    dot = x:100, y:200, z:300, X:400, Y:500
+    dot = x:600, y:750, z:830, X:900, Y:200
+    dot = x:300, y:850, z:50, X:801, Y:300
+    dot = x:430, y:950, z:400, X:500, Y:1
+    texture = blou.xpm
+}

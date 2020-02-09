@@ -38,7 +38,7 @@ SRC_NAME += Engine/math.c\
 
 SRC_NAME += Parsing/parsing_poly.c Parsing/parsing_error.c \
 			Parsing/parsing_list.c Parsing/parsing_error2.c \
-			Parsing/parsing_other.c
+			Parsing/parsing_other.c	Parsing/parsing_tex.c
 
 #SRC_NAME += Sound/init_s.c Sound/parsing_wav.c
 
@@ -66,7 +66,7 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 #compil
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall -g -O3
+CFLAGS = -Werror -Wextra -Wall -g -O3 -march=native -flto -ffast-math
 
 all: lib $(MLX_LIB) $(NAME)
 	@printf "$(BLUE)> $(NAME) : $(YELLOW)Project ready !$(END)\n"

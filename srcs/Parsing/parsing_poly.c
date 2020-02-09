@@ -36,6 +36,7 @@ static char		*sort_tex(char *line)
 	str[tmp]= '\0';
 	return (str);
 }
+
 static int		poly_read(t_line *list, t_poly **poly)
 {
 	t_index index;
@@ -63,7 +64,8 @@ static int		poly_read(t_line *list, t_poly **poly)
 	push_back(new, poly);
 	return 1;
 }
-static int		parse_file(t_line *list, t_poly **poly)
+
+int		parse_file(t_line *list, t_poly **poly)
 {
 	int count;
 	t_line *tmp;
@@ -85,16 +87,13 @@ static int		parse_file(t_line *list, t_poly **poly)
 	return (count);
 }
 
-t_poly			*parsing_poly(char *file)
+t_poly			*parsing_poly(char *file, t_input data)
 {
 	int		fd;
-	int		n_line;
-	char	*line;
 	int 	i; 
 	t_line	*list;
 	t_poly	*poly;
 
-	n_line = 1;
 	poly = NULL;
 	list = NULL;
 	if ((fd = open(file, O_RDONLY)) < 1)
@@ -102,17 +101,8 @@ t_poly			*parsing_poly(char *file)
 	if (!(read(fd, NULL, 1)))	// A CHANGER
 		return (NULL); 			// HIHI
 	error_file(fd, file);
-	while (get_next_line(fd, &line) > 0)
-	{
-		
-		if(!(creat_elem_l(line, n_line, &list)))
-			return NULL;
-		n_line++;
-		ft_strdel(&line);
-	}
-	ft_strdel(&line);
-	if (!(i = parse_file(list, &poly)))
-		return (NULL);
+	if (!(i = parse_loop(&poly, list, data, fd))) 
+		return NULL;
 	print_s(i);
 	free_line(&list);
 	close(fd);

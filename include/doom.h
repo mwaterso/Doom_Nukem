@@ -126,10 +126,10 @@ typedef struct	s_2dbox
 
 typedef struct		s_image
 {
-	void			*ad;
-	int				*tab;
-	int				bits_per_pixel;
-	int				size_line;
+	void			*ad; 				//img
+	int				*tab;				//addr
+	int				bits_per_pixel;		//bpp
+	int				size_line;   		//s_l
 	int				endian;
 }					t_image;
 
@@ -166,6 +166,7 @@ typedef struct s_poly
 	float			areaabc;
 	int				nbr_p;
 	int				nbr_pprojx;
+	t_texture		tex_tab;
 
 }				t_poly;
 
@@ -175,6 +176,7 @@ typedef struct		s_input
 	void			*win_ad;
 	t_image			im;
 
+	void 			**tab_win;
 	t_thread		thread_tab[NB_THREAD];
     int		win_h;
     int		win_w;
@@ -190,6 +192,13 @@ typedef struct		s_input
 
 }					t_input;
 
+typedef struct 		s_lstex
+{
+	t_texture		tex;
+	char			*name;
+	char			*long_name;
+	struct s_lstex	*next;
+}					t_lstex;
 
 /*typedef struct		s_octree
 {
@@ -200,8 +209,6 @@ typedef struct		s_input
 	t_fdot start_corner;	/Coordonnees du sommet -z -x -y/
 }					t_octree;*/
 
-
-#endif
 
 double 			get3ddist(t_fdot a, t_fdot b);
 void			get_plans(t_poly *poly);
@@ -225,6 +232,11 @@ int				creat_elem_l(char *line, int n_line, t_line **list);
 int		   		sort_dot(char *line, t_poly *new, t_index *index);
 t_fdot			ApplyMatPoint(t_3x3matrix matrix, t_fdot point);
 t_fdot 			getvect(t_fdot a, t_fdot b);
-t_poly			*parsing_poly(char *file);
+t_poly			*parsing_poly(char *file, t_input data);
+int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd);
+int				parse_file(t_line *list, t_poly **poly);
+int				load_tex(t_poly **poly, t_input data);
 
+
+#endif
 

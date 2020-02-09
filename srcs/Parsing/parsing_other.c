@@ -35,10 +35,33 @@ int		sort_dot(char *line, t_poly *new, t_index *index)
 	return 1;
 }
 
+int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd)
+{
+	int n_line;
+	char *line;
+	int i;
+
+	i = 0;
+	n_line = 0;
+	(void)data;
+	while (get_next_line(fd, &line) > 0)
+	{
+		if(!(creat_elem_l(line, n_line, &list)))
+			return 0;
+		n_line++;
+		ft_strdel(&line);
+	}
+	ft_strdel(&line);
+	if (!(i = parse_file(list, poly)))
+		return (0);
+	if (!(load_tex(poly, data)))
+		return 0;
+	return i;
+}
+
 void			print_s(int i)
 {
 	ft_putstr_hexa("parsing sucsess : ", BOLD | UNDERLINE, 0x4DA6D9);
 	ft_putnbr_hexa(i, BOLD | UNDERLINE, 0x4EEFD2);
 	ft_putendl_hexa(" loaded", BOLD | UNDERLINE, 0x4DA6D9);
 }
-

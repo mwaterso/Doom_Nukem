@@ -165,7 +165,44 @@ int		init_var(t_input *inputs)
 
 }*/
 
+void print_parse(t_poly *poly)
+{
+	int i = 1;
 
+	//dprintf(1, "COUOCU11\n");
+	while (poly)
+	{
+		printf("poly %d\n{\n", i++);
+		printf("\tnb ply = %d\n", poly->nbr_p);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[0].x, poly->dot[0].y, poly->dot[0].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[3].x, poly->dot[3].y, poly->dot[3].z);
+		printf("\n");
+		printf("\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
+		printf("\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
+		printf("\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
+		printf("\tX = %f | Y = %f\n", poly->cord[3].x, poly->cord[3].y);
+		printf("\ttextur = [%s]\n", poly->tex);
+		printf("}\n");
+		poly = poly->next;
+	}
+}
+
+int	keyboard_test(int key, t_input *inputs)
+{
+    if (key == 49)
+    {
+        mlx_clear_window(inputs->im.ad, inputs->win_ad);
+        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->map->tex_tab.im.ad, 0, 0);
+        dprintf(1, "%s\n", inputs->map->tex);
+        if (inputs->map->next)
+            inputs->map = inputs->map->next;
+        else
+             return 0;
+    }
+    return 0;
+}
 
 int main(int c, char **v)
 {
@@ -175,21 +212,37 @@ int main(int c, char **v)
 
     //poly = (t_poly *)malloc(sizeof(t_poly));
     //data.nbrpoly = Debugfct(poly);
-	if(!(data.map = parsing_poly(v[1])))
-		return(0);
-    printf("init vars\n");
+
+
+    // printf("init vars\n");
     init_var(&data);
-    printf("ray init\n");
-    data.rays = tab_ray(data.win_h * data.win_w, &data);
-    printf("ray init end\n");
-    get_plans(data.map);
-    printf("plans init end\n");
-   // thread_start(&data);
-    proj_2d(data.map, &data);
-    printf("proj2d end\n");
-	mlx_put_image_to_window(data.im.tab, data.win_ad, data.im.ad, 0, 0);
-	mlx_hook(data.win_ad, 2, 0, keyboard_move, &data);
-	//mlx_hook(inputs.win_ad, 17, 0, &ft_close, &inputs);
-	mlx_loop(data.mlx_ad);
+	if(!(data.map = parsing_poly(v[1], data)))
+		return(0);
+    print_parse(data.map);
+
+// mlx_put_image_to_window(data.im.ad, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
+    mlx_hook(data.win_ad, 2, 0, keyboard_test, &data);
+   // mlx_put_image_to_window(data.map->tex_tab.im.tab, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
+    
+
+    // while (data.map)
+    // {
+    //     display_window(&data, data.map);
+    //     data.map = data.map->next;
+    // }
+
+
+//     printf("ray init\n");
+//     data.rays = tab_ray(data.win_h * data.win_w, &data);
+//     printf("ray init end\n");
+//     get_plans(data.map);
+//     printf("plans init end\n");
+//    /*thread_start(&data);*/
+//     proj_2d(data.map, &data);
+//     printf("proj2d end\n");
+ //	mlx_put_image_to_window(data.im.tab, data.win_ad, data.im.ad, 0, 0);
+ 	//mlx_hook(data.win_ad, 2, 0, keyboard_move, &data);
+// 	/*mlx_hook(inputs.win_ad, 17, 0, &ft_close, &inputs);*/
+ 	mlx_loop(data.mlx_ad);
     return(0);
 }
