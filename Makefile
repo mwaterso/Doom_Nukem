@@ -33,8 +33,9 @@ SRC_NAME += Engine/math.c\
 			Engine/Projection.c\
 			Engine/trace.c\
 			Engine/map.c\
-			Engine/hooks.c\
 			Engine/matrix.c\
+
+SRC_NAME += Event/hooks.c
 
 SRC_NAME += Parsing/parsing_poly.c Parsing/parsing_error.c \
 			Parsing/parsing_list.c Parsing/parsing_error2.c \
@@ -58,7 +59,7 @@ CPPFLAGS = -I include -I libft/includes
 LDFLAGS = -L libft
 LDLIBS = libft/libft.a
 
-SRC_SUP = {Parsing,Engine}
+SRC_SUP = {Parsing,Engine,Event}
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
