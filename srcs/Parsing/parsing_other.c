@@ -35,7 +35,7 @@ int		sort_dot(char *line, t_poly *new, t_index *index)
 	return 1;
 }
 
-int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd)
+int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd)
 {
 	int n_line;
 	char *line;
@@ -43,7 +43,6 @@ int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd)
 
 	i = 0;
 	n_line = 0;
-	(void)data;
 	while (get_next_line(fd, &line) > 0)
 	{
 		if(!(creat_elem_l(line, n_line, &list)))
@@ -52,7 +51,7 @@ int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd)
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
-	if (!(i = parse_file(list, poly)))
+	if (!(i = parse_file(list, poly, data)))
 		return (0);
 	if (!(load_tex(poly, data)))
 	{

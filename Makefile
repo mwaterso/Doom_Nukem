@@ -40,6 +40,8 @@ SRC_NAME += Event/hooks.c
 SRC_NAME += Parsing/parsing_poly.c Parsing/parsing_error.c \
 			Parsing/parsing_list.c Parsing/parsing_error2.c \
 			Parsing/parsing_other.c	Parsing/parsing_tex.c
+	
+SRC_NAME += Parsing_obj/parse_obj.c
 
 #SRC_NAME += Sound/init_s.c Sound/parsing_wav.c
 
@@ -59,7 +61,7 @@ CPPFLAGS = -I include -I libft/includes
 LDFLAGS = -L libft
 LDLIBS = libft/libft.a
 
-SRC_SUP = {Parsing,Engine,Event}
+SRC_SUP = {Parsing,Engine,Event,Parsing_obj}
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

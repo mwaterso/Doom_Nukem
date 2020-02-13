@@ -1,11 +1,26 @@
 Object
 {
-    posx = 100
-    posy = 100
-    posz = 100
-    width = 100
-    height = 100
-    texture = Brique.png
+    pos = x:0, y:0, z:0
+    rot = x:0, y:0, z:0
+    file = starf.obj
+}
+Object
+{
+    pos = x:0, y:0, z:0
+    rot = x:0, y:0, z:0
+    file = starf.obj
+}
+Object
+{
+    pos = x:0, y:0, z:0
+    rot = x:0, y:0, z:0
+    file = starf.obj
+}
+Object
+{
+    pos = x:0, y:0, z:0
+    rot = x:0, y:0, z:0
+    file = starf.obj
 }
 
 /* Murs du haut */

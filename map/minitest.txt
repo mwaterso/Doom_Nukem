@@ -1,3 +1,16 @@
+Object
+{
+    pos = x:1, y:2, z:3
+    rot = x:4, y:5, z:6
+    file = starf.obj
+}
+Object
+{
+    pos = x:11, y:12, z:13
+    rot = x:14, y:15, z:16
+    file = coffre.obj
+}
+
 Polygon                                 //Mur entier 1
 {
     dot = x:100, y:200, z:300, X:400, Y:500

@@ -150,14 +150,21 @@ typedef struct		s_thread
 	struct s_input	*inputs;
 }					t_thread;
 
+typedef struct		s_tex
+{
+	int		*tab;
+	int		width;
+	int		height;
+}					t_tex;
+
 typedef struct s_poly
 {
-	struct s_poly 	*next;
 	t_2dbox			box;
   	t_fdot			dot[NBR_PPOLY];
 	t_fdot			rotx[NBR_PPOLY];
 	t_fdot			projx[NBR_PPOLY];
    	t_2d			cord[NBR_PPOLY];
+	t_fdot			normale;
 	float			a;
 	float			b;
 	float			c;
@@ -166,40 +173,50 @@ typedef struct s_poly
 	float			areaabc;
 	int				nbr_p;
 	int				nbr_pprojx;
-	void			*tex_tab;
+	t_tex			tex_tab;
+	struct s_poly 	*next;
 
-}				t_poly;
+}					t_poly;
+
+typedef struct			s_object
+{
+	t_fdot				pos;
+	t_fdot				rot;
+	t_poly				*poly;
+	char				*file;
+	struct s_object		*next;
+}						t_object;
 
 typedef struct		s_input
 {   
 	void			*mlx_ad;
 	void			*win_ad;
 	t_image			im;
-
 	void 			**tab_win;
 	t_thread		thread_tab[NB_THREAD];
-    int		win_h;
-    int		win_w;
-	double	alpha_x;   /* angle entre vue joueur et vect x sur plan xy (PROJECTION 2D)*/
-	double	alpha_z;   /* angle entre vue joueur et vect z */
-	int nbrpoly;
-	t_poly	*map;
+    int				win_h;
+    int				win_w;
+	double			alpha_x;   /* angle entre vue joueur et vect x sur plan xy (PROJECTION 2D)*/
+	double			alpha_z;   /* angle entre vue joueur et vect z */
+	int				nbrpoly;
+	t_poly			*map;
+	t_object		*obj;
 	t_fdot			dir;
-	t_fov *fov;
-	t_ray *rays;
-	t_3x3matrix rotz;
-	t_3x3matrix roty;
+	t_fov			*fov;
+	t_ray			*rays;
+	t_3x3matrix		rotz;
+	t_3x3matrix		roty;
 
 }					t_input;
 
 typedef struct 		s_lstex
 {
-	void			*tab;
-	int				width;
-	int				height;
+	t_tex			tex;
 	char			*name;
 	struct s_lstex	*next;
 }					t_lstex;
+
+
 
 /*typedef struct		s_octree
 {
@@ -233,10 +250,12 @@ int				creat_elem_l(char *line, int n_line, t_line **list);
 int		   		sort_dot(char *line, t_poly *new, t_index *index);
 t_fdot			ApplyMatPoint(t_3x3matrix matrix, t_fdot point);
 t_fdot 			getvect(t_fdot a, t_fdot b);
-t_poly			*parsing_poly(char *file, t_input data);
-int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd);
-int				parse_file(t_line *list, t_poly **poly);
-int				load_tex(t_poly **poly, t_input data);
+t_poly			*parsing_poly(char *file, t_input *data);
+int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd);
+int				parse_file(t_line *list, t_poly **poly, t_input *data);
+int				load_tex(t_poly **poly, t_input *data);
+char			*sort_file(char *line);
+t_line			*read_obj(t_line *list, t_object **obj);
 
 
 #endif

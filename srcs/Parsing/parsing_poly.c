@@ -13,7 +13,7 @@
 
 #include "doom.h"
 
-static char		*sort_tex(char *line)
+char		*sort_file(char *line)
 {
 	int i;
 	int tmp;
@@ -37,15 +37,16 @@ static char		*sort_tex(char *line)
 	return (str);
 }
 
-static int		poly_read(t_line *list, t_poly **poly)
+ t_line		*poly_read(t_line *list, t_poly **poly)
 {
-	t_index index;
-	t_poly *new;
-	int		dot;
+	t_index		index;
+	t_poly		*new;
+	int			dot;
+
 	dot = 0;
 	index = (t_index){.i = -1, .j = 0, .k = 0};
 	if (!(new = (t_poly *)malloc(sizeof(t_poly))))
-		return (0);
+		return (NULL);
 	new->next = NULL;
 	new->nbr_p = 4;
 	while (list && list->line[0] != '}')
@@ -55,17 +56,18 @@ static int		poly_read(t_line *list, t_poly **poly)
 			sort_dot(list->line, new, &index);
 			dot++;
 		}
-		if (ft_strnequ_word(list->line, "texture", 7))
-			new->tex = sort_tex(list->line);
+		else if (ft_strnequ_word(list->line, "texture", 7))
+			if (!(new->tex = sort_file(list->line)))
+				return (NULL);
 		list = list->next;
 	}
 	if (dot < 4)
 		new->nbr_p = dot;
 	push_back(new, poly);
-	return 1;
+	return (list);
 }
 
-int		parse_file(t_line *list, t_poly **poly)
+int		parse_file(t_line *list, t_poly **poly, t_input *data)
 {
 	int count;
 	t_line *tmp;
@@ -76,20 +78,26 @@ int		parse_file(t_line *list, t_poly **poly)
 		return (0);
 	while (tmp)
 	{
-		if (ft_strnequ_word(tmp->line, "//Polygon", 9))
+		if (ft_strnequ_word(tmp->line, "//Polygon", 9) ||
+		ft_strnequ_word(tmp->line, "//Object", 8))
 			tmp = tmp->next;
-		if (ft_strnequ_word(tmp->line, "Polygon", 7))
+		else if (ft_strnequ_word(tmp->line, "Polygon", 7))
 		{
 			count++;
-			if (!(poly_read(tmp, poly)))
+			if (!(tmp = poly_read(tmp, poly)))
 				return (0); 
+		}
+		else if (ft_strnequ_word(tmp->line, "Object", 6))
+		{
+			if (!(tmp = read_obj(tmp, &(data->obj))))
+				return (0);
 		}
 		tmp = tmp->next;
 	}
 	return (count);
 }
 
-t_poly			*parsing_poly(char *file, t_input data)
+t_poly			*parsing_poly(char *file, t_input *data)
 {
 	int		fd;
 	int 	i; 

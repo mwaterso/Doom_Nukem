@@ -45,9 +45,8 @@ int		push_back_tex(t_lstex *new, t_lstex **lst)
 	return (1);
 }
 
-int init_lsttex(t_poly *poly, t_lstex **lst, t_input data)
+int init_lsttex(t_poly *poly, t_lstex **lst, t_input *data)
 {
-	(void)data;
 	t_lstex *new;
 	char *buff;
 
@@ -58,8 +57,8 @@ int init_lsttex(t_poly *poly, t_lstex **lst, t_input data)
 		return 0;
 	if (!(buff = ft_strjoin("texture/", new->name)))
 		return 0;
-	if (!(new->tab = mlx_xpm_file_to_image(data.mlx_ad, buff,
-		&new->width, &new->height)))
+	if (!(new->tex.tab = (int *)mlx_xpm_file_to_image(data->mlx_ad, buff,
+		&new->tex.width, &new->tex.height)))
 		return (0);
 	push_back_tex(new, lst);
 	free(buff);
@@ -79,7 +78,7 @@ t_lstex             *tex_cmp(char *tex, t_lstex *lst)
 	return NULL;
 }
 
-int				load_tex(t_poly **poly, t_input data)
+int				load_tex(t_poly **poly, t_input *data)
 {
 	t_lstex	*lst;
 	t_poly	*tmp;
@@ -93,7 +92,7 @@ int				load_tex(t_poly **poly, t_input data)
 			if(!(init_lsttex(tmp, &lst, data)))
 				return 0;
 		}
-		tmp->tex_tab = tex_cmp(tmp->tex, lst)->tab;
+		tmp->tex_tab = tex_cmp(tmp->tex, lst)->tex;
 		tmp = tmp->next;
 	}
 	free_texlst(&lst);

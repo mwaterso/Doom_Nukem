@@ -24,20 +24,39 @@ void	error_file(int fd, char *av)
 	}
 }
 
-void    free_line(t_line **line)
-{
-    t_line *tmp;
-    t_line *next;
+// void    free_line(t_line **line)
+// {
+//     t_line *tmp;
+//     t_line *next;
 
-    tmp = *line;
-    while (tmp)
-    {
-        next = tmp->next;
-        ft_strdel(&(tmp->line));
-        free(tmp);
-		tmp = next;
-    }
-	*line = NULL;
+//     tmp = *line;
+//     while (tmp)
+//     {
+//         next = tmp->next;
+//         ft_strdel(&(tmp->line));
+//         free(tmp);
+// 		tmp = next;
+//     }
+// 	*line = NULL;
+// }
+
+void			free_line(t_line **lst)
+{
+	t_line		*head;
+	t_line		*next;
+
+	head = *lst;
+	while (head != NULL)
+	{
+		next = head->next;
+		if (head->line)
+			ft_strdel(&head->line);
+		ft_memdel((void **)&head);
+		head = next;
+	}
+	*lst = NULL;
+	head = NULL;
+	next = NULL;
 }
 
 void    free_poly(t_poly **poly)

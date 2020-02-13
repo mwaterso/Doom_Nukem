@@ -165,6 +165,22 @@ int		init_var(t_input *inputs)
 
 }*/
 
+void print_parse_obj(t_object *obj)
+{
+	int i = 1;
+
+	dprintf(1, "OBJ\n\n");
+	while (obj)
+	{
+		printf("obj %d\n{\n", i++);
+		printf("\tpos = x:%f | y:%f | z:%f\n", obj->pos.x, obj->pos.y, obj->pos.z);
+		printf("\trot = x:%f | y:%f | z:%f\n", obj->rot.x, obj->rot.y, obj->rot.z);
+		printf("\tfile = [%s]\n", obj->file);
+		printf("}\n");
+		obj = obj->next;
+	}
+}
+
 void print_parse(t_poly *poly)
 {
 	int i = 1;
@@ -194,7 +210,7 @@ int	keyboard_test(int key, t_input *inputs)
     if (key == 49)
     {
         mlx_clear_window(inputs->im.ad, inputs->win_ad);
-        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->map->tex_tab, 0, 0);
+        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->map->tex_tab.tab, 0, 0);
         dprintf(1, "%s\n", inputs->map->tex);
         if (inputs->map->next)
             inputs->map = inputs->map->next;
@@ -216,9 +232,10 @@ int main(int c, char **v)
 
     // printf("init vars\n");
     init_var(&data);
-	if(!(data.map = parsing_poly(v[1], data)))
+	if(!(data.map = parsing_poly(v[1], &data)))
 		return(0);
     print_parse(data.map);
+    print_parse_obj(data.obj);
 
 // mlx_put_image_to_window(data.im.ad, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
     mlx_hook(data.win_ad, 2, 0, keyboard_test, &data);
