@@ -22,7 +22,7 @@ void    free_texlst(t_lstex **tex)
     while (tmp)
     {
         next = tmp->next;
-        ft_strdel(&(tmp->long_name));
+		ft_strdel(&(tmp->name));
         free(tmp);
 		tmp = next;
     }
@@ -49,18 +49,20 @@ int init_lsttex(t_poly *poly, t_lstex **lst, t_input data)
 {
 	(void)data;
 	t_lstex *new;
+	char *buff;
 
 	if (!(new = (t_lstex *)malloc(sizeof(t_lstex))))
 		return 0;
 	new->next = NULL;
 	if (!(new->name = ft_strdup(poly->tex)))
 		return 0;
-	if (!(new->long_name = ft_strjoin("texture/", new->name)))
+	if (!(buff = ft_strjoin("texture/", new->name)))
 		return 0;
-	if (!(new->tex.im.ad = mlx_xpm_file_to_image(data.mlx_ad, new->long_name,
-		&new->tex.width, &new->tex.height)))
+	if (!(new->tab = mlx_xpm_file_to_image(data.mlx_ad, buff,
+		&new->width, &new->height)))
 		return (0);
 	push_back_tex(new, lst);
+	free(buff);
 	return 1;
 }
 
@@ -91,7 +93,7 @@ int				load_tex(t_poly **poly, t_input data)
 			if(!(init_lsttex(tmp, &lst, data)))
 				return 0;
 		}
-		tmp->tex_tab = tex_cmp(tmp->tex, lst)->tex;
+		tmp->tex_tab = tex_cmp(tmp->tex, lst)->tab;
 		tmp = tmp->next;
 	}
 	free_texlst(&lst);

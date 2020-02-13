@@ -55,7 +55,10 @@ int				parse_loop(t_poly **poly, t_line *list, t_input data, int fd)
 	if (!(i = parse_file(list, poly)))
 		return (0);
 	if (!(load_tex(poly, data)))
+	{
+		write(1, "load tex fail\n", 14);
 		return 0;
+	}
 	return i;
 }
 

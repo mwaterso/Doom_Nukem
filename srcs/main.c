@@ -194,7 +194,7 @@ int	keyboard_test(int key, t_input *inputs)
     if (key == 49)
     {
         mlx_clear_window(inputs->im.ad, inputs->win_ad);
-        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->map->tex_tab.im.ad, 0, 0);
+        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->map->tex_tab, 0, 0);
         dprintf(1, "%s\n", inputs->map->tex);
         if (inputs->map->next)
             inputs->map = inputs->map->next;
@@ -244,5 +244,6 @@ int main(int c, char **v)
  	//mlx_hook(data.win_ad, 2, 0, keyboard_move, &data);
 // 	/*mlx_hook(inputs.win_ad, 17, 0, &ft_close, &inputs);*/
  	mlx_loop(data.mlx_ad);
+    free_poly(&(data.map));
     return(0);
 }

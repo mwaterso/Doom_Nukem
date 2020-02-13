@@ -166,7 +166,7 @@ typedef struct s_poly
 	float			areaabc;
 	int				nbr_p;
 	int				nbr_pprojx;
-	t_texture		tex_tab;
+	void			*tex_tab;
 
 }				t_poly;
 
@@ -194,9 +194,10 @@ typedef struct		s_input
 
 typedef struct 		s_lstex
 {
-	t_texture		tex;
+	void			*tab;
+	int				width;
+	int				height;
 	char			*name;
-	char			*long_name;
 	struct s_lstex	*next;
 }					t_lstex;
 

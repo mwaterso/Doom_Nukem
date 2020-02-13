@@ -76,6 +76,8 @@ int		parse_file(t_line *list, t_poly **poly)
 		return (0);
 	while (tmp)
 	{
+		if (ft_strnequ_word(tmp->line, "//Polygon", 9))
+			tmp = tmp->next;
 		if (ft_strnequ_word(tmp->line, "Polygon", 7))
 		{
 			count++;
@@ -102,7 +104,10 @@ t_poly			*parsing_poly(char *file, t_input data)
 		return (NULL); 			// HIHI
 	error_file(fd, file);
 	if (!(i = parse_loop(&poly, list, data, fd))) 
+	{
+		free_line(&list);
 		return NULL;
+	}
 	print_s(i);
 	free_line(&list);
 	close(fd);
