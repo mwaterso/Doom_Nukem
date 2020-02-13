@@ -10,6 +10,12 @@ Object
     rot = x:14, y:15, z:16
     file = coffre.obj
 }
+Object
+{
+    pos = x:11, y:12, z:13
+    rot = x:14, y:15, z:19
+    file = coffre2.obj
+}
 
 Polygon                                 //Mur entier 1
 {

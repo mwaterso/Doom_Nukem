@@ -256,6 +256,9 @@ int				parse_file(t_line *list, t_poly **poly, t_input *data);
 int				load_tex(t_poly **poly, t_input *data);
 char			*sort_file(char *line);
 t_line			*read_obj(t_line *list, t_object **obj);
+void			push_front_obj(t_object *new, t_object **obj);
+void             reverse(t_object **obj);
+void             poly_rev(t_poly **poly) ;
 
 
 #endif

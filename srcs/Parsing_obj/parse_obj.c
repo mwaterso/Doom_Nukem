@@ -13,30 +13,6 @@
 
 #include "doom.h"
 
-void				push_front_obj(t_object *new, t_object **obj)
-{
-	if (!obj)
-		*obj = new;
-	else
-	{
-		new->next = *obj;
-		*obj = new;
-	}
-}
-
-// void			rev_obj(t_object *obj)
-// {
-// 	t_object *swap;
-// 	t_object *tmp;
-
-// 	while (obj->next)
-// 	{
-// 		tmp = obj->next;
-// 		swap = obj->next;
-// 		obj->next = obj;
-// 	}
-// }
-
 void			ft_sort_pos(char *line, t_object *new)
 {
 	if (ft_strrchr(line, 'x'))
@@ -80,5 +56,6 @@ t_line			*read_obj(t_line *list, t_object **obj)
 		list = list->next;
 	}
 	push_front_obj(new, obj);
+	reverse(obj);
 	return (list);
 }

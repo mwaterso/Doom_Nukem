@@ -41,7 +41,8 @@ SRC_NAME += Parsing/parsing_poly.c Parsing/parsing_error.c \
 			Parsing/parsing_list.c Parsing/parsing_error2.c \
 			Parsing/parsing_other.c	Parsing/parsing_tex.c
 	
-SRC_NAME += Parsing_obj/parse_obj.c
+SRC_NAME += Parsing_obj/parse_obj.c \
+			Parsing_obj/object_list.c
 
 #SRC_NAME += Sound/init_s.c Sound/parsing_wav.c
 

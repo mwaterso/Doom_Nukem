@@ -1,7 +1,7 @@
 Object
 {
-    pos = x:0, y:0, z:0
-    rot = x:0, y:0, z:0
+    pos = x:1, y:2, z:3
+    rot = x:4, y:5, z:6
     file = starf.obj
 }
 Object
@@ -18,10 +18,17 @@ Object
 }
 Object
 {
+    pos = x:11, y:12, z:13
+    rot = x:14, y:15, z:16
+    file = coffre.obj
+}
+Object
+{
     pos = x:0, y:0, z:0
     rot = x:0, y:0, z:0
     file = starf.obj
 }
+
 
 /* Murs du haut */
 Polygon                                 //Mur entier 1
