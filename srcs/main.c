@@ -233,7 +233,10 @@ int main(int c, char **v)
     // printf("init vars\n");
     init_var(&data);
 	if(!(data.map = parsing_poly(v[1], &data)))
+    {
+        printf("BLALALALALA\n");
 		return(0);
+    }
     print_parse(data.map);
     print_parse_obj(data.obj);
 

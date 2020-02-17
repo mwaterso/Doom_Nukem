@@ -89,7 +89,7 @@ int		parse_file(t_line *list, t_poly **poly, t_input *data)
 		}
 		else if (ft_strnequ_word(tmp->line, "Object", 6))
 		{
-			if (!(tmp = read_obj(tmp, &(data->obj))))
+			if (!(tmp = read_obj(tmp, &(data->obj), data)))
 				return (0);
 		}
 		tmp = tmp->next;
@@ -111,7 +111,7 @@ t_poly			*parsing_poly(char *file, t_input *data)
 	if (!(read(fd, NULL, 1)))	// A CHANGER
 		return (NULL); 			// HIHI
 	error_file(fd, file);
-	if (!(i = parse_loop(&poly, list, data, fd))) 
+	if (!(i = parse_loop(&poly, list, data, fd)))
 	{
 		free_line(&list);
 		return NULL;

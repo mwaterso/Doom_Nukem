@@ -88,9 +88,7 @@ static int			pars_block(t_line *list, int *error, t_index *check)
 		   check_texture(list, error);
 	   }
 	   else if (list->line[0] != '{' && list->line[0] != '}')
-	   {
 		   return (0);
-	   }
 		list = list->next;
 	}
 	
@@ -107,8 +105,7 @@ static void         line_error(t_line *list, int *error)
 	if (list->line[0] == '{')
 	{
 		if (!(pars_block(list, error, &check)))
-		{
-			poly_error(list, BRACKET, 0, error);}
+			poly_error(list, BRACKET, 0, error);
 		else if ((check.j < 3 || check.j > 4) || check.i != 1)
 			poly_error(list, BLOCK, ft_strlen(list->line), error);
 	}
@@ -129,6 +126,8 @@ int                 check_error(t_line *list)
 	{
 		if (tmp->next && ft_strnequ_word(tmp->line, "Polygon", 7))
 			line_error(tmp->next, &error);
+		if (tmp->next && ft_strnequ_word(tmp->line, "Object", 6))
+			obj_error(tmp->next, &error);
 		tmp = tmp->next;
 	}
 	if (error > 0)

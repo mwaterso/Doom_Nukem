@@ -71,6 +71,8 @@ void		print_error(t_line *list, int error, int i)
 	}
 	if (error == TEX_X)
 		ft_putendl_hexa(" .xpm", BOLD | ITALIC, 0x16A085);
+	else if (error == D_OBJ)
+		ft_putendl_hexa(" .obj", BOLD | ITALIC, 0x16A085);
 	if (error == BRACKET || error == O_BRACKET)
 		print_bracket(list, error);
 	if (error != BLOCK)
@@ -93,6 +95,8 @@ void		poly_error(t_line *list, int error, int i, int *err)
 		ft_putstr_hexa("Error bad spacing line :", UNDERLINE, 0xEC7063);
 	else if (error == BLOCK)
 		ft_putstr_hexa("Error invalide size block line :", UNDERLINE, 0xEC7063);
+	else if (error == D_OBJ)
+		ft_putstr_hexa("Error invalide name obj file line :", UNDERLINE, 0xEC7063);
 	if (list)
 		print_error(list, error, i);
 	if (error == BLOCK)

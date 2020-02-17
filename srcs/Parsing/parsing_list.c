@@ -109,7 +109,8 @@ int		creat_elem_l(char *line, int n_line, t_line **list)
 	{
 		tmp = *list;
 		while (tmp->next)
-			tmp = tmp->next;
+		{
+			tmp = tmp->next;}
 		tmp->next = new;
 	}
 	return (1);

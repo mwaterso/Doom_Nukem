@@ -33,7 +33,7 @@ void			ft_sort_rot(char  *line, t_object *new)
 		new->rot.z = ft_atof(ft_strrchr(line, 'z') + 2);
 }
 
-t_line			*read_obj(t_line *list, t_object **obj)
+t_line			*read_obj(t_line *list, t_object **obj, t_input *data)
 {
 	t_object	*new;
 
@@ -50,8 +50,11 @@ t_line			*read_obj(t_line *list, t_object **obj)
 		{
 			if (!(new->file = sort_file(list->line)))
 				return (NULL);
-			// if (!(new->poly = ft_pase_obj()))
-			// 	return (NULL);
+			if (!(new->l_file = ft_strjoin("Object/", new->file)))
+				return NULL;
+			ft_pares_obj(new->l_file, data);
+			//if (!(new->poly = ft_pares_obj(new->l_file, data)))
+			//	return (NULL);
 		}
 		list = list->next;
 	}

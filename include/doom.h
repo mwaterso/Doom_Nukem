@@ -46,7 +46,7 @@
 
 
 
-enum {NUM, TEX, CORD, BRACKET, O_BRACKET, TEX_E, TEX_X, BLOCK};
+enum {NUM, TEX, CORD, BRACKET, O_BRACKET, TEX_E, TEX_X, BLOCK, D_OBJ};
 
 typedef struct		s_2d
 {
@@ -184,6 +184,7 @@ typedef struct			s_object
 	t_fdot				rot;
 	t_poly				*poly;
 	char				*file;
+	char				*l_file;
 	struct s_object		*next;
 }						t_object;
 
@@ -215,6 +216,14 @@ typedef struct 		s_lstex
 	char			*name;
 	struct s_lstex	*next;
 }					t_lstex;
+
+typedef struct		s_file_obj
+{
+	t_fdot      *v;
+    t_2d        *vt;
+    t_fdot      *vn;
+}					t_file_obj;
+
 
 
 
@@ -255,10 +264,14 @@ int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd);
 int				parse_file(t_line *list, t_poly **poly, t_input *data);
 int				load_tex(t_poly **poly, t_input *data);
 char			*sort_file(char *line);
-t_line			*read_obj(t_line *list, t_object **obj);
+t_line			*read_obj(t_line *list, t_object **obj, t_input *data);
 void			push_front_obj(t_object *new, t_object **obj);
 void             reverse(t_object **obj);
 void             poly_rev(t_poly **poly) ;
+void 			obj_error(t_line *list, int *error);
+t_poly			*ft_pares_obj(char *file, t_input *data);
+t_fdot      	sort_tfdot(char *line);
+t_2d      		sort_t2d(char *line);
 
 
 #endif
