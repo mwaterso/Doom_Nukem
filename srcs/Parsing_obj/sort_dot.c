@@ -12,14 +12,56 @@
 
 #include "doom.h"
 
-t_fdot      sort_tfdot(char *line)
+void				free_tab(char ***tab)
 {
-    printf("t_fdot = %s\n", line);
-    return ((t_fdot){.x = 0, .y = 0, .z = 0});
+	char	**str;
+	int		i;
+
+	i = 0;
+	str = *tab;
+	while (*str)
+	{
+		ft_strdel(str);
+		i++;
+		str = &(*tab)[i];
+	}
+	ft_memdel((void **)tab);
 }
 
-t_2d      sort_t2d(char *line)
+int      sort_tfdot(char *line, t_fdot *dot)
 {
-    printf("t_2d = %s\n", line);
-    return ((t_2d){.x = 0, .y = 0});
+    int i;
+    char **tab;
+
+    i = 0;
+    while (!ft_isdigit(line[i]))
+        i++;
+    if (!(tab = ft_strsplit(line + i, ' ')))
+        return 0;
+    if (ft_avlen(tab) != 3)
+        return 0;
+    dot->x = ft_atof(tab[0]);
+    dot->y = ft_atof(tab[1]);
+    dot->z = ft_atof(tab[2]);
+    free_tab(&tab);
+    printf("%f | %f | %f\n", dot->x, dot->y, dot->z);
+    return (0);
+}
+int       sort_t2d(char *line, t_2d *dot)
+{
+    int i;
+    char **tab;
+
+    i = 0;
+    while (!ft_isdigit(line[i]))
+        i++;
+    if (!(tab = ft_strsplit(line + i, ' ')))
+        return 0;
+    if (ft_avlen(tab) != 2)
+        return 0;
+    dot->x = ft_atof(tab[0]);
+    dot->y = ft_atof(tab[1]);
+    free_tab(&tab);
+    printf("%f | %f\n", dot->x, dot->y);
+    return (0);
 }

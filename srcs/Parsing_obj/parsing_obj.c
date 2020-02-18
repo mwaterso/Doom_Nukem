@@ -52,17 +52,20 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data)
 	index = (t_index){.i = 0, .j = 0, .k = 0};
 	if (!(mall_file(&file, list)))
 		return 0;
-   while (list)
-   {
+   	while (list)
+   	{
 		if (ft_strnequ_word(list->line, "v ", 2))
-			file.v[index.i++] = sort_tfdot(list->line);
+			sort_tfdot(list->line, &(file.v[index.i++]));
 		if (ft_strnequ_word(list->line, "vt ", 3))
-		   file.vt[index.j++] = sort_t2d(list->line);
+		   sort_t2d(list->line, &(file.vt[index.j++]));
 		if (ft_strnequ_word(list->line, "vn ", 3))
-           file.vn[index.k++] = sort_tfdot(list->line);
+           sort_tfdot(list->line, &(file.vn[index.k++]));
+		if (ft_strnequ_word(list->line, "f ", 2))
+			sort_poly(list->line + 2, poly, file);
+		/*---------------TEXT .MLT----------------*/
 		list = list->next;
-   }
-   (void)data, (void)poly;
+   	}
+   (void)data;
    return 1;
 }
 

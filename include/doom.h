@@ -161,6 +161,7 @@ typedef struct s_poly
 {
 	t_2dbox			box;
   	t_fdot			dot[NBR_PPOLY];
+	t_fdot			dot_vn[NBR_PPOLY];
 	t_fdot			rotx[NBR_PPOLY];
 	t_fdot			projx[NBR_PPOLY];
    	t_2d			cord[NBR_PPOLY];
@@ -270,9 +271,14 @@ void             reverse(t_object **obj);
 void             poly_rev(t_poly **poly) ;
 void 			obj_error(t_line *list, int *error);
 t_poly			*ft_pares_obj(char *file, t_input *data);
-t_fdot      	sort_tfdot(char *line);
-t_2d      		sort_t2d(char *line);
+int      		sort_tfdot(char *line, t_fdot *dot);
+int      		sort_t2d(char *line, t_2d *dot);
+int         	sort_poly(char *line, t_poly **poly, t_file_obj file);
+void			free_tab(char ***tab);
 
+/*------------------------------*/
+void 			print_parse1(t_poly *poly);
+/*-------------------------------*/
 
 #endif
 

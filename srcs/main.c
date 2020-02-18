@@ -181,6 +181,41 @@ void print_parse_obj(t_object *obj)
 	}
 }
 
+
+/*
+**----------------------------------------------------------------------------------------------------------
+*/
+
+void print_parse1(t_poly *poly)
+{
+	int i = 1;
+
+	//dprintf(1, "COUOCU11\n");
+		printf("poly %d\n{\n", i++);
+		printf("\tnb ply = %d\n", poly->nbr_p);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[0].x, poly->dot[0].y, poly->dot[0].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[3].x, poly->dot[3].y, poly->dot[3].z);
+		printf("\n");
+        printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[0].x, poly->dot_vn[0].y, poly->dot_vn[0].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[1].x, poly->dot_vn[1].y, poly->dot_vn[1].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[2].x, poly->dot_vn[2].y, poly->dot_vn[2].z);
+		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[3].x, poly->dot_vn[3].y, poly->dot_vn[3].z);
+        printf("\n");
+		printf("\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
+		printf("\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
+		printf("\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
+		printf("\tX = %f | Y = %f\n", poly->cord[3].x, poly->cord[3].y);
+		printf("}\n");
+}
+
+
+/*
+**----------------------------------------------------------------------------------------------------------
+*/
+
+
 void print_parse(t_poly *poly)
 {
 	int i = 1;
@@ -237,8 +272,8 @@ int main(int c, char **v)
         printf("BLALALALALA\n");
 		return(0);
     }
-    print_parse(data.map);
-    print_parse_obj(data.obj);
+   //print_parse(data.map);
+   //print_parse_obj(data.obj);
 
 // mlx_put_image_to_window(data.im.ad, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
     mlx_hook(data.win_ad, 2, 0, keyboard_test, &data);

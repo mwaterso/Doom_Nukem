@@ -13,7 +13,29 @@
 
 #include "doom.h"
 
-void             poly_rev(t_poly **poly) 
+void			push_front_obj(t_object *new, t_object **obj)
+{
+	if (!obj)
+		*obj = new;
+	else
+	{
+		new->next = *obj;
+		*obj = new;
+	}
+}
+
+void			push_front_pol(t_poly *new, t_poly **poly)
+{
+	if (!poly)
+		poly = new;
+	else
+	{
+		new->next = poly;
+		poly = new;
+	}
+}
+
+void             reverse_p(t_poly **poly) 
 { 
     t_poly    *prev; 
     t_poly    *current; 
@@ -32,32 +54,40 @@ void             poly_rev(t_poly **poly)
     *poly = prev; 
 } 
 
-void			push_front_obj(t_object *new, t_object **obj)
-{
-	if (!obj)
-		*obj = new;
-	else
-	{
-		new->next = *obj;
-		*obj = new;
-	}
-}
-
-void             reverse(t_object **obj) 
+void             reverse_l(t_line **list) 
 { 
-    t_object    *prev; 
-    t_object    *current; 
-    t_object    *next; 
+	t_line *current;
+	t_line *prev;
+	t_line *next;
+    
+	current = *list;
+	next = NULL;
+	prev = NULL;
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*list = prev;
+} 
 
+void             reverse_o(t_object **obj) 
+{ 
+	t_object *current;
+	t_object *prev;
+	t_object *next;
+    
 	current = *obj;
 	next = NULL;
 	prev = NULL;
-    while (current)
-	{ 
-        next = current->next;
-        current->next = prev; 
-        prev = current; 
-        current = next; 
-    } 
-    *obj = prev; 
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*obj = prev;
 } 
