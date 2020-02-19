@@ -157,6 +157,20 @@ typedef struct		s_tex
 	int		height;
 }					t_tex;
 
+typedef struct		s_color
+{
+	uint8_t			r;
+	uint8_t			g;
+	uint8_t			b;
+}					t_color;
+
+typedef	struct		s_mtl
+{
+	t_tex			tex;
+	t_color			ka;
+	t_color			kd;
+}					t_mtl;
+
 typedef struct s_poly
 {
 	t_2dbox			box;
@@ -175,6 +189,7 @@ typedef struct s_poly
 	int				nbr_p;
 	int				nbr_pprojx;
 	t_tex			tex_tab;
+	t_mtl			mtl;
 	struct s_poly 	*next;
 
 }					t_poly;
@@ -228,6 +243,7 @@ typedef struct		s_file_obj
 
 
 
+
 /*typedef struct		s_octree
 {
 	struct s_octree (*childs)[8];
@@ -265,20 +281,28 @@ int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd);
 int				parse_file(t_line *list, t_poly **poly, t_input *data);
 int				load_tex(t_poly **poly, t_input *data);
 char			*sort_file(char *line);
+
+
 t_line			*read_obj(t_line *list, t_object **obj, t_input *data);
 void			push_front_obj(t_object *new, t_object **obj);
 void             reverse(t_object **obj);
 void             poly_rev(t_poly **poly) ;
 void 			obj_error(t_line *list, int *error);
-t_poly			*ft_pares_obj(char *file, t_input *data);
+t_poly			*ft_pares_obj(char *file, t_input *data, t_object *new);
 int      		sort_tfdot(char *line, t_fdot *dot);
 int      		sort_t2d(char *line, t_2d *dot);
 int         	sort_poly(char *line, t_poly **poly, t_file_obj file);
 void			free_tab(char ***tab);
-
 /*------------------------------*/
 void 			print_parse1(t_poly *poly);
 /*-------------------------------*/
+void			push_front_pol(t_poly *new, t_poly **poly);
+void             reverse_p(t_poly **poly);
+void             reverse_o(t_object **obj);
+void             reverse_l(t_line **list);
+void    sort_mtl(t_input *data, t_poly **poly, char *file);
+int		creat_elem_l1(char *line, int n_line, t_line **list);
+int      sort_color(char *line, t_color *color);
 
 #endif
 

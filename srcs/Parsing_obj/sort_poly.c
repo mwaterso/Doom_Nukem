@@ -26,13 +26,15 @@ t_poly         *init_pol(t_file_obj file, t_poly *new, char **tab)
     {
         if (!(split = ft_strsplit(tab[index.i], '/')))
            return NULL;
-        new->dot[index.j] = file.v[ft_atoi(split[0]) - 1];
-        new->cord[index.j] = file.vt[ft_atoi(split[1]) - 1];
-        new->dot_vn[index.j] = file.vn[ft_atoi(split[2]) - 1];
+        if (split[0] && ft_atoi(split[0]) - 1 >= 0)
+            new->dot[index.j] = file.v[ft_atoi(split[0]) - 1];
+        if (split[1] && ft_atoi(split[1]) - 1 >= 0)
+            new->cord[index.j] = file.vt[ft_atoi(split[1]) - 1];
+        if (split[2] && ft_atoi(split[2]) - 1 >= 0)
+            new->dot_vn[index.j] = file.vn[ft_atoi(split[2]) - 1];
         index.j++;
     }
     //free_tab(&tab);
-    print_parse1(new);/*---------------A VIREE----------------*/
     return new;
 }
 

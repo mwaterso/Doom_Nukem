@@ -165,6 +165,11 @@ int		init_var(t_input *inputs)
 
 }*/
 
+/*
+**-------------------------------------------------PRINT OBJ PARSE---------------------------------------------------------
+*/
+
+
 void print_parse_obj(t_object *obj)
 {
 	int i = 1;
@@ -176,43 +181,41 @@ void print_parse_obj(t_object *obj)
 		printf("\tpos = x:%f | y:%f | z:%f\n", obj->pos.x, obj->pos.y, obj->pos.z);
 		printf("\trot = x:%f | y:%f | z:%f\n", obj->rot.x, obj->rot.y, obj->rot.z);
 		printf("\tfile = [%s]\n", obj->file);
+        printf("********************************************  POLY LIST ******************************************\n");
+        print_parse1(obj->poly);
+        printf("********************************************  END ************************************************\n");
 		printf("}\n");
 		obj = obj->next;
 	}
 }
-
-
-/*
-**----------------------------------------------------------------------------------------------------------
-*/
 
 void print_parse1(t_poly *poly)
 {
 	int i = 1;
 
 	//dprintf(1, "COUOCU11\n");
-		printf("poly %d\n{\n", i++);
-		printf("\tnb ply = %d\n", poly->nbr_p);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[0].x, poly->dot[0].y, poly->dot[0].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[3].x, poly->dot[3].y, poly->dot[3].z);
+    while (poly){
+		printf("\tpoly %d\n\t{\n", i++);
+		printf("\t\tnb ply = %d\n", poly->nbr_p);
+		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[0].x, poly->dot[0].y, poly->dot[0].z);
+		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
+		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
 		printf("\n");
-        printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[0].x, poly->dot_vn[0].y, poly->dot_vn[0].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[1].x, poly->dot_vn[1].y, poly->dot_vn[1].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[2].x, poly->dot_vn[2].y, poly->dot_vn[2].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[3].x, poly->dot_vn[3].y, poly->dot_vn[3].z);
+        printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[0].x, poly->dot_vn[0].y, poly->dot_vn[0].z);
+		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[1].x, poly->dot_vn[1].y, poly->dot_vn[1].z);
+		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[2].x, poly->dot_vn[2].y, poly->dot_vn[2].z);
         printf("\n");
-		printf("\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
-		printf("\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
-		printf("\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
-		printf("\tX = %f | Y = %f\n", poly->cord[3].x, poly->cord[3].y);
-		printf("}\n");
+		printf("\t\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
+		printf("\t\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
+		printf("\t\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
+		printf("\t}\n");
+        poly = poly->next;
+    }
 }
 
 
 /*
-**----------------------------------------------------------------------------------------------------------
+**------------------------------------------------------POLY-------------------------------------------------------------
 */
 
 
@@ -239,6 +242,10 @@ void print_parse(t_poly *poly)
 		poly = poly->next;
 	}
 }
+
+/*
+**--------------------------------------------------END-----------------------------------------------------------------
+*/
 
 int	keyboard_test(int key, t_input *inputs)
 {

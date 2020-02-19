@@ -94,7 +94,6 @@ int		push_back(t_poly *new, t_poly **poly)
 
 int		creat_elem_l(char *line, int n_line, t_line **list)
 {
-	t_line	*tmp;
 	t_line	*new;
 
 	if (!(new = (t_line *)malloc(sizeof(t_line))))
@@ -107,11 +106,8 @@ int		creat_elem_l(char *line, int n_line, t_line **list)
 		*list = new;
 	else
 	{
-		tmp = *list;
-		while (tmp->next)
-		{
-			tmp = tmp->next;}
-		tmp->next = new;
+		new->next = *list;
+		*list = new;
 	}
 	return (1);
 }

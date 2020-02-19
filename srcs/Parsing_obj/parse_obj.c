@@ -52,12 +52,12 @@ t_line			*read_obj(t_line *list, t_object **obj, t_input *data)
 				return (NULL);
 			if (!(new->l_file = ft_strjoin("Object/", new->file)))
 				return NULL;
-			ft_pares_obj(new->l_file, data);
-			//if (!(new->poly = ft_pares_obj(new->l_file, data)))
-			//	return (NULL);
+			if (!(new->poly = ft_pares_obj(new->l_file, data, new)))
+				return (NULL);
 		}
 		list = list->next;
 	}
 	push_front_obj(new, obj);
+	printf("OBJ LOAD\n");
 	return (list);
 }

@@ -63,7 +63,7 @@ char		*sort_file(char *line)
 	}
 	if (dot < 4)
 		new->nbr_p = dot;
-	push_back(new, poly);
+	push_front_pol(new, poly);
 	return (list);
 }
 
@@ -94,6 +94,8 @@ int		parse_file(t_line *list, t_poly **poly, t_input *data)
 		}
 		tmp = tmp->next;
 	}
+	reverse_p(poly);
+	reverse_o(&(data->obj));
 	return (count);
 }
 

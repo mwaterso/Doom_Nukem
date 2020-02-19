@@ -1,6 +1,6 @@
 # Blender v2.81 (sub 16) OBJ File: 'box.blend'
 # www.blender.org
-mtllib assets/chest.mtl
+mtllib chest.mtl
 o Cube
 v 8.000000 8.000000 -8.000000
 v 8.000000 0.000000 -8.000000

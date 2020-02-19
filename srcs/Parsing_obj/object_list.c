@@ -27,11 +27,11 @@ void			push_front_obj(t_object *new, t_object **obj)
 void			push_front_pol(t_poly *new, t_poly **poly)
 {
 	if (!poly)
-		poly = new;
+		*poly = new;
 	else
 	{
-		new->next = poly;
-		poly = new;
+		new->next = *poly;
+		*poly = new;
 	}
 }
 

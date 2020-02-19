@@ -40,13 +40,13 @@ int      sort_tfdot(char *line, t_fdot *dot)
         return 0;
     if (ft_avlen(tab) != 3)
         return 0;
-    dot->x = ft_atof(tab[0]);
-    dot->y = ft_atof(tab[1]);
-    dot->z = ft_atof(tab[2]);
+        dot->x = ft_atof(tab[0]);
+        dot->y = ft_atof(tab[1]);
+        dot->z = ft_atof(tab[2]);
     free_tab(&tab);
-    printf("%f | %f | %f\n", dot->x, dot->y, dot->z);
     return (0);
 }
+
 int       sort_t2d(char *line, t_2d *dot)
 {
     int i;
@@ -59,9 +59,27 @@ int       sort_t2d(char *line, t_2d *dot)
         return 0;
     if (ft_avlen(tab) != 2)
         return 0;
-    dot->x = ft_atof(tab[0]);
-    dot->y = ft_atof(tab[1]);
+        dot->x = ft_atof(tab[0]);
+        dot->y = ft_atof(tab[1]);
     free_tab(&tab);
-    printf("%f | %f\n", dot->x, dot->y);
+    return (0);
+}
+
+int      sort_color(char *line, t_color *color)
+{
+    int i;
+    char **tab;
+
+    i = 0;
+    while (!ft_isdigit(line[i]))
+        i++;
+    if (!(tab = ft_strsplit(line + i, ' ')))
+        return 0;
+    if (ft_avlen(tab) != 3)
+        return 0;
+        color->r = ft_atof(tab[0]) * 255;
+        color->g = ft_atof(tab[1]) * 255;
+        color->b = ft_atof(tab[2]) * 255;
+    free_tab(&tab);
     return (0);
 }

@@ -44,7 +44,7 @@ int     mall_file(t_file_obj *file, t_line *list)
 	return 1;
 }
 
-int     parse_file_obj(t_line *list, t_poly **poly, t_input *data)
+int     parse_file_obj(t_line *list, t_poly **poly, t_input *data, t_object *new)
 {
 	t_file_obj  file;
 	t_index     index;
@@ -57,19 +57,23 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data)
 		if (ft_strnequ_word(list->line, "v ", 2))
 			sort_tfdot(list->line, &(file.v[index.i++]));
 		if (ft_strnequ_word(list->line, "vt ", 3))
-		   sort_t2d(list->line, &(file.vt[index.j++]));
+			sort_t2d(list->line, &(file.vt[index.j++]));
 		if (ft_strnequ_word(list->line, "vn ", 3))
-           sort_tfdot(list->line, &(file.vn[index.k++]));
+			sort_tfdot(list->line, &(file.vn[index.k++]));
 		if (ft_strnequ_word(list->line, "f ", 2))
 			sort_poly(list->line + 2, poly, file);
-		/*---------------TEXT .MLT----------------*/
+		if (ft_strnequ_word(list->line, "mtllib ", 7))
+			sort_mtl(data, new, list->line);
 		list = list->next;
    	}
+	(void)new;
+	reverse_p(poly);
+	//print_parse1(*poly);
    (void)data;
    return 1;
 }
 
-int     p_obj_loop(t_poly **poly, t_input *data, int fd)
+int     p_obj_loop(t_poly **poly, t_input *data, int fd, t_object *new)
 {
 	t_line *list;
 	int n_line;
@@ -86,13 +90,14 @@ int     p_obj_loop(t_poly **poly, t_input *data, int fd)
 		n_line++;
 		ft_strdel(&line);
 	}
+	reverse_l(&list);
 	ft_strdel(&line);
-	if (!(i = parse_file_obj(list, poly, data)))
+	if (!(i = parse_file_obj(list, poly, data, new)))
 		return (0);
 	return i;
 }
 
-t_poly *ft_pares_obj(char *file, t_input *data)
+t_poly *ft_pares_obj(char *file, t_input *data, t_object *new)
 {
 	int		fd;
 	int 	i;
@@ -104,8 +109,8 @@ t_poly *ft_pares_obj(char *file, t_input *data)
 	if ((fd = open(file, O_RDONLY)) < 1)
 		return (NULL);
 	error_file(fd, file);
-	if (!(i = p_obj_loop(&poly, data, fd)))
+	if (!(i = p_obj_loop(&poly, data, fd, new)))
 		return (NULL);
 	close(fd);
-	return NULL;
+	return (poly);
 }
