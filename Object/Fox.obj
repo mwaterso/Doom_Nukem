@@ -1,6 +1,6 @@
 # Blender v2.79 (sub 0) OBJ File: 'Fox_scene.blend.blend'
 # www.blender.org
-mtllib Fox_scene.blend.mtl
+mtllib Fox_scene_blend.mtl
 o Plane.001
 v -31.448874 7.415131 -21.897472
 v -28.638123 10.102697 -17.649254

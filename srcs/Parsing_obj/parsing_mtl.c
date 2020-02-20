@@ -22,31 +22,41 @@ void    sort_mtllib(char *line, t_mtl *mlt, t_input *data)
             break ;
     if (!(mlt->tex.tab = (int *)mlx_xpm_file_to_image(data->mlx_ad, line + (i + 1),
 		&mlt->tex.width, &mlt->tex.height)))
-		return (0);
+            return ;
 }
 
-int     parse_mtl(t_poly **poly, t_input *data, t_line *list)
+t_line     *parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 {
-    while (list)
+    t_lst_mtl *new;
+
+    if (!(new = (t_lst_mtl *)malloc(sizeof(t_lst_mtl))))
+        return 0;
+    new->next = NULL;
+    while (list && ft_strcmp(list->line, "\n") > 0)
     {
         if (ft_strnequ_word(list->line, "Ka ", 3))
-            sort_color(list->line, &((*poly)->mtl.ka));
+            sort_color(list->line, &(new->mtl.ka));
         if (ft_strnequ_word(list->line, "Kd ", 3))
-            sort_color(list->line, &((*poly)->mtl.kd));
+            sort_color(list->line, &(new->mtl.kd));
         if (ft_strnequ_word(list->line, "mtllib ", 7))
-            sort_mtllib(list->line, &((*poly)->mtl), data);
-        
+            sort_mtllib(list->line, &(new->mtl), data);
+        if (ft_strnequ_word(list->line, "newmtl ", 7))
+            if (!(new->name = sort_material(list->line)))
+                return NULL;
         list = list->next;
     }
+    push_front_mtl(new, &(file->lst));
+    return list;
 }
 
-int     p_mtl_loop(t_input *data, int fd, t_poly *poly)
+int     p_mtl_loop(t_input *data, int fd, t_file_obj file)
 {
 	t_line *list;
 	int n_line;
 	char *line;
 	int i;
 
+    (void)data, (void)file;
 	i = 0;
 	n_line = 0;
 	list = NULL;
@@ -59,17 +69,17 @@ int     p_mtl_loop(t_input *data, int fd, t_poly *poly)
 	}
 	ft_strdel(&line);
     reverse_l(&list);
-    
     while (list)
     {
-        printf("%s\n", list->line);
+        if (ft_strnequ_word(list->line, "newmtl ", 7))
+            if (!(list = parse_mtl(data, list, &file)))
+                break;
         list = list->next;
     }
-    (void)poly, (void)data;
 	return i;
 }
 
-void    sort_mtl(t_input *data, t_poly **poly, char *file)
+void    sort_mtl(t_input *data, char *file, t_file_obj f)
 {
     int		fd;
     int     i;
@@ -85,8 +95,7 @@ void    sort_mtl(t_input *data, t_poly **poly, char *file)
 	if ((fd = open(l_file, O_RDONLY)) < 1)
 		return ;
     error_file(fd, file);
-    if (!(p_mtl_loop(data, fd, poly)))
+    if (!(p_mtl_loop(data, fd, f)))
         return ;
-
     ft_strdel(&l_file);
 }

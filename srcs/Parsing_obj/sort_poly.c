@@ -38,7 +38,21 @@ t_poly         *init_pol(t_file_obj file, t_poly *new, char **tab)
     return new;
 }
 
-int         sort_poly(char *line, t_poly **poly, t_file_obj file)
+int     sort_mtl_lst(t_lst_mtl *list, char *name, t_mtl *mtl)
+{
+    while (list)
+    {
+        if (ft_strcmp(name, list->name) > 0)
+        {
+            *mtl = list->mtl;
+            return (1);
+        }
+        list = list->next;
+    }
+    return (0);
+}
+
+int         sort_poly(char *line, t_poly **poly, t_file_obj file, char *mtl)
 {
     char **tab;
     t_poly *new;
@@ -46,6 +60,13 @@ int         sort_poly(char *line, t_poly **poly, t_file_obj file)
     new = NULL;
     if (!(new = (t_poly *)malloc(sizeof(t_poly))))
         return 0;
+    if (mtl)
+        if (!sort_mtl_lst(file.lst, mtl, &new->mtl))
+        {
+            new->mtl.ka = (t_color){1, 1, 1};
+            new->mtl.kd = (t_color){1, 1, 1};
+        }
+    new->next = NULL;
     if (!(tab = ft_strsplit(line, ' ')))
         return 0;
     if (!(new = init_pol(file, new, tab)))

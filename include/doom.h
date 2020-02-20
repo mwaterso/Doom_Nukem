@@ -171,6 +171,13 @@ typedef	struct		s_mtl
 	t_color			kd;
 }					t_mtl;
 
+typedef	struct		s_lst_mtl
+{
+	char				*name;
+	t_mtl				mtl;
+	struct s_lst_mtl	*next;
+}					t_lst_mtl;
+
 typedef struct s_poly
 {
 	t_2dbox			box;
@@ -235,13 +242,11 @@ typedef struct 		s_lstex
 
 typedef struct		s_file_obj
 {
+	t_lst_mtl	*lst;
 	t_fdot      *v;
     t_2d        *vt;
     t_fdot      *vn;
 }					t_file_obj;
-
-
-
 
 
 /*typedef struct		s_octree
@@ -291,7 +296,7 @@ void 			obj_error(t_line *list, int *error);
 t_poly			*ft_pares_obj(char *file, t_input *data, t_object *new);
 int      		sort_tfdot(char *line, t_fdot *dot);
 int      		sort_t2d(char *line, t_2d *dot);
-int         	sort_poly(char *line, t_poly **poly, t_file_obj file);
+int         	sort_poly(char *line, t_poly **poly, t_file_obj file, char *mtl);
 void			free_tab(char ***tab);
 /*------------------------------*/
 void 			print_parse1(t_poly *poly);
@@ -300,9 +305,11 @@ void			push_front_pol(t_poly *new, t_poly **poly);
 void             reverse_p(t_poly **poly);
 void             reverse_o(t_object **obj);
 void             reverse_l(t_line **list);
-void    sort_mtl(t_input *data, t_poly **poly, char *file);
+void    sort_mtl(t_input *data, char *file, t_file_obj f);
 int		creat_elem_l1(char *line, int n_line, t_line **list);
 int      sort_color(char *line, t_color *color);
+char    *sort_material(char *line);
+void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl);
 
 #endif
 

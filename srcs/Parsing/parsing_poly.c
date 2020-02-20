@@ -88,10 +88,8 @@ int		parse_file(t_line *list, t_poly **poly, t_input *data)
 				return (0); 
 		}
 		else if (ft_strnequ_word(tmp->line, "Object", 6))
-		{
 			if (!(tmp = read_obj(tmp, &(data->obj), data)))
 				return (0);
-		}
 		tmp = tmp->next;
 	}
 	reverse_p(poly);

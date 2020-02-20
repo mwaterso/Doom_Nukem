@@ -48,12 +48,19 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data, t_object *new
 {
 	t_file_obj  file;
 	t_index     index;
+	char		*tmp;
 
 	index = (t_index){.i = 0, .j = 0, .k = 0};
 	if (!(mall_file(&file, list)))
 		return 0;
    	while (list)
    	{
+		tmp = NULL;
+		if (ft_strnequ_word(list->line, "usemtl ", 7))
+		{
+			ft_putendl(list->line + 7);
+			tmp = list->line + 7;
+		}
 		if (ft_strnequ_word(list->line, "v ", 2))
 			sort_tfdot(list->line, &(file.v[index.i++]));
 		if (ft_strnequ_word(list->line, "vt ", 3))
@@ -61,9 +68,9 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data, t_object *new
 		if (ft_strnequ_word(list->line, "vn ", 3))
 			sort_tfdot(list->line, &(file.vn[index.k++]));
 		if (ft_strnequ_word(list->line, "f ", 2))
-			sort_poly(list->line + 2, poly, file);
+			sort_poly(list->line + 2, poly, file, tmp);
 		if (ft_strnequ_word(list->line, "mtllib ", 7))
-			sort_mtl(data, new, list->line);
+			sort_mtl(data, list->line, file);
 		list = list->next;
    	}
 	(void)new;

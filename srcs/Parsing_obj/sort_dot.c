@@ -77,9 +77,9 @@ int      sort_color(char *line, t_color *color)
         return 0;
     if (ft_avlen(tab) != 3)
         return 0;
-        color->r = ft_atof(tab[0]) * 255;
-        color->g = ft_atof(tab[1]) * 255;
-        color->b = ft_atof(tab[2]) * 255;
+    color->r = ft_atof(tab[0]) * 255;
+    color->g = ft_atof(tab[1]) * 255;
+    color->b = ft_atof(tab[2]) * 255;
     free_tab(&tab);
     return (0);
 }
