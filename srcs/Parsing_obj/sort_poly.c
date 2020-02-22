@@ -42,7 +42,7 @@ int     sort_mtl_lst(t_lst_mtl *list, char *name, t_mtl *mtl)
 {
     while (list)
     {
-        if (ft_strcmp(name, list->name) > 0)
+        if (ft_strcmp(name, list->name) == 0)
         {
             *mtl = list->mtl;
             return (1);
@@ -60,12 +60,13 @@ int         sort_poly(char *line, t_poly **poly, t_file_obj file, char *mtl)
     new = NULL;
     if (!(new = (t_poly *)malloc(sizeof(t_poly))))
         return 0;
-    if (mtl)
+    if (mtl){
         if (!sort_mtl_lst(file.lst, mtl, &new->mtl))
         {
-            new->mtl.ka = (t_color){1, 1, 1};
-            new->mtl.kd = (t_color){1, 1, 1};
+            new->mtl.ka = (t_color){2, 2, 2};
+            new->mtl.kd = (t_color){2, 2, 2};
         }
+}
     new->next = NULL;
     if (!(tab = ft_strsplit(line, ' ')))
         return 0;

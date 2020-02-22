@@ -133,8 +133,8 @@ t_ray *tab_ray(int nbrpix, t_input *data)
 
 int		init_var(t_input *inputs)
 {
-	inputs->win_w = 1000;
-	inputs->win_h = 1000;
+	inputs->win_w = 1980;
+	inputs->win_h = 1080;
 	//fill_texture_tab(inputs);
 	inputs->mlx_ad = mlx_init();
 	inputs->win_ad = mlx_new_window(inputs->mlx_ad, inputs->win_w,
@@ -167,6 +167,7 @@ int		init_var(t_input *inputs)
 
 /*
 **-------------------------------------------------PRINT OBJ PARSE---------------------------------------------------------
+**----------------------------------------------------------------------------------------------------------------------
 */
 
 
@@ -208,6 +209,8 @@ void print_parse1(t_poly *poly)
 		printf("\t\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
 		printf("\t\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
 		printf("\t\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
+        printf("\t\tr = %hhu g = %hhu b = %hhu\n", poly->mtl.ka.r, poly->mtl.ka.g, poly->mtl.ka.b);
+        printf("\t\tr = %hhu g = %hhu b = %hhu\n", poly->mtl.kd.r, poly->mtl.kd.g, poly->mtl.kd.b);
 		printf("\t}\n");
         poly = poly->next;
     }
@@ -244,7 +247,7 @@ void print_parse(t_poly *poly)
 }
 
 /*
-**--------------------------------------------------END-----------------------------------------------------------------
+**------------------------------------------------------TEX-------------------------------------------------------------
 */
 
 int	keyboard_test(int key, t_input *inputs)
@@ -259,8 +262,30 @@ int	keyboard_test(int key, t_input *inputs)
         else
              return 0;
     }
+    if (key == 83)
+    {
+        if (!inputs->obj->poly->mtl.tex.tab)
+        {
+            dprintf(1, "nop\n");
+            return 0;
+        }
+        mlx_clear_window(inputs->im.ad, inputs->win_ad);
+        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->obj->poly->mtl.tex.tab, 0, 0);
+        dprintf(1, "%s\n", "bla");
+        if (inputs->obj->poly->next)
+            inputs->obj->poly = inputs->obj->poly->next;
+        else if (inputs->obj->next)
+            inputs->obj = inputs->obj->next;
+        else
+             return 0;
+    }
     return 0;
 }
+
+/*
+**--------------------------------------------------END-----------------------------------------------------------------
+**----------------------------------------------------------------------------------------------------------------------
+*/
 
 int main(int c, char **v)
 {

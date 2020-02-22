@@ -305,7 +305,7 @@ void			push_front_pol(t_poly *new, t_poly **poly);
 void             reverse_p(t_poly **poly);
 void             reverse_o(t_object **obj);
 void             reverse_l(t_line **list);
-void    sort_mtl(t_input *data, char *file, t_file_obj f);
+void    sort_mtl(t_input *data, char *file, t_file_obj *f);
 int		creat_elem_l1(char *line, int n_line, t_line **list);
 int      sort_color(char *line, t_color *color);
 char    *sort_material(char *line);

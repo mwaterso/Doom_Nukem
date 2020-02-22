@@ -8,13 +8,13 @@ Object
 {
     pos = x:11, y:12, z:13
     rot = x:14, y:15, z:16
-    file = Fox.obj
+    file = test.obj
 }
-//Object
+Object
 {
     pos = x:11, y:12, z:13
     rot = x:14, y:15, z:19
-    file = Winter.obj
+    file = creeper.obj
 }
 
 Polygon                                 //Mur entier 1
