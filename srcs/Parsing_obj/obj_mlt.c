@@ -12,6 +12,53 @@
 
 #include "doom.h"
 
+
+void            free_fdot(t_fdot **dot)
+{
+    int i;
+    int len;
+
+    i = 0;
+    len = sizeof(*dot) / sizeof(t_fdot);
+    while (i < len)
+        free(dot[i++]);
+    dot = NULL;
+}
+
+void            free_2d(t_2d **dot)
+{
+    int i;
+    int len;
+
+    i = 0;
+    len = sizeof(*dot) / sizeof(t_fdot);
+    while (i < len)
+        free(dot[i++]);
+    dot = NULL;
+}
+
+void            free_file(t_file_obj *file)
+{
+    t_lst_mtl		*head;
+	t_lst_mtl		*next;
+
+    head = file->lst;
+    while (head != NULL)
+	{
+		next = head->next;
+		if (head->name)
+			ft_strdel(&head->name);
+		ft_memdel((void **)&head);
+		head = next;
+	}
+	file->lst = NULL;
+	head = NULL;
+	next = NULL;
+    free_fdot(&(file->v));
+	free_2d(&(file->vt));
+	free_fdot(&(file->vn));
+}
+
 void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl)
 {
 	if (!mtl)

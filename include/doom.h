@@ -152,9 +152,13 @@ typedef struct		s_thread
 
 typedef struct		s_tex
 {
-	int		*tab;
-	int		width;
-	int		height;
+	void			*tab;
+	unsigned int	*img;
+	int				width;
+	int				height;
+	int				bpp;
+	int				s_l;
+	int				endian;
 }					t_tex;
 
 typedef struct		s_color
@@ -310,6 +314,7 @@ int		creat_elem_l1(char *line, int n_line, t_line **list);
 int      sort_color(char *line, t_color *color);
 char    *sort_material(char *line);
 void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl);
+void            free_file(t_file_obj *file);
 
 #endif
 

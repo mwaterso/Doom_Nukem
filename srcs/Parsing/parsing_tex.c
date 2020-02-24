@@ -57,8 +57,11 @@ int init_lsttex(t_poly *poly, t_lstex **lst, t_input *data)
 		return 0;
 	if (!(buff = ft_strjoin("texture/", new->name)))
 		return 0;
-	if (!(new->tex.tab = (int *)mlx_xpm_file_to_image(data->mlx_ad, buff,
+	if (!(new->tex.tab = mlx_xpm_file_to_image(data->mlx_ad, buff,
 		&new->tex.width, &new->tex.height)))
+		return (0);
+	if (!(new->tex.img = (unsigned int *)mlx_get_data_addr(new->tex.tab,
+		&(new->tex.bpp), &(new->tex.s_l), &(new->tex.endian))))
 		return (0);
 	push_back_tex(new, lst);
 	free(buff);

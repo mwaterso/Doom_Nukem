@@ -71,6 +71,7 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data, t_object *new
 		list = list->next;
    	}
 	reverse_p(poly);
+	free_file(&file);
 	(void)new;
 	//print_parse1(*poly);
    return 1;
@@ -93,10 +94,12 @@ int     p_obj_loop(t_poly **poly, t_input *data, int fd, t_object *new)
 		n_line++;
 		ft_strdel(&line);
 	}
-	reverse_l(&list);
 	ft_strdel(&line);
+	reverse_l(&list);
+	(void)new, (void)data, (void)poly;
 	if (!(i = parse_file_obj(list, poly, data, new)))
 		return (0);
+	free_line(&list);
 	return i;
 }
 
@@ -113,7 +116,10 @@ t_poly *ft_pares_obj(char *file, t_input *data, t_object *new)
 		return (NULL);
 	error_file(fd, file);
 	if (!(i = p_obj_loop(&poly, data, fd, new)))
+	{
+		close(fd);
 		return (NULL);
+	}
 	close(fd);
 	return (poly);
 }

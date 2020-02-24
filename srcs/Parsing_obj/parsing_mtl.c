@@ -23,10 +23,12 @@ void    sort_mtllib(char *line, t_mtl *mlt, t_input *data)
             break ;
     if (!(file = ft_strjoin("Object/", line + (i + 1))))
         return ;
-    if (!(mlt->tex.tab = (int *)mlx_xpm_file_to_image(data->mlx_ad, file,
+    if (!(mlt->tex.tab = mlx_xpm_file_to_image(data->mlx_ad, file,
 		&mlt->tex.width, &mlt->tex.height)))
             return ;
-    printf("vjnvjnbjngjbnjgnbjgbg\n\nrr");
+    if (!(mlt->tex.img = (unsigned int *)mlx_get_data_addr(mlt->tex.tab,
+		&(mlt->tex.bpp), &(mlt->tex.s_l), &(mlt->tex.endian))))
+        return ;
 }
 
 t_line     *parse_mtl(t_input *data, t_line *list, t_file_obj *file)

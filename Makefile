@@ -96,13 +96,13 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c include/doom.h libft/libft.a
 	@printf "$(ERASE)$(BLUE)> Compilation :$(END) $<"
 clean:
 	@make -C libft clean
-	@make -C $(MLX) clean
+	#@make -C $(MLX) clean
 	@rm -rf $(OBJ_PATH)
 	@printf "$(BLUE)> Deleted : $(RED)$(OBJ_PATH)$(END)\n"
 
 fclean: clean
 	@make -C libft fclean
-	@make -C $(MLX) fclean
+	#@make -C $(MLX) fclean
 	@rm -rf $(NAME)
 	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
 
