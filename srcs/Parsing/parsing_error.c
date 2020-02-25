@@ -47,10 +47,10 @@ static void         error_dot(t_line *list, int *error)
 	int tmp;
 
 	len = ft_strlen(list->line);
-	i = -1;
+	i = 0;
 	count = 0;
 	tmp = 0;
-	while (list->line[++i] && i < len)
+	while (list->line[i++] && i < len)
 	{
 		if (list->line[i] && list->line[i] == ':')
 		{

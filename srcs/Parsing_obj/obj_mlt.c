@@ -13,37 +13,39 @@
 #include "doom.h"
 
 
-void            free_fdot(t_fdot **dot)
+void            free_fdot(t_fdot **dot, int size)
 {
     int i;
-    int len;
 
     i = 0;
-    len = sizeof(*dot) / sizeof(t_fdot);
-    while (i < len)
+    dprintf(1, "SIZE1 =%d\n", size);
+    while (i <= size)
+    {
+        dprintf(1, "\t\tdot = x:%f | y:%f | z:%f\n", dot[i]->x, dot[i]->y, dot[i]->z);
+        free(dot[i++]);
+    }
+    dprintf(1, "OUT\n");
+    dot = NULL;
+}
+
+void            free_2d(t_2d **dot, int size)
+{
+    int i;
+
+    i = 0;
+    dprintf(1, "SIZE =%d\n", size);
+    while (i < size)
         free(dot[i++]);
     dot = NULL;
 }
 
-void            free_2d(t_2d **dot)
+void            free_file(t_lst_mtl **lst)
 {
-    int i;
-    int len;
-
-    i = 0;
-    len = sizeof(*dot) / sizeof(t_fdot);
-    while (i < len)
-        free(dot[i++]);
-    dot = NULL;
-}
-
-void            free_file(t_file_obj *file)
-{
-    t_lst_mtl		*head;
+	t_lst_mtl		*head;
 	t_lst_mtl		*next;
 
-    head = file->lst;
-    while (head != NULL)
+	head = *lst;
+	while (head != NULL)
 	{
 		next = head->next;
 		if (head->name)
@@ -51,12 +53,12 @@ void            free_file(t_file_obj *file)
 		ft_memdel((void **)&head);
 		head = next;
 	}
-	file->lst = NULL;
+	*lst = NULL;
 	head = NULL;
 	next = NULL;
-    free_fdot(&(file->v));
-	free_2d(&(file->vt));
-	free_fdot(&(file->vn));
+    // ft_memdel((void **)&file->v);
+    // ft_memdel((void **)&file->vt);
+    // ft_memdel((void **)&file->vn);
 }
 
 void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl)

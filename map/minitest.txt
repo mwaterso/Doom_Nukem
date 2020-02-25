@@ -4,20 +4,20 @@ Object
     rot = x:4, y:5, z:6
     file = chest.obj
 }
-Object
+//Object
 {
     pos = x:11, y:12, z:13
     rot = x:14, y:15, z:16
     file = test.obj
 }
-Object
+//Object
 {
     pos = x:11, y:12, z:13
     rot = x:14, y:15, z:19
     file = creeper.obj
 }
 
-Polygon                                 //Mur entier 1
+Polygon
 {
     dot = x:100, y:200, z:300, X:400, Y:500
     dot = x:600, y:750, z:830, X:900, Y:200

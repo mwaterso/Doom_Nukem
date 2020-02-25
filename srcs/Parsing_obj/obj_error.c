@@ -46,10 +46,10 @@ void        error_dot_obj(t_line *list, int *error)
 	int tmp;
 
 	len = ft_strlen(list->line);
-	i = -1;
+	i = 0;
 	count = 0;
 	tmp = 0;
-	while (list->line[++i] && i < len)
+	while (list->line[i++] && i < len)
 	{
 		if (list->line[i] && list->line[i] == ':')
 		{
@@ -57,12 +57,14 @@ void        error_dot_obj(t_line *list, int *error)
 			list->line[i - 1] != 'z')
 				poly_error(list, NUM, i, error);
 			tmp = i;
-			while (list->line[++i] && list->line[i] != ',')
+			while (list->line[++i] && i < len && list->line[i] != ',')
+			{
 				if (list->line[i] != '-' && list->line[i] != '.' && !ft_isdigit(list->line[i]))
 				{
 				   poly_error(list, NUM, i, error);
 				   break ;
 				}
+			}
 			if (tmp + 1 == i)
 				poly_error(list, NUM, i, error);
 			count++;

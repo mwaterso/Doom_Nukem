@@ -29,6 +29,7 @@ void    sort_mtllib(char *line, t_mtl *mlt, t_input *data)
     if (!(mlt->tex.img = (unsigned int *)mlx_get_data_addr(mlt->tex.tab,
 		&(mlt->tex.bpp), &(mlt->tex.s_l), &(mlt->tex.endian))))
         return ;
+    ft_strdel(&file);
 }
 
 t_line     *parse_mtl(t_input *data, t_line *list, t_file_obj *file)
@@ -37,13 +38,12 @@ t_line     *parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 
     if (!(new = (t_lst_mtl *)malloc(sizeof(t_lst_mtl))))
         return 0;
-        (void)data, (void)file;
     new->next = NULL;
     while (list && ft_strcmp(list->line, "\n") > 0)
     {
         if (ft_strnequ_word(list->line, "Ka ", 3))
             sort_color(list->line, &(new->mtl.ka));
-        if (ft_strnequ_word(list->line, "Kd ", 3))
+        if (ft_strnequ_word(list->line, "Kd ", 3) && ft_isdigit((*list->line + 3)))
             sort_color(list->line, &(new->mtl.kd));
         if (ft_strnequ_word(list->line, "map_Kd ", 7))
             sort_mtllib(list->line, &(new->mtl), data);
@@ -58,11 +58,11 @@ t_line     *parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 
 int     p_mtl_loop(t_input *data, int fd, t_file_obj *file)
 {
-	t_line *list;
-	int n_line;
-	char *line;
+	t_line  *list;
+    t_line  *tmp;
+	int     n_line;
+	char    *line;
 
-    (void)data, (void)file;
 	n_line = 0;
 	list = NULL;
 	while (get_next_line(fd, &line) > 0)
@@ -74,13 +74,15 @@ int     p_mtl_loop(t_input *data, int fd, t_file_obj *file)
 	}
 	ft_strdel(&line);
     reverse_l(&list);
-    while (list)
+    tmp = list;
+    while (tmp)
     {
-        if (ft_strnequ_word(list->line, "newmtl ", 7))
-           if (!(list = parse_mtl(data, list, file)))
+        if (ft_strnequ_word(tmp->line, "newmtl ", 7))
+           if (!(tmp = parse_mtl(data, tmp, file)))
                break;
-        list = list->next;
+        tmp = tmp->next;
     }
+    free_line(&list);
 	return 1;
 }
 

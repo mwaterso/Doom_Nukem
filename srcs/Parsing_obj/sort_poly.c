@@ -30,11 +30,12 @@ t_poly         *init_pol(t_file_obj file, t_poly *new, char **tab)
             new->dot[index.j] = file.v[ft_atoi(split[0]) - 1];
         if (split[1] && ft_atoi(split[1]) - 1 >= 0)
             new->cord[index.j] = file.vt[ft_atoi(split[1]) - 1];
-        if (split[2] && ft_atoi(split[2]) - 1 >= 0)
-            new->dot_vn[index.j] = file.vn[ft_atoi(split[2]) - 1];
+        if (index.i == 1 && split[2] && ft_atoi(split[2]) - 1 >= 0)
+            new->normale = file.vn[ft_atoi(split[2]) - 1];
+        ft_2dstrdel(&split);
         index.j++;
     }
-    //free_tab(&tab);
+    ft_2dstrdel(&split);
     return new;
 }
 

@@ -32,24 +32,24 @@ t_index    obj_size(t_line *list)
 
 int     mall_file(t_file_obj *file, t_line *list)
 {
-	t_index i;
-
-	i = obj_size(list);
-	if (!(file->v = (t_fdot *)malloc(sizeof(t_fdot) * i.i + 1)))
+	file->size = obj_size(list);
+	dprintf(1, "i  %d  j  %d  k  %d\n", file->size.i, file->size.j, file->size.k);
+	if (!(file->v = (t_fdot *)malloc(sizeof(t_fdot) * file->size.i)))
 		return 0;
-	if (!(file->vt = (t_2d *)malloc(sizeof(t_2d) * i.j + 1)))
+	if (!(file->vt = (t_2d *)malloc(sizeof(t_2d) * file->size.j)))
 		return 0;
-	if (!(file->vn = (t_fdot *)malloc(sizeof(t_fdot) * i.k + 1)))
+	if (!(file->vn = (t_fdot *)malloc(sizeof(t_fdot) * file->size.k)))
 		return 0;
 	return 1;
 }
 
-int     parse_file_obj(t_line *list, t_poly **poly, t_input *data, t_object *new)
+int     parse_file_obj(t_line *list, t_poly **poly, t_input *data)
 {
 	t_file_obj  file;
 	t_index     index;
-	char		*tmp;
+	char		*tmp = NULL;
 
+	(void)data, (void)poly, (void)data;
 	index = (t_index){.i = 0, .j = 0, .k = 0};
 	file.lst = NULL;
 	if (!(mall_file(&file, list)))
@@ -71,13 +71,13 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data, t_object *new
 		list = list->next;
    	}
 	reverse_p(poly);
-	free_file(&file);
-	(void)new;
-	//print_parse1(*poly);
+	// ft_memdel((vo/;
+	free_file(&(file.lst));
+	// print_parse1(*poly);
    return 1;
 }
 
-int     p_obj_loop(t_poly **poly, t_input *data, int fd, t_object *new)
+int     p_obj_loop(t_poly **poly, t_input *data, int fd)
 {
 	t_line *list;
 	int n_line;
@@ -96,14 +96,14 @@ int     p_obj_loop(t_poly **poly, t_input *data, int fd, t_object *new)
 	}
 	ft_strdel(&line);
 	reverse_l(&list);
-	(void)new, (void)data, (void)poly;
-	if (!(i = parse_file_obj(list, poly, data, new)))
+	(void)data, (void)poly;
+	if (!(i = parse_file_obj(list, poly, data)))
 		return (0);
 	free_line(&list);
 	return i;
 }
 
-t_poly *ft_pares_obj(char *file, t_input *data, t_object *new)
+t_poly *ft_pares_obj(char *file, t_input *data)
 {
 	int		fd;
 	int 	i;
@@ -115,7 +115,7 @@ t_poly *ft_pares_obj(char *file, t_input *data, t_object *new)
 	if ((fd = open(file, O_RDONLY)) < 1)
 		return (NULL);
 	error_file(fd, file);
-	if (!(i = p_obj_loop(&poly, data, fd, new)))
+	if (!(i = p_obj_loop(&poly, data, fd)))
 	{
 		close(fd);
 		return (NULL);

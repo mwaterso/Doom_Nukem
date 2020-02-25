@@ -52,7 +52,7 @@ t_line			*read_obj(t_line *list, t_object **obj, t_input *data)
 				return (NULL);
 			if (!(new->l_file = ft_strjoin("Object/", new->file)))
 				return NULL;
-			if (!(new->poly = ft_pares_obj(new->l_file, data, new)))
+			if (!(new->poly = ft_pares_obj(new->l_file, data)))
 				return (NULL);
 		}
 		list = list->next;

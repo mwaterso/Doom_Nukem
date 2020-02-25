@@ -246,10 +246,11 @@ typedef struct 		s_lstex
 
 typedef struct		s_file_obj
 {
-	t_lst_mtl	*lst;
-	t_fdot      *v;
-    t_2d        *vt;
-    t_fdot      *vn;
+	t_lst_mtl		*lst;
+	t_fdot      	*v;
+    t_2d        	*vt;
+    t_fdot      	*vn;
+	t_index			size;
 }					t_file_obj;
 
 
@@ -297,7 +298,7 @@ void			push_front_obj(t_object *new, t_object **obj);
 void             reverse(t_object **obj);
 void             poly_rev(t_poly **poly) ;
 void 			obj_error(t_line *list, int *error);
-t_poly			*ft_pares_obj(char *file, t_input *data, t_object *new);
+t_poly			*ft_pares_obj(char *file, t_input *data);
 int      		sort_tfdot(char *line, t_fdot *dot);
 int      		sort_t2d(char *line, t_2d *dot);
 int         	sort_poly(char *line, t_poly **poly, t_file_obj file, char *mtl);
@@ -314,7 +315,7 @@ int		creat_elem_l1(char *line, int n_line, t_line **list);
 int      sort_color(char *line, t_color *color);
 char    *sort_material(char *line);
 void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl);
-void            free_file(t_file_obj *file);
+void            free_file(t_lst_mtl **lst);
 
 #endif
 

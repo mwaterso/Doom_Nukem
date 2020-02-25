@@ -202,9 +202,7 @@ void print_parse1(t_poly *poly)
 		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
 		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
 		printf("\n");
-        printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[0].x, poly->dot_vn[0].y, poly->dot_vn[0].z);
-		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[1].x, poly->dot_vn[1].y, poly->dot_vn[1].z);
-		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot_vn[2].x, poly->dot_vn[2].y, poly->dot_vn[2].z);
+        printf("\t\tnormal = x:%f | y:%f | z:%f\n", poly->normale.x, poly->normale.y, poly->normale.z);
         printf("\n");
 		printf("\t\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
 		printf("\t\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
@@ -299,14 +297,14 @@ int main(int c, char **v)
 
     // printf("init vars\n");
     init_var(&data);
-    //data.map = parsing_poly(v[1], &data);
-    if(!(data.map = parsing_poly(v[1], &data)))
-    {
-        printf("BLALALALALA\n");
-    	return(0);
-    }
-   //print_parse(data.map);
-   //print_parse_obj(data.obj);
+    data.map = parsing_poly(v[1], &data);
+//     if(!(data.map = parsing_poly(v[1], &data)))
+//     {
+//         printf("BLALALALALA\n");
+//     	return(0);
+//     }
+//    print_parse(data.map);
+//    print_parse_obj(data.obj);
 
 // mlx_put_image_to_window(data.im.ad, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
     mlx_hook(data.win_ad, 2, 0, keyboard_test, &data);
