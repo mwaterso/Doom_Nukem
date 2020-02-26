@@ -58,6 +58,5 @@ t_line			*read_obj(t_line *list, t_object **obj, t_input *data)
 		list = list->next;
 	}
 	push_front_obj(new, obj);
-	//printf("OBJ LOAD\n");
 	return (list);
 }

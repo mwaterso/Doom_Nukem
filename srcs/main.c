@@ -289,6 +289,7 @@ int main(int c, char **v)
 {
     (void)c;
     t_input data;
+    sleep(15);
     //t_poly  *poly;
 
     //poly = (t_poly *)malloc(sizeof(t_poly));

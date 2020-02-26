@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-static void         check_file(t_line *list, int *error)
+static void		check_file(t_line *list, int *error)
 {
 	int i;
 	int dot;
@@ -38,9 +38,9 @@ static void         check_file(t_line *list, int *error)
 		poly_error(list, TEX, ft_strlen(list->line), error);
 }
 
-void        error_dot_obj(t_line *list, int *error)
+void			error_dot_obj(t_line *list, int *error)
 {
-    int i;
+	int i;
 	int count;
 	int len;
 	int tmp;
@@ -74,27 +74,27 @@ void        error_dot_obj(t_line *list, int *error)
 		poly_error(list, CORD, ft_strlen(list->line), error);
 }
 
-int			obj_block(t_line *list, int *error, t_index *check)
+int				obj_block(t_line *list, int *error, t_index *check)
 {
 	while (list && list->line[0] != '}')
 	{
 
-        if (ft_strnequ_word(list->line, "rot", 3))
-	    {
-		    check->i++;
-		    error_dot_obj(list, error);
-	    }
-	    else if (ft_strnequ_word(list->line, "pos", 3))
-	    {
+		if (ft_strnequ_word(list->line, "rot", 3))
+		{
+			check->i++;
+			error_dot_obj(list, error);
+		}
+		else if (ft_strnequ_word(list->line, "pos", 3))
+		{
 		   check->j++;
 		   error_dot_obj(list, error);
-	    }
-	    else if (ft_strnequ_word(list->line, "file", 4))
-	    {
+		}
+		else if (ft_strnequ_word(list->line, "file", 4))
+		{
 		   check->k++;
 		   check_file(list, error);
-	    }
-	    else if (list->line[0] != '{' && list->line[0] != '}')
+		}
+		else if (list->line[0] != '{' && list->line[0] != '}')
 		   return (0);
 		list = list->next;
 	}
@@ -104,18 +104,18 @@ int			obj_block(t_line *list, int *error, t_index *check)
 }
 
 
-void obj_error(t_line *list, int *error)
+void			obj_error(t_line *list, int *error)
 {
-    t_index index;
+	t_index index;
 
-    index = (t_index){.i = 0, .j = 0, .k = 0};
-    if (list->line[0] == '{')
-    {
-        if (!(obj_block(list, error, &index)))
-            poly_error(list, BRACKET, 0, error);
-        else if (index.i != 1 && index.j != 1 && index.k != 1)
-            poly_error(list, BLOCK, ft_strlen(list->line), error);
-    }
-    else
-        poly_error(list, O_BRACKET, 0, error);
+	index = (t_index){.i = 0, .j = 0, .k = 0};
+	if (list->line[0] == '{')
+	{
+		if (!(obj_block(list, error, &index)))
+			poly_error(list, BRACKET, 0, error);
+		else if (index.i != 1 && index.j != 1 && index.k != 1)
+			poly_error(list, BLOCK, ft_strlen(list->line), error);
+	}
+	else
+		poly_error(list, O_BRACKET, 0, error);
 }

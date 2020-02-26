@@ -76,7 +76,7 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 #compil
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall -g -fsanitize=address #-O3 -march=native -flto -ffast-math
+CFLAGS = -Werror -Wextra -Wall -g #-fsanitize=address #-O3 -march=native -flto -ffast-math
 #-fsanitize=address
 
 all: lib $(MLX_LIB) $(NAME)

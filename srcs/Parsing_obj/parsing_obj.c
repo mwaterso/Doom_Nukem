@@ -12,9 +12,9 @@
 
 #include "doom.h"
 
-t_index    obj_size(t_line *list)
+t_index		obj_size(t_line *list)
 {
-	t_index index;
+	t_index		index;
 
 	index = (t_index){.i = 0, .j = 0, .k = 0};
 	while (list)
@@ -30,32 +30,30 @@ t_index    obj_size(t_line *list)
 	return (index);
 }
 
-int     mall_file(t_file_obj *file, t_line *list)
+int			mall_file(t_file_obj *file, t_line *list)
 {
 	file->size = obj_size(list);
-	dprintf(1, "i  %d  j  %d  k  %d\n", file->size.i, file->size.j, file->size.k);
 	if (!(file->v = (t_fdot *)malloc(sizeof(t_fdot) * file->size.i)))
 		return 0;
 	if (!(file->vt = (t_2d *)malloc(sizeof(t_2d) * file->size.j)))
 		return 0;
 	if (!(file->vn = (t_fdot *)malloc(sizeof(t_fdot) * file->size.k)))
 		return 0;
-	return 1;
+	return (1);
 }
 
-int     parse_file_obj(t_line *list, t_poly **poly, t_input *data)
+int			parse_file_obj(t_line *list, t_poly **poly, t_input *data)
 {
-	t_file_obj  file;
-	t_index     index;
+	t_file_obj	file;
+	t_index		index;
 	char		*tmp = NULL;
 
-	(void)data, (void)poly, (void)data;
 	index = (t_index){.i = 0, .j = 0, .k = 0};
 	file.lst = NULL;
 	if (!(mall_file(&file, list)))
 		return 0;
-   	while (list)
-   	{
+	while (list)
+	{
 		if (ft_strnequ_word(list->line, "mtllib ", 7))
 			sort_mtl(data, list->line, &file);
 		if (ft_strnequ_word(list->line, "usemtl ", 7))
@@ -69,20 +67,21 @@ int     parse_file_obj(t_line *list, t_poly **poly, t_input *data)
 		if (ft_strnequ_word(list->line, "f ", 2))
 			sort_poly(list->line + 2, poly, file, tmp);
 		list = list->next;
-   	}
+	}
 	reverse_p(poly);
-	// ft_memdel((vo/;
 	free_file(&(file.lst));
-	// print_parse1(*poly);
-   return 1;
+	ft_memdel((void **)&file.v);
+	ft_memdel((void **)&file.vt);
+	ft_memdel((void **)&file.vn);
+	return (1);
 }
 
-int     p_obj_loop(t_poly **poly, t_input *data, int fd)
+int			p_obj_loop(t_poly **poly, t_input *data, int fd)
 {
-	t_line *list;
-	int n_line;
-	char *line;
-	int i;
+	t_line		*list;
+	int			n_line;
+	char		*line;
+	int			i;
 
 	i = 0;
 	n_line = 0;
@@ -96,21 +95,18 @@ int     p_obj_loop(t_poly **poly, t_input *data, int fd)
 	}
 	ft_strdel(&line);
 	reverse_l(&list);
-	(void)data, (void)poly;
 	if (!(i = parse_file_obj(list, poly, data)))
 		return (0);
 	free_line(&list);
-	return i;
+	return (i);
 }
 
-t_poly *ft_pares_obj(char *file, t_input *data)
+t_poly		*ft_pares_obj(char *file, t_input *data)
 {
-	int		fd;
-	int 	i;
-	t_poly	*poly;
+	int			fd;
+	int 		i;
+	t_poly		*poly;
 
-	(void)data;
-	(void)i;
 	poly = NULL;
 	if ((fd = open(file, O_RDONLY)) < 1)
 		return (NULL);

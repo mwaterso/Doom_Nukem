@@ -1,35 +1,41 @@
 Object
 {
-    pos = x:1, y:2, z:3
-    rot = x:4, y:5, z:6
-    file = chest.obj
+	pos = x:1, y:2, z:3
+	rot = x:4, y:5, z:6
+	file = chest.obj
 }
 //Object
 {
-    pos = x:11, y:12, z:13
-    rot = x:14, y:15, z:16
-    file = test.obj
+	pos = x:11, y:12, z:13
+	rot = x:14, y:15, z:16
+	file = test.obj
 }
 //Object
 {
-    pos = x:11, y:12, z:13
-    rot = x:14, y:15, z:19
-    file = creeper.obj
+	pos = x:11, y:12, z:13
+	rot = x:14, y:15, z:19
+	file = creeper.obj
+}
+//Object
+{
+	pos = x:11, y:12, z:13
+	rot = x:14, y:15, z:19
+	file = fox.obj
 }
 
-Polygon
+Polygon                                 //Mur entier 1
 {
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430.0, y:950.0, z:400.0, X:500.0, Y:1.82
-    texture = Brique.xpm
+	dot = x:100, y:200, z:300, X:400, Y:500
+	dot = x:600, y:750, z:830, X:900, Y:200
+	dot = x:300, y:850, z:50, X:801, Y:300
+	dot = x:430.0, y:950.0, z:400.0, X:500.0, Y:1.82
+	texture = Brique.xpm
 }
 Polygon                                 //Mur entier 1
 {
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430.0, y:950.0, z:400.0, X:500.0, Y:1.82
-    texture = blou.xpm
+	dot = x:100, y:200, z:300, X:400, Y:500
+	dot = x:600, y:750, z:830, X:900, Y:200
+	dot = x:300, y:850, z:50, X:801, Y:300
+	dot = x:430.0, y:950.0, z:400.0, X:500.0, Y:1.82
+	texture = blou.xpm
 }

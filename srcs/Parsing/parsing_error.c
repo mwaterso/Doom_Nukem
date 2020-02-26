@@ -13,10 +13,10 @@
 
 #include "doom.h"
 
-static void         check_texture(t_line *list, int *error)
+static void		check_texture(t_line *list, int *error)
 {
-	int i;
-	int dot;
+	int			i;
+	int			dot;
 
 	i = ft_strnchr(list->line, '=');
 	dot = 0;
@@ -39,12 +39,12 @@ static void         check_texture(t_line *list, int *error)
 		poly_error(list, TEX, ft_strlen(list->line), error);
 }
 
-static void         error_dot(t_line *list, int *error)
+static void		error_dot(t_line *list, int *error)
 {
-	int i;
-	int count;
-	int len;
-	int tmp;
+	int			i;
+	int			count;
+	int			len;
+	int			tmp;
 
 	len = ft_strlen(list->line);
 	i = 0;
@@ -73,7 +73,7 @@ static void         error_dot(t_line *list, int *error)
 		poly_error(list, CORD, ft_strlen(list->line), error);
 }
 
-static int			pars_block(t_line *list, int *error, t_index *check)
+static int		pars_block(t_line *list, int *error, t_index *check)
 {
 	while (list && list->line[0] != '}')
 	{
@@ -97,9 +97,9 @@ static int			pars_block(t_line *list, int *error, t_index *check)
 	return (1);
 }
 
-static void         line_error(t_line *list, int *error)
+static void		line_error(t_line *list, int *error)
 {
-	t_index check;
+	t_index		check;
 
 	check = (t_index){.i = 0, .j = 0, .k = 0};
 	if (list->line[0] == '{')
@@ -113,10 +113,10 @@ static void         line_error(t_line *list, int *error)
 		poly_error(list, O_BRACKET, 0, error);
 }
 
-int                 check_error(t_line *list)
+int				check_error(t_line *list)
 {
-	t_line  *tmp;
-	int     error;
+	t_line		*tmp;
+	int			error;
 
 	tmp = list;
 	error = 0;

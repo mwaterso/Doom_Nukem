@@ -32,14 +32,14 @@ int		sort_dot(char *line, t_poly *new, t_index *index)
 		new->nbr_p--;
 	else if (*(ft_strrchr(line, 'z') + 2) == 'X')
 		new->nbr_p--;
-	return 1;
+	return (1);
 }
 
 int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd)
 {
-	int n_line;
-	char *line;
-	int i;
+	int		n_line;
+	char	*line;
+	int		i;
 
 	i = 0;
 	n_line = 0;
@@ -59,7 +59,8 @@ int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd)
 		write(1, "load tex fail\n", 14);
 		return 0;
 	}
-	return i;
+	free_line(&list);
+	return (i);
 }
 
 void			print_s(int i)

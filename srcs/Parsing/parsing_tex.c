@@ -13,25 +13,25 @@
 
 #include "doom.h"
 
-void    free_texlst(t_lstex **tex)
+void		free_texlst(t_lstex **tex)
 {
-    t_lstex *tmp;
-    t_lstex *next;
+	t_lstex		*tmp;
+	t_lstex		*next;
 
-    tmp = *tex;
-    while (tmp)
-    {
-        next = tmp->next;
+	tmp = *tex;
+	while (tmp)
+	{
+		next = tmp->next;
 		ft_strdel(&(tmp->name));
-        free(tmp);
+		free(tmp);
 		tmp = next;
-    }
+	}
 	*tex = NULL;
 }
 
-int		push_back_tex(t_lstex *new, t_lstex **lst)
+int			push_back_tex(t_lstex *new, t_lstex **lst)
 {
-	t_lstex *tmp;
+	t_lstex		*tmp;
 
 	if (*lst == NULL)
 		*lst = new;
@@ -45,10 +45,10 @@ int		push_back_tex(t_lstex *new, t_lstex **lst)
 	return (1);
 }
 
-int init_lsttex(t_poly *poly, t_lstex **lst, t_input *data)
+int			init_lsttex(t_poly *poly, t_lstex **lst, t_input *data)
 {
-	t_lstex *new;
-	char *buff;
+	t_lstex		*new;
+	char		*buff;
 
 	if (!(new = (t_lstex *)malloc(sizeof(t_lstex))))
 		return 0;
@@ -65,10 +65,10 @@ int init_lsttex(t_poly *poly, t_lstex **lst, t_input *data)
 		return (0);
 	push_back_tex(new, lst);
 	free(buff);
-	return 1;
+	return (1);
 }
 
-t_lstex             *tex_cmp(char *tex, t_lstex *lst)
+t_lstex		*tex_cmp(char *tex, t_lstex *lst)
 {
 	if (!lst)
 		return NULL;
@@ -81,10 +81,10 @@ t_lstex             *tex_cmp(char *tex, t_lstex *lst)
 	return NULL;
 }
 
-int				load_tex(t_poly **poly, t_input *data)
+int			load_tex(t_poly **poly, t_input *data)
 {
-	t_lstex	*lst;
-	t_poly	*tmp;
+	t_lstex		*lst;
+	t_poly		*tmp;
 
 	tmp = *poly;
 	lst = NULL;
@@ -99,5 +99,5 @@ int				load_tex(t_poly **poly, t_input *data)
 		tmp = tmp->next;
 	}
 	free_texlst(&lst);
-	return 1;
+	return (1);
 }

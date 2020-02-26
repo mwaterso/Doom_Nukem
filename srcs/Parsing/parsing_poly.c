@@ -15,9 +15,9 @@
 
 char		*sort_file(char *line)
 {
-	int i;
-	int tmp;
-	char *str;
+	int			i;
+	int			tmp;
+	char		*str;
 	i = 0;
 	while (line[i] && line[i] != '=')
 		i++;
@@ -69,13 +69,14 @@ char		*sort_file(char *line)
 
 int		parse_file(t_line *list, t_poly **poly, t_input *data)
 {
-	int count;
-	t_line *tmp;
+	int			count;
+	t_line		*tmp;
 
 	tmp = list;
 	count = 0;
 	if (!(check_error(list)))
 		return (0);
+	data->obj = NULL;
 	while (tmp)
 	{
 		if (ft_strnequ_word(tmp->line, "//Polygon", 9) ||
@@ -99,10 +100,10 @@ int		parse_file(t_line *list, t_poly **poly, t_input *data)
 
 t_poly			*parsing_poly(char *file, t_input *data)
 {
-	int		fd;
-	int 	i; 
-	t_line	*list;
-	t_poly	*poly;
+	int			fd;
+	int			i;
+	t_line		*list;
+	t_poly		*poly;
 
 	poly = NULL;
 	list = NULL;
@@ -117,7 +118,6 @@ t_poly			*parsing_poly(char *file, t_input *data)
 		return NULL;
 	}
 	print_s(i);
-	free_line(&list);
 	close(fd);
 	return (poly);
 }
