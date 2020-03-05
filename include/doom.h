@@ -47,6 +47,7 @@
 
 
 enum {NUM, TEX, CORD, BRACKET, O_BRACKET, TEX_E, TEX_X, BLOCK, D_OBJ};
+enum {ENEMI, POTION, ARMOR, MUN, SCEN, CHEST, KEY};
 
 typedef struct		s_2d
 {
@@ -212,6 +213,7 @@ typedef struct			s_object
 	t_poly				*poly;
 	char				*file;
 	char				*l_file;
+	uint8_t				type;
 	struct s_object		*next;
 }						t_object;
 
@@ -234,7 +236,11 @@ typedef struct		s_input
 	t_ray			*rays;
 	t_3x3matrix		rotz;
 	t_3x3matrix		roty;
-
+	/*--------------------FREE----------------*/
+	//t_file_obj		*ptr_file;
+	//t_line			*ptr_obj;
+	//t_line			*ptr_mtl;
+	//t_line			*ptr_map;
 }					t_input;
 
 typedef struct 		s_lstex
@@ -316,6 +322,10 @@ int      sort_color(char *line, t_color *color);
 char    *sort_material(char *line);
 void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl);
 void            free_file(t_lst_mtl **lst);
+void		inter_cord(t_line *list, int *tmp, int *error, int *i);
+int			loop_read(t_line *tmp, int *count, t_poly **poly, t_input *data);
+t_line		*poly_read(t_line *list, t_poly **poly);
+void	free_file_obj(t_file_obj file);
 
 #endif
 

@@ -5,6 +5,7 @@
         "iterator": "c",
         "string": "c",
         "vector": "c",
-        "doom.h": "c"
+        "doom.h": "c",
+        "__locale": "c"
     }
 }

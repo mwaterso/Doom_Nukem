@@ -1,19 +1,43 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   parse_obj.c                                      .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: beduroul <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/02/13 21:13:57 by beduroul     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/13 21:14:06 by beduroul    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_obj.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: beduroul <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/04 20:25:41 by beduroul          #+#    #+#             */
+/*   Updated: 2020/03/04 20:25:42 by beduroul         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void			ft_sort_pos(char *line, t_object *new)
+void		sort_type(char *line, t_object *new)
+{
+	char	*type;
+
+	if (!(type = sort_file(line)))
+		return ;
+	printf("type = [%s]\n", type);
+	if (ft_strcmp(type, "chest") == 0)
+		new->type = CHEST;
+	else if (ft_strcmp(type, "key") == 0)
+		new->type = KEY;
+	else if (ft_strcmp(type, "enemi") == 0)
+		new->type = ENEMI;
+	else if (ft_strcmp(type, "potion") == 0)
+		new->type = POTION;
+	else if (ft_strcmp(type, "armor") == 0)
+		new->type = ARMOR;
+	else if (ft_strcmp(type, "munition") == 0)
+		new->type = MUN;
+	else if (ft_strcmp(type, "scene") == 0)
+		new->type = SCEN;
+	printf("nb = %d | %d\n\n", new->type, ft_strcmp(type, "chest"));
+	free(type);
+}
+
+void		ft_sort_pos(char *line, t_object *new)
 {
 	if (ft_strrchr(line, 'x'))
 		new->pos.x = ft_atof(ft_strrchr(line, 'x') + 2);
@@ -23,7 +47,7 @@ void			ft_sort_pos(char *line, t_object *new)
 		new->pos.z = ft_atof(ft_strrchr(line, 'z') + 2);
 }
 
-void			ft_sort_rot(char  *line, t_object *new)
+void		ft_sort_rot(char *line, t_object *new)
 {
 	if (ft_strrchr(line, 'x'))
 		new->rot.x = ft_atof(ft_strrchr(line, 'x') + 2);
@@ -33,30 +57,41 @@ void			ft_sort_rot(char  *line, t_object *new)
 		new->rot.z = ft_atof(ft_strrchr(line, 'z') + 2);
 }
 
-t_line			*read_obj(t_line *list, t_object **obj, t_input *data)
+int			loop_read_obj(t_line *list, t_object *new, t_input *data)
+{
+	if (!(new->file = sort_file(list->line)))
+		return (0);
+	if (!(new->l_file = ft_strjoin("Object/", new->file)))
+		return (0);
+	if (!(new->poly = ft_pares_obj(new->l_file, data)))
+		return (0);
+	return (1);
+}
+
+t_line		*read_obj(t_line *list, t_object **obj, t_input *data)
 {
 	t_object	*new;
 
 	if (!(new = (t_object *)malloc(sizeof(t_object))))
-		return NULL;
+		return (NULL);
 	new->next = NULL;
 	while (list && list->line[0] != '}')
 	{
+		if (ft_strnequ_word(list->line, "type", 4))
+			sort_type(list->line, new);
 		if (ft_strnequ_word(list->line, "pos", 3))
 			ft_sort_pos(list->line, new);
 		else if (ft_strnequ_word(list->line, "rot", 3))
 			ft_sort_rot(list->line, new);
 		else if (ft_strnequ_word(list->line, "file", 4))
 		{
-			if (!(new->file = sort_file(list->line)))
-				return (NULL);
-			if (!(new->l_file = ft_strjoin("Object/", new->file)))
-				return NULL;
-			if (!(new->poly = ft_pares_obj(new->l_file, data)))
+			if (!(loop_read_obj(list, new, data)))
 				return (NULL);
 		}
 		list = list->next;
 	}
+	ft_strdel(&(new->l_file));
+	ft_strdel(&(new->file));
 	push_front_obj(new, obj);
 	return (list);
 }

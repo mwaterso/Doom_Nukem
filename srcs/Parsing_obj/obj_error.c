@@ -22,7 +22,7 @@ static void		check_file(t_line *list, int *error)
 	if (!i || list->line[i + 1] != ' ' || list->line[i - 1] != ' ')
 		poly_error(list, TEX_E, i, error);
 	i += 2;
-	while(list->line[i])
+	while (list->line[i])
 	{
 		if (list->line[i] == '.')
 		{
@@ -36,6 +36,23 @@ static void		check_file(t_line *list, int *error)
 	}
 	if (dot != 1)
 		poly_error(list, TEX, ft_strlen(list->line), error);
+}
+
+void			loop_err_obj(t_line *list, int *tmp, int *i, int *error)
+{
+	if (list->line[*i - 1] != 'x' && list->line[*i - 1] != 'y' &&
+	list->line[*i - 1] != 'z')
+		poly_error(list, NUM, *i, error);
+	*tmp = *i;
+	while (list->line[++(*i)] && list->line[*i] != ',')
+		if (list->line[*i] != '-' && list->line[*i] != '.' &&
+		!ft_isdigit(list->line[*i]))
+		{
+			poly_error(list, NUM, *i, error);
+			break ;
+		}
+	if (*tmp + 1 == *i)
+		poly_error(list, NUM, *i, error);
 }
 
 void			error_dot_obj(t_line *list, int *error)
@@ -53,20 +70,7 @@ void			error_dot_obj(t_line *list, int *error)
 	{
 		if (list->line[i] && list->line[i] == ':')
 		{
-			if (list->line[i - 1] != 'x' && list->line[i - 1] != 'y' &&
-			list->line[i - 1] != 'z')
-				poly_error(list, NUM, i, error);
-			tmp = i;
-			while (list->line[++i] && i < len && list->line[i] != ',')
-			{
-				if (list->line[i] != '-' && list->line[i] != '.' && !ft_isdigit(list->line[i]))
-				{
-				   poly_error(list, NUM, i, error);
-				   break ;
-				}
-			}
-			if (tmp + 1 == i)
-				poly_error(list, NUM, i, error);
+			loop_err_obj(list, &tmp, &i, error);
 			count++;
 		}
 	}
@@ -78,7 +82,6 @@ int				obj_block(t_line *list, int *error, t_index *check)
 {
 	while (list && list->line[0] != '}')
 	{
-
 		if (ft_strnequ_word(list->line, "rot", 3))
 		{
 			check->i++;
@@ -86,23 +89,23 @@ int				obj_block(t_line *list, int *error, t_index *check)
 		}
 		else if (ft_strnequ_word(list->line, "pos", 3))
 		{
-		   check->j++;
-		   error_dot_obj(list, error);
+			check->j++;
+			error_dot_obj(list, error);
 		}
 		else if (ft_strnequ_word(list->line, "file", 4))
 		{
-		   check->k++;
-		   check_file(list, error);
+			check->k++;
+			check_file(list, error);
 		}
-		else if (list->line[0] != '{' && list->line[0] != '}')
-		   return (0);
+		else if (list->line[0] != '{' && list->line[0] != '}' &&
+		!ft_strnequ_word(list->line, "type", 4))
+			return (0);
 		list = list->next;
 	}
 	if (!list)
 		return (0);
 	return (1);
 }
-
 
 void			obj_error(t_line *list, int *error)
 {

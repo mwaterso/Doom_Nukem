@@ -1,19 +1,36 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   parsing_error2.c                                 .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/26 00:10:19 by beduroul     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 17:43:12 by mwaterso    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_error2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: beduroul <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 17:09:21 by beduroul          #+#    #+#             */
+/*   Updated: 2020/02/27 17:09:24 by beduroul         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void	print_block(t_line *list)
+void		inter_cord(t_line *list, int *tmp, int *error, int *i)
+{
+	if (list->line[*i - 1] != 'x' && list->line[*i - 1] != 'y' &&
+	list->line[*i - 1] != 'z' && list->line[*i - 1] != 'X' &&
+	list->line[*i - 1] != 'Y')
+		poly_error(list, NUM, *i, error);
+	*tmp = *i;
+	while (list->line[++(*i)] && list->line[*i] != ',')
+		if (list->line[*i] != 'X' && list->line[*i] != '-' &&
+		list->line[*i] != '.' && !ft_isdigit(list->line[*i]))
+		{
+			poly_error(list, NUM, *i, error);
+			break ;
+		}
+	if (*tmp + 1 == *i)
+		poly_error(list, NUM, *i, error);
+}
+
+void		print_block(t_line *list)
 {
 	while (list->next && list->line[0] != '}')
 	{
@@ -26,7 +43,7 @@ void	print_block(t_line *list)
 	}
 }
 
-void print_bracket(t_line *list, int error)
+void		print_bracket(t_line *list, int error)
 {
 	if (error == O_BRACKET)
 	{
@@ -84,9 +101,9 @@ void		poly_error(t_line *list, int error, int i, int *err)
 	if ((*err) > 1)
 		ft_putchar('\n');
 	if (error == NUM)
-	   ft_putstr_hexa("Error invalide value line:", UNDERLINE, 0xEC7063);
+		ft_putstr_hexa("Error invalide value line:", UNDERLINE, 0xEC7063);
 	else if (error == TEX || error == TEX_X)
-		ft_putstr_hexa("Error invalide name texture line :", UNDERLINE, 0xEC7063);
+		ft_putstr_hexa("Error invalide texture line :", UNDERLINE, 0xEC7063);
 	else if (error == CORD)
 		ft_putstr_hexa("Error wring number cord line :", UNDERLINE, 0xEC7063);
 	else if (error == BRACKET || error == O_BRACKET)
@@ -96,7 +113,7 @@ void		poly_error(t_line *list, int error, int i, int *err)
 	else if (error == BLOCK)
 		ft_putstr_hexa("Error invalide size block line :", UNDERLINE, 0xEC7063);
 	else if (error == D_OBJ)
-		ft_putstr_hexa("Error invalide name obj file line :", UNDERLINE, 0xEC7063);
+		ft_putstr_hexa("Error invalide obj file line :", UNDERLINE, 0xEC7063);
 	if (list)
 		print_error(list, error, i);
 	if (error == BLOCK)

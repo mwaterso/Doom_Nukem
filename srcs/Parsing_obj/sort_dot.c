@@ -37,12 +37,12 @@ int			sort_tfdot(char *line, t_fdot *dot)
 	while (!ft_isdigit(line[i]))
 		i++;
 	if (!(tab = ft_strsplit(line + i, ' ')))
-		return 0;
+		return (0);
 	if (ft_avlen(tab) != 3)
-		return 0;
-		dot->x = ft_atof(tab[0]);
-		dot->y = ft_atof(tab[1]);
-		dot->z = ft_atof(tab[2]);
+		return (0);
+	dot->x = ft_atof(tab[0]);
+	dot->y = ft_atof(tab[1]);
+	dot->z = ft_atof(tab[2]);
 	free_tab(&tab);
 	return (0);
 }
@@ -56,11 +56,11 @@ int			sort_t2d(char *line, t_2d *dot)
 	while (!ft_isdigit(line[i]))
 		i++;
 	if (!(tab = ft_strsplit(line + i, ' ')))
-		return 0;
+		return (0);
 	if (ft_avlen(tab) != 2)
-		return 0;
-		dot->x = ft_atof(tab[0]);
-		dot->y = ft_atof(tab[1]);
+		return (0);
+	dot->x = ft_atof(tab[0]);
+	dot->y = ft_atof(tab[1]);
 	free_tab(&tab);
 	return (0);
 }
@@ -74,9 +74,9 @@ int			sort_color(char *line, t_color *color)
 	while (!ft_isdigit(line[i]))
 		i++;
 	if (!(tab = ft_strsplit(line + i, ' ')))
-		return 0;
+		return (0);
 	if (ft_avlen(tab) != 3)
-		return 0;
+		return (0);
 	color->r = ft_atof(tab[0]) * 255;
 	color->g = ft_atof(tab[1]) * 255;
 	color->b = ft_atof(tab[2]) * 255;

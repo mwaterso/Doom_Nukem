@@ -12,31 +12,15 @@
 
 #include "doom.h"
 
-
-void	free_fdot(t_fdot **dot, int size)
+void	free_file_obj(t_file_obj file)
 {
-	int			i;
-
-	i = 0;
-	dprintf(1, "SIZE1 =%d\n", size);
-	while (i <= size)
-	{
-		dprintf(1, "\t\tdot = x:%f | y:%f | z:%f\n", dot[i]->x, dot[i]->y, dot[i]->z);
-		free(dot[i++]);
-	}
-	dprintf(1, "OUT\n");
-	dot = NULL;
-}
-
-void	free_2d(t_2d **dot, int size)
-{
-	int			i;
-
-	i = 0;
-	dprintf(1, "SIZE =%d\n", size);
-	while (i < size)
-		free(dot[i++]);
-	dot = NULL;
+	free_file(&(file.lst));
+	if (file.v)
+		ft_memdel((void **)&file.v);
+	if (file.vt)
+		ft_memdel((void **)&file.vt);
+	if (file.vn)
+		ft_memdel((void **)&file.vn);
 }
 
 void	free_file(t_lst_mtl **lst)

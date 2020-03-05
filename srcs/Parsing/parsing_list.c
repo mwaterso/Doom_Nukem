@@ -1,14 +1,13 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   parsing_list.c                                   .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/22 23:36:02 by beduroul     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 17:43:07 by mwaterso    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_list.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: beduroul <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/27 17:13:05 by beduroul          #+#    #+#             */
+/*   Updated: 2020/02/27 17:13:07 by beduroul         ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
@@ -59,7 +58,6 @@ void	free_poly(t_poly **poly)
 	*poly = NULL;
 }
 
-
 int		push_back(t_poly *new, t_poly **poly)
 {
 	t_poly		*tmp;
@@ -81,9 +79,9 @@ int		creat_elem_l(char *line, int n_line, t_line **list)
 	t_line		*new;
 
 	if (!(new = (t_line *)malloc(sizeof(t_line))))
-		return 0;
+		return (0);
 	if (!(new->line = ft_strdup(line)))
-		return 0;
+		return (0);
 	new->next = NULL;
 	new->n_line = n_line;
 	if (*list == NULL)
