@@ -14,7 +14,8 @@
 
 void	free_file_obj(t_file_obj file)
 {
-	free_file(&(file.lst));
+	if (file.lst)
+		free_file(&(file.lst));
 	if (file.v)
 		ft_memdel((void **)&file.v);
 	if (file.vt)

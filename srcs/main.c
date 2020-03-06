@@ -288,6 +288,7 @@ int	keyboard_test(int key, t_input *inputs)
 
 int main(int c, char **v)
 {
+    //sleep(10);
     (void)c;
     t_input data;
     //t_poly  *poly;
@@ -302,7 +303,7 @@ int main(int c, char **v)
     if(!(data.map = parsing_poly(v[1], &data)))
     {
         printf("BLALALALALA\n");
-        sleep(10);
+        sleep(20);
     	return(0);
     }
   print_parse(data.map);

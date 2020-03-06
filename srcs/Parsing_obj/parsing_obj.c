@@ -42,28 +42,21 @@ int			mall_file(t_file_obj *file, t_line *list)
 	return (1);
 }
 
-int			parse_fobj(t_line *list, t_poly **poly, t_input *d, t_index index)
+int			parse_fobj(t_line *list, t_poly **poly, t_input *d)
 {
 	t_file_obj	file;
-	char		*tmp;
 
 	file.lst = NULL;
+	file.index = (t_index){.i = 0, .j = 0, .k = 0};
 	if (!(mall_file(&file, list)))
 		return (0);
 	while (list)
 	{
-		if (ft_strnequ_word(list->line, "mtllib ", 7))
-			sort_mtl(d, list->line, &file);
-		if (ft_strnequ_word(list->line, "usemtl ", 7))
-			tmp = list->line + 7;
-		if (ft_strnequ_word(list->line, "v ", 2))
-			sort_tfdot(list->line, &(file.v[index.i++]));
-		if (ft_strnequ_word(list->line, "vt ", 3))
-			sort_t2d(list->line, &(file.vt[index.j++]));
-		if (ft_strnequ_word(list->line, "vn ", 3))
-			sort_tfdot(list->line, &(file.vn[index.k++]));
-		if (ft_strnequ_word(list->line, "f ", 2))
-			sort_poly(list->line + 2, poly, file, tmp);
+		if (!(parse_fobj2(list, &file, d, poly)))
+		{
+			free_file_obj(file);
+			return (0);
+		}
 		list = list->next;
 	}
 	reverse_p(poly);
@@ -90,8 +83,11 @@ int			p_obj_loop(t_poly **poly, t_input *data, int fd)
 	}
 	ft_strdel(&line);
 	reverse_l(&list);
-	if (!(i = parse_fobj(list, poly, data, (t_index){.i = 0, .j = 0, .k = 0})))
+	if (!(i = parse_fobj(list, poly, data)))
+	{
+		free_line(&list);
 		return (0);
+	}
 	free_line(&list);
 	return (i);
 }

@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-void		sort_mtllib(char *line, t_mtl *mlt, t_input *data)
+int		sort_mtllib(char *line, t_mtl *mlt, t_input *data)
 {
 	int			i;
 	char		*file;
@@ -22,17 +22,24 @@ void		sort_mtllib(char *line, t_mtl *mlt, t_input *data)
 		if (line[i] == ' ')
 			break ;
 	if (!(file = ft_strjoin("Object/", line + (i + 1))))
-		return ;
+		return (0);
 	if (!(mlt->tex.tab = mlx_xpm_file_to_image(data->mlx_ad, file,
 		&mlt->tex.width, &mlt->tex.height)))
-		return ;
+	{
+		ft_strdel(&file);
+		return (0);
+	}
 	if (!(mlt->tex.img = (unsigned int *)mlx_get_data_addr(mlt->tex.tab,
 		&(mlt->tex.bpp), &(mlt->tex.s_l), &(mlt->tex.endian))))
-		return ;
+	{
+		ft_strdel(&file);
+		return (0);
+	}
 	ft_strdel(&file);
+	return (1);
 }
 
-t_line		*parse_mtl(t_input *data, t_line *list, t_file_obj *file)
+int		parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 {
 	t_lst_mtl	*new;
 
@@ -47,25 +54,32 @@ t_line		*parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 		ft_isdigit((*list->line + 3)))
 			sort_color(list->line, &(new->mtl.kd));
 		if (ft_strnequ_word(list->line, "map_Kd ", 7))
-			sort_mtllib(list->line, &(new->mtl), data);
+		{
+			if (!(sort_mtllib(list->line, &(new->mtl), data)))
+			{
+				free_new_lst(new);
+				return (0);
+			}
+		}
 		if (ft_strnequ_word(list->line, "newmtl ", 7))
 			if (!(new->name = sort_material(list->line)))
-				return (NULL);
+				return (0);
 		list = list->next;
 	}
 	push_front_mtl(new, &(file->lst));
-	return (list);
+	return (1);
 }
 
-void		check_newmtl(t_line *list, t_input *data, t_file_obj *file)
+int		check_newmtl(t_line *list, t_input *data, t_file_obj *file)
 {
 	while (list)
 	{
 		if (ft_strnequ_word(list->line, "newmtl ", 7))
-			if (!(list = parse_mtl(data, list, file)))
-				break ;
+			if (!(parse_mtl(data, list, file)))
+				return (0);
 		list = list->next;
 	}
+	return (1);
 }
 
 int			p_mtl_loop(t_input *data, int fd, t_file_obj *file)
@@ -85,12 +99,16 @@ int			p_mtl_loop(t_input *data, int fd, t_file_obj *file)
 	}
 	ft_strdel(&line);
 	reverse_l(&list);
-	check_newmtl(list, data, file);
+	if (!(check_newmtl(list, data, file)))
+	{
+		free_line(&list);
+		return (0);
+	}
 	free_line(&list);
 	return (1);
 }
 
-void		sort_mtl(t_input *data, char *file, t_file_obj *f)
+int		sort_mtl(t_input *data, char *file, t_file_obj *f)
 {
 	int			fd;
 	int			i;
@@ -101,11 +119,19 @@ void		sort_mtl(t_input *data, char *file, t_file_obj *f)
 		if (file[i] == ' ')
 			break ;
 	if (!(l_file = ft_strjoin("Object/", file + (i + 1))))
-		return ;
+		return (0);
 	if ((fd = open(l_file, O_RDONLY)) < 1)
-		return ;
+	{
+		if (l_file)
+			ft_strdel(&l_file);
+		return (0);
+	}
 	error_file(fd, file);
 	if (!(p_mtl_loop(data, fd, f)))
-		return ;
+	{
+		ft_strdel(&l_file);
+		return (0);
+	}
 	ft_strdel(&l_file);
+	return (1);
 }

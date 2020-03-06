@@ -257,6 +257,7 @@ typedef struct		s_file_obj
     t_2d        	*vt;
     t_fdot      	*vn;
 	t_index			size;
+	t_index			index;
 }					t_file_obj;
 
 
@@ -275,30 +276,30 @@ void			get_plans(t_poly *poly);
 void			ray_boxes(t_input *data, t_poly *poly);
 void 			mapmoveallp(t_poly *poly, t_fdot incr);
 void 			maprotateallp(t_poly *poly, t_fdot rot, t_input *data);
+void			print_s(int i);
+void    		get_device(char **device);
+int				poly_toboxes (t_input *data, t_poly *poly);
+int				proj_2d(t_poly *map, t_input *data);
+int				keyboard_move(int key, t_input *inputs);
+t_fdot			ApplyMatPoint(t_3x3matrix matrix, t_fdot point);
+t_fdot 			getvect(t_fdot a, t_fdot b);
+
+
+void 			print_parse(t_poly *poly);
+int				check_error(t_line *list);
 void		   	free_poly(t_poly **poly);
 void		   	free_poly(t_poly **poly);
 void		   	free_line(t_line **line);
 void		   	error_file(int fd, char *av);
 void		  	poly_error(t_line *list, int error, int i, int *err);
-void			print_s(int i);
-void    		get_device(char **device);
-void 			print_parse(t_poly *poly);
-int				check_error(t_line *list);
-int				poly_toboxes (t_input *data, t_poly *poly);
-int				proj_2d(t_poly *map, t_input *data);
-int				keyboard_move(int key, t_input *inputs);
 int				push_back(t_poly *new, t_poly **poly);
 int				creat_elem_l(char *line, int n_line, t_line **list);
 int		   		sort_dot(char *line, t_poly *new, t_index *index);
-t_fdot			ApplyMatPoint(t_3x3matrix matrix, t_fdot point);
-t_fdot 			getvect(t_fdot a, t_fdot b);
-t_poly			*parsing_poly(char *file, t_input *data);
 int				parse_loop(t_poly **poly, t_line *list, t_input *data, int fd);
+t_poly			*parsing_poly(char *file, t_input *data);
 int				parse_file(t_line *list, t_poly **poly, t_input *data);
 int				load_tex(t_poly **poly, t_input *data);
 char			*sort_file(char *line);
-
-
 t_line			*read_obj(t_line *list, t_object **obj, t_input *data);
 void			push_front_obj(t_object *new, t_object **obj);
 void             reverse(t_object **obj);
@@ -316,7 +317,7 @@ void			push_front_pol(t_poly *new, t_poly **poly);
 void             reverse_p(t_poly **poly);
 void             reverse_o(t_object **obj);
 void             reverse_l(t_line **list);
-void    sort_mtl(t_input *data, char *file, t_file_obj *f);
+int   				sort_mtl(t_input *data, char *file, t_file_obj *f);
 int		creat_elem_l1(char *line, int n_line, t_line **list);
 int      sort_color(char *line, t_color *color);
 char    *sort_material(char *line);
@@ -326,6 +327,9 @@ void		inter_cord(t_line *list, int *tmp, int *error, int *i);
 int			loop_read(t_line *tmp, int *count, t_poly **poly, t_input *data);
 t_line		*poly_read(t_line *list, t_poly **poly);
 void	free_file_obj(t_file_obj file);
+int	parse_fobj2(t_line *list, t_file_obj *file, t_input *d, t_poly **poly);
+void	free_object(t_object **obj, t_object *new);
+void	free_new_lst(t_lst_mtl *new);
 
 #endif
 

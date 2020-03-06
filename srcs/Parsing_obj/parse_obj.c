@@ -18,7 +18,6 @@ void		sort_type(char *line, t_object *new)
 
 	if (!(type = sort_file(line)))
 		return ;
-	printf("type = [%s]\n", type);
 	if (ft_strcmp(type, "chest") == 0)
 		new->type = CHEST;
 	else if (ft_strcmp(type, "key") == 0)
@@ -33,7 +32,6 @@ void		sort_type(char *line, t_object *new)
 		new->type = MUN;
 	else if (ft_strcmp(type, "scene") == 0)
 		new->type = SCEN;
-	printf("nb = %d | %d\n\n", new->type, ft_strcmp(type, "chest"));
 	free(type);
 }
 
@@ -86,7 +84,10 @@ t_line		*read_obj(t_line *list, t_object **obj, t_input *data)
 		else if (ft_strnequ_word(list->line, "file", 4))
 		{
 			if (!(loop_read_obj(list, new, data)))
+			{
+				free_object(obj, new);
 				return (NULL);
+			}
 		}
 		list = list->next;
 	}

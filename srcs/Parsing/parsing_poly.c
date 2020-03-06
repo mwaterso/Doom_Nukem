@@ -106,6 +106,7 @@ t_poly		*parsing_poly(char *file, t_input *data)
 	error_file(fd, file);
 	if (!(i = parse_loop(&poly, list, data, fd)))
 	{
+		free_poly(&poly);
 		free_line(&list);
 		return (NULL);
 	}

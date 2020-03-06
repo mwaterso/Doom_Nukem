@@ -44,7 +44,7 @@ int			sort_tfdot(char *line, t_fdot *dot)
 	dot->y = ft_atof(tab[1]);
 	dot->z = ft_atof(tab[2]);
 	free_tab(&tab);
-	return (0);
+	return (1);
 }
 
 int			sort_t2d(char *line, t_2d *dot)
@@ -62,7 +62,7 @@ int			sort_t2d(char *line, t_2d *dot)
 	dot->x = ft_atof(tab[0]);
 	dot->y = ft_atof(tab[1]);
 	free_tab(&tab);
-	return (0);
+	return (1);
 }
 
 int			sort_color(char *line, t_color *color)
@@ -81,5 +81,5 @@ int			sort_color(char *line, t_color *color)
 	color->g = ft_atof(tab[1]) * 255;
 	color->b = ft_atof(tab[2]) * 255;
 	free_tab(&tab);
-	return (0);
+	return (1);
 }

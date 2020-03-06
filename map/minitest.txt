@@ -1,18 +1,18 @@
-//Object
+Object
 {
 	type = chest
 	pos = x:1, y:2, z:3
 	rot = x:4, y:5, z:6
 	file = chest.obj
 }
-Object
+//Object
 {
 	type = scene
 	pos = x:11, y:12, z:13
 	rot = x:14, y:15, z:16
 	file = test.obj
 }
-Object
+//Object
 {
 	type = scene
 	pos = x:11, y:12, z:13
@@ -26,7 +26,7 @@ Object
 	rot = x:14, y:15, z:19
 	file = creeper.obj
 }
-//Object
+Object
 {
 	type = munition
 	pos = x:11, y:12, z:13

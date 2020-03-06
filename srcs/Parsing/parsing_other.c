@@ -65,9 +65,13 @@ int			parse_loop(t_poly **poly, t_line *list, t_input *data, int fd)
 	ft_strdel(&line);
 	reverse_l(&list);
 	if (!(i = parse_file(list, poly, data)))
+	{
+		free_line(&list);
 		return (0);
+	}
 	if (!(load_tex(poly, data)))
 	{
+		free(&list);
 		write(1, "load tex fail\n", 14);
 		return (0);
 	}

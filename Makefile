@@ -48,7 +48,8 @@ SRC_NAME += Parsing_obj/parse_obj.c		\
 			Parsing_obj/sort_dot.c		\
 			Parsing_obj/sort_poly.c		\
 			Parsing_obj/parsing_mtl.c	\
-			Parsing_obj/obj_mlt.c
+			Parsing_obj/obj_mlt.c		\
+			Parsing_obj/parsing_norm.c
 
 #SRC_NAME += Sound/init_s.c Sound/parsing_wav.c
 
