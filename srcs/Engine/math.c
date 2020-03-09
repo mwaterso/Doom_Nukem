@@ -6,17 +6,34 @@
 /*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/21 14:43:50 by mwaterso     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 18:19:16 by mwaterso    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/03/06 17:31:47 by mwaterso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "doom.h"
 
+void redefinevector(t_poly *poly)
+{
+    while (poly)
+    {
+		poly->vAB = getvect(poly->dot[0], poly->dot[1]);
+		poly->vBC = getvect(poly->dot[1], poly->dot[2]);
+        poly->den1 = (-poly->vAB.y * poly->vBC.z + poly->vBC.y * poly->vAB.z);
+        poly->den2 = (-poly->vAB.x * poly->vBC.y + poly->vBC.x * poly->vAB.y);
+        poly->den3 = (-poly->vAB.z * poly->vBC.x + poly->vBC.z * poly->vAB.x);
+        poly = poly->next;
+    }
+}
+
 t_fdot getvect(t_fdot a, t_fdot b)
 {
-    //printf("vectorial product\n");
     return((t_fdot){.x = b.x - a.x, .y = b.y - a.y, .z = b.z - a.z});
+}
+
+t_2d get2dvect(t_2d a, t_2d b)
+{
+    return((t_2d){.x = b.x - a.x, .y = b.y - a.y});
 }
 
 double get3ddist(t_fdot a, t_fdot b)

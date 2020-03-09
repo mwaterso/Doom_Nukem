@@ -12,38 +12,7 @@
 
 #include "doom.h"
 
-void	free_file_obj(t_file_obj file)
-{
-	if (file.lst)
-		free_file(&(file.lst));
-	if (file.v)
-		ft_memdel((void **)&file.v);
-	if (file.vt)
-		ft_memdel((void **)&file.vt);
-	if (file.vn)
-		ft_memdel((void **)&file.vn);
-}
-
-void	free_file(t_lst_mtl **lst)
-{
-	t_lst_mtl	*head;
-	t_lst_mtl	*next;
-
-	head = *lst;
-	while (head != NULL)
-	{
-		next = head->next;
-		if (head->name)
-			ft_strdel(&head->name);
-		ft_memdel((void **)&head);
-		head = next;
-	}
-	*lst = NULL;
-	head = NULL;
-	next = NULL;
-}
-
-void	push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl)
+void			push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl)
 {
 	if (!mtl)
 		*mtl = new;
@@ -54,16 +23,16 @@ void	push_front_mtl(t_lst_mtl *new, t_lst_mtl **mtl)
 	}
 }
 
-char	*sort_material(char *line)
+char    *sort_material(char *line)
 {
-	int			i;
-	char		*str;
+    int i;
+    char *str;
 
-	i = 0;
-	while (line[++i])
-		if (line[i] == ' ')
-			break ;
-	if (!(str = ft_strdup(line + (i + 1))))
-		return (NULL);
-	return (str);
+    i = 0;
+    while (line[++i])
+        if (line[i] == ' ')
+            break ;
+    if (!(str = ft_strdup(line + (i + 1))))
+        return (NULL);
+    return (str);
 }

@@ -1,97 +1,87 @@
-//Object
+Polygon                           //Mur fond 1
 {
-    pos = x:1, y:2, z:3
-    rot = x:4, y:5, z:6
-    file = starf.obj
+    dot = x:10, y:0, z:4, X:0, Y:0
+    dot = x:10, y:6, z:0, X:1, Y:1
+    dot = x:10, y:6, z:4, X:1, Y:0
+    texture = Brique.xpm
 }
-//Object
+
+Polygon      
 {
-    pos = x:0, y:0, z:0
-    rot = x:0, y:0, z:0
-    file = starf.obj
-}
-//Object
-{
-    pos = x:0, y:0, z:0
-    rot = x:0, y:0, z:0
-    file = starf.obj
-}
-//Object
-{
-    pos = x:11, y:12, z:13
-    rot = x:14, y:15, z:16
-    file = coffre.obj
-}
-//Object
-{
-    pos = x:0, y:0, z:0
-    rot = x:0, y:0, z:0
-    file = starf.obj
+    dot = x:10, y:0, z:4, X:0, Y:0
+    dot = x:10, y:0, z:0, X:0, Y:1
+    dot = x:10, y:6, z:0, X:1, Y:1
+    texture = Brique.xpm
 }
 
 
-/* Murs du haut */
-Polygon                                 //Mur entier 1
+
+Polygon            //plafond 1
 {
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430.0, y:950.0, z:400.0, X:500.0, Y:1.82
+    dot = x:10, y:0, z:4, X:0, Y:0
+    dot = x:10, y:6, z:4, X:0, Y:1
+    dot = x:5, y:0, z:4, X:1, Y:0
+    texture = t4.xpm
+}
+
+Polygon           
+{
+    dot = x:100, y:6, z:5, X:0, Y:1
+    dot = x:50, y:6, z:0, X:1, Y:1
+    dot = x:50, y:0, z:0, X:1, Y:0
+    texture = t4.xpm
+}
+
+
+
+Polygon           //Mur droite
+{
+    dot = x:10, y:6, z:4, X:0, Y:0
+    dot = x:5, y:6, z:4, X:1, Y:0
+    dot = x:5, y:6, z:0, X:1, Y:1
+    texture = t3.xpm
+}
+
+Polygon
+{
+    dot = x:10, y:6, z:4, X:0, Y:0
+    dot = x:10, y:6, z:0, X:0, Y:1
+    dot = x:5, y:6, z:0, X:1, Y:1
+    texture = t3.xpm
+}
+
+
+Polygon           //Mur gauche
+{
+    dot = x:10, y:0, z:4, X:0, Y:0
+    dot = x:5, y:0, z:4, X:0, Y:1
+    dot = x:5, y:0, z:0, X:1, Y:0
+    texture = t4.xpm
+}
+
+Polygon
+{
+    dot = x:10, y:0, z:4, X:0, Y:1
+    dot = x:10, y:0, z:0, X:1, Y:0
+    dot = x:5, y:0, z:0, X:1, Y:1
+    texture = t4.xpm
+}
+
+
+
+//Polygon     //Mur entier 1
+{
+    dot = x:-10, y:10, z:10, X:4, Y:5
+    dot = x:-10, y:-10, z:10, X:9, Y:2
+    dot = x:-10, y:10, z:-10, X:8, Y:3
     texture = Brique.xpm
 }
-Polygon                                 //Mur entier 1
+//Polygon   //Mur entier 1
 {
-    dot = x:200, y:650, z:300, X:200, Y:100
-    dot = x:900, y:160, z:800, X:300, Y:200
-    dot = x:800, y:170, z:90, X:400, Y:300
-    dot = x:700, y:680, z:50, X:500, Y:1
-    texture = cuocud.xpm
-}
-Polygon                                //Mur entier 1
-{
-    dot = x:300, y:650, z:200, X:200, Y:100
-    dot = x:100, y:150, z:200, X:300, Y:200
-    dot = x:100, y:150, z:50, X:400, Y:100
-    dot = x:100, y:650, z:50, X:500, Y:2
-    texture = plafond.xpm
-}
-Polygon                                 //Mur entier 1
-{
-    dot = x:200, y:650, z:300, X:200, Y:100
-    dot = x:900, y:160, z:800, X:300, Y:200
-    dot = x:800, y:170, z:90, X:400, Y:300
-    dot = x:700, y:680, z:50, X:500, Y:1
-    texture = cuocud.xpm
-}
-Polygon                                 //Mur entier 1
-{
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430, y:950, z:400, X:500, Y:1
+    dot = x:-10, y:-10, z:-10, X:4, Y:5
+    dot = x:-10, y:-10, z:10, X:9, Y:2
+    dot = x:-10, y:10, z:-10, X:8, Y:3
     texture = Brique.xpm
 }
-Polygon                                 //Mur entier 1
-{
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430, y:950, z:400, X:500, Y:1
-    texture = plafond.xpm
-}
-Polygon                                 //Mur entier 1
-{
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430, y:950, z:400, X:500, Y:1
-    texture = wow.xpm
-}
-Polygon                                 //Mur entier 1
-{
-    dot = x:100, y:200, z:300, X:400, Y:500
-    dot = x:600, y:750, z:830, X:900, Y:200
-    dot = x:300, y:850, z:50, X:801, Y:300
-    dot = x:430, y:950, z:400, X:500, Y:1
-    texture = blou.xpm
+
 }

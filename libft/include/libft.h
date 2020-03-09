@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   libft.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: beduroul <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 12:21:37 by beduroul     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 12:21:39 by beduroul    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/03/05 16:55:36 by mwaterso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,6 +59,7 @@ char				*ft_strrchr(const char *s, int c);
 char				*ft_strclr(char *s);
 void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
+char				*ft_strjoin2(char const *s1, char const *s2, int index_free);
 char				*ft_strnew(size_t size);
 void				ft_strdel(char **as);
 char				*ft_strmap(char const *s, char (*f)(char));

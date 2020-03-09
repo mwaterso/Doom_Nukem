@@ -1,28 +1,29 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_error.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: beduroul <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 20:24:28 by beduroul          #+#    #+#             */
-/*   Updated: 2020/03/02 20:24:31 by beduroul         ###   ########lyon.fr   */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   parsing_error.c                                  .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/16 17:32:54 by beduroul     #+#   ##    ##    #+#       */
+/*   Updated: 2020/02/05 17:43:16 by mwaterso    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-static void		check_texture(t_line *list, int *error)
+static void         check_texture(t_line *list, int *error)
 {
-	int			i;
-	int			dot;
+	int i;
+	int dot;
 
 	i = ft_strnchr(list->line, '=');
 	dot = 0;
 	if (!i || list->line[i + 1] != ' ' || list->line[i - 1] != ' ')
 		poly_error(list, TEX_E, i, error);
 	i += 2;
-	while (list->line[i])
+	while(list->line[i])
 	{
 		if (list->line[i] == '.')
 		{
@@ -38,12 +39,12 @@ static void		check_texture(t_line *list, int *error)
 		poly_error(list, TEX, ft_strlen(list->line), error);
 }
 
-static void		error_dot(t_line *list, int *error)
+static void         error_dot(t_line *list, int *error)
 {
-	int			i;
-	int			count;
-	int			len;
-	int			tmp;
+	int i;
+	int count;
+	int len;
+	int tmp;
 
 	len = ft_strlen(list->line);
 	i = 0;
@@ -53,7 +54,18 @@ static void		error_dot(t_line *list, int *error)
 	{
 		if (list->line[i] && list->line[i] == ':')
 		{
-			inter_cord(list, &tmp, error, &i);
+			if (list->line[i - 1] != 'x' && list->line[i - 1] != 'y' &&
+			list->line[i - 1] != 'z' && list->line[i - 1] != 'X' && list->line[i - 1] != 'Y')
+				poly_error(list, NUM, i, error);
+			tmp = i;
+			while (list->line[++i] && list->line[i] != ',')
+				if (list->line[i] != 'X' && list->line[i] != '-' && list->line[i] != '.' && !ft_isdigit(list->line[i]))
+				{
+				   poly_error(list, NUM, i, error);
+				   break ;
+				}
+			if (tmp + 1 == i)
+				poly_error(list, NUM, i, error);
 			count++;
 		}
 	}
@@ -61,32 +73,33 @@ static void		error_dot(t_line *list, int *error)
 		poly_error(list, CORD, ft_strlen(list->line), error);
 }
 
-static int		pars_block(t_line *list, int *error, t_index *check)
+static int			pars_block(t_line *list, int *error, t_index *check)
 {
 	while (list && list->line[0] != '}')
 	{
-		if (ft_strnequ_word(list->line, "dot", 3))
-		{
-			check->j++;
-			error_dot(list, error);
-		}
-		else if (ft_strnequ_word(list->line, "texture", 7))
-		{
-			check->i++;
-			check_texture(list, error);
-		}
-		else if (list->line[0] != '{' && list->line[0] != '}')
-			return (0);
+	   if (ft_strnequ_word(list->line, "dot", 3))
+	   {
+		   check->j++;
+		   error_dot(list, error);
+	   }
+	   else if (ft_strnequ_word(list->line, "texture", 7))
+	   {
+		   check->i++;
+		   check_texture(list, error);
+	   }
+	   else if (list->line[0] != '{' && list->line[0] != '}')
+		   return (0);
 		list = list->next;
 	}
+	
 	if (!list)
 		return (0);
 	return (1);
 }
 
-static void		line_error(t_line *list, int *error)
+static void         line_error(t_line *list, int *error)
 {
-	t_index		check;
+	t_index check;
 
 	check = (t_index){.i = 0, .j = 0, .k = 0};
 	if (list->line[0] == '{')
@@ -100,15 +113,15 @@ static void		line_error(t_line *list, int *error)
 		poly_error(list, O_BRACKET, 0, error);
 }
 
-int				check_error(t_line *list)
+int                 check_error(t_line *list)
 {
-	t_line		*tmp;
-	int			error;
+	t_line  *tmp;
+	int     error;
 
 	tmp = list;
 	error = 0;
 	if (!list)
-		return (0);
+		return 0;
 	while (tmp)
 	{
 		if (tmp->next && ft_strnequ_word(tmp->line, "Polygon", 7))
@@ -123,7 +136,7 @@ int				check_error(t_line *list)
 		ft_putnbr_hexa(error, BOLD | UNDERLINE, 0xF9E79F);
 		ft_putstr_hexa(" error founds\n", BOLD | UNDERLINE, 0xF9E79F);
 		free_line(&list);
-		return (0);
+		return 0;
 	}
 	return (1);
 }
