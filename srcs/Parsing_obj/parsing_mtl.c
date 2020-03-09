@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-int		sort_mtllib(char *line, t_mtl *mlt, t_input *data)
+int			sort_mtllib(char *line, t_mtl *mlt, t_input *data)
 {
 	int			i;
 	char		*file;
@@ -39,7 +39,7 @@ int		sort_mtllib(char *line, t_mtl *mlt, t_input *data)
 	return (1);
 }
 
-int		parse_mtl(t_input *data, t_line *list, t_file_obj *file)
+int			parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 {
 	t_lst_mtl	*new;
 
@@ -48,11 +48,7 @@ int		parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 	new->next = NULL;
 	while (list && ft_strcmp(list->line, "\n") > 0)
 	{
-		if (ft_strnequ_word(list->line, "Ka ", 3))
-			sort_color(list->line, &(new->mtl.ka));
-		if (ft_strnequ_word(list->line, "Kd ", 3) &&
-		ft_isdigit((*list->line + 3)))
-			sort_color(list->line, &(new->mtl.kd));
+		parse_mtl_loop(list, new);
 		if (ft_strnequ_word(list->line, "map_Kd ", 7))
 		{
 			if (!(sort_mtllib(list->line, &(new->mtl), data)))
@@ -70,7 +66,7 @@ int		parse_mtl(t_input *data, t_line *list, t_file_obj *file)
 	return (1);
 }
 
-int		check_newmtl(t_line *list, t_input *data, t_file_obj *file)
+int			check_newmtl(t_line *list, t_input *data, t_file_obj *file)
 {
 	while (list)
 	{
@@ -108,16 +104,13 @@ int			p_mtl_loop(t_input *data, int fd, t_file_obj *file)
 	return (1);
 }
 
-int		sort_mtl(t_input *data, char *file, t_file_obj *f)
+int			sort_mtl(t_input *data, char *file, t_file_obj *f)
 {
 	int			fd;
 	int			i;
 	char		*l_file;
 
-	i = -1;
-	while (file[++i])
-		if (file[i] == ' ')
-			break ;
+	i = size_mtl_file(file);
 	if (!(l_file = ft_strjoin("Object/", file + (i + 1))))
 		return (0);
 	if ((fd = open(l_file, O_RDONLY)) < 1)

@@ -19,18 +19,18 @@ t_poly		*init_pol(t_file_obj file, t_poly *new, char **tab)
 
 	index = (t_index){.i = -1, .j = 0, .k = 0};
 	split = NULL;
-	ft_bzero(new->dot, sizeof(new->dot));
-	ft_bzero(new->dot_vn, sizeof(new->dot_vn));
-	ft_bzero(new->cord, sizeof(new->cord));
 	while (tab[++(index.i)])
 	{
 		if (!(split = ft_strsplit(tab[index.i], '/')))
 			return (NULL);
-		if (split[0] && ft_atoi(split[0]) - 1 >= 0)
+		if (split[0] && ft_atoi(split[0]) - 1 >= 0 &&
+		ft_atoi(split[0]) - 1 <= file.size.i)
 			new->dot[index.j] = file.v[ft_atoi(split[0]) - 1];
-		if (split[1] && ft_atoi(split[1]) - 1 >= 0)
+		if (split[1] && ft_atoi(split[1]) - 1 >= 0 &&
+		ft_atoi(split[1]) - 1 <= file.size.j)
 			new->cord[index.j] = file.vt[ft_atoi(split[1]) - 1];
-		if (index.i == 1 && split[2] && ft_atoi(split[2]) - 1 >= 0)
+		if (index.i == 1 && split[2] && ft_atoi(split[2]) - 1 >= 0 &&
+		ft_atoi(split[2]) - 1 <= file.size.k)
 			new->normale = file.vn[ft_atoi(split[2]) - 1];
 		ft_2dstrdel(&split);
 		index.j++;
@@ -61,6 +61,10 @@ int			sort_poly(char *line, t_poly **poly, t_file_obj file, char *mtl)
 	new = NULL;
 	if (!(new = (t_poly *)malloc(sizeof(t_poly))))
 		return (0);
+	ft_bzero(new->dot, sizeof(new->dot));
+	new->normale = (t_fdot){.x = 0, .y = 0, .z = 0};
+	ft_bzero(new->cord, sizeof(new->cord));
+	new->tex = NULL;
 	if (mtl)
 		if (!sort_mtl_lst(file.lst, mtl, &new->mtl))
 		{

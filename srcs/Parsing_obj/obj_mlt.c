@@ -12,6 +12,15 @@
 
 #include "doom.h"
 
+void	parse_mtl_loop(t_line *list, t_lst_mtl *new)
+{
+	if (ft_strnequ_word(list->line, "Ka ", 3))
+		sort_color(list->line, &(new->mtl.ka));
+	if (ft_strnequ_word(list->line, "Kd ", 3) &&
+	ft_isdigit((*list->line + 3)))
+		sort_color(list->line, &(new->mtl.kd));
+}
+
 void	free_file_obj(t_file_obj file)
 {
 	if (file.lst)

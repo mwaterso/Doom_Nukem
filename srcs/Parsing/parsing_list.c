@@ -51,7 +51,8 @@ void	free_poly(t_poly **poly)
 	while (tmp)
 	{
 		next = tmp->next;
-		ft_strdel(&(tmp->tex));
+		if (tmp->tex)
+			ft_strdel(&(tmp->tex));
 		free(tmp);
 		tmp = next;
 	}

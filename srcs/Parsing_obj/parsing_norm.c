@@ -12,6 +12,27 @@
 
 #include "doom.h"
 
+int		size_mtl_file(char *file)
+{
+	int i;
+
+	i = -1;
+	while (file[++i])
+		if (file[i] == ' ')
+			return (i);
+	return (0);
+}
+
+void	loop_read2(t_line *list, t_object *new)
+{
+	if (ft_strnequ_word(list->line, "type", 4))
+		sort_type(list->line, new);
+	else if (ft_strnequ_word(list->line, "pos", 3))
+		ft_sort_pos(list->line, new);
+	else if (ft_strnequ_word(list->line, "rot", 3))
+		ft_sort_rot(list->line, new);
+}
+
 void	free_new_lst(t_lst_mtl *new)
 {
 	ft_strdel(&(new->name));
@@ -25,6 +46,8 @@ void	free_object(t_object **obj, t_object *new)
 	t_object		*next;
 
 	tmp = *obj;
+	if (!obj)
+		return ;
 	while (tmp)
 	{
 		next = tmp->next;
@@ -37,13 +60,14 @@ void	free_object(t_object **obj, t_object *new)
 	*obj = NULL;
 	ft_strdel(&(new->file));
 	ft_strdel(&(new->l_file));
-	free(new);
+	if (new)
+		free(new);
 	new = NULL;
 }
 
-int	parse_fobj2(t_line *list, t_file_obj *file, t_input *d, t_poly **poly)
+int		parse_fobj2(t_line *list, t_file_obj *file, t_input *d, t_poly **poly)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (ft_strnequ_word(list->line, "mtllib ", 7))
 		if (!(sort_mtl(d, list->line, file)))

@@ -310,9 +310,6 @@ int      		sort_tfdot(char *line, t_fdot *dot);
 int      		sort_t2d(char *line, t_2d *dot);
 int         	sort_poly(char *line, t_poly **poly, t_file_obj file, char *mtl);
 void			free_tab(char ***tab);
-/*------------------------------*/
-void 			print_parse1(t_poly *poly);
-/*-------------------------------*/
 void			push_front_pol(t_poly *new, t_poly **poly);
 void             reverse_p(t_poly **poly);
 void             reverse_o(t_object **obj);
@@ -330,6 +327,15 @@ void	free_file_obj(t_file_obj file);
 int	parse_fobj2(t_line *list, t_file_obj *file, t_input *d, t_poly **poly);
 void	free_object(t_object **obj, t_object *new);
 void	free_new_lst(t_lst_mtl *new);
+void	loop_read2(t_line *list, t_object *new);
+void		ft_sort_rot(char *line, t_object *new);
+void		ft_sort_pos(char *line, t_object *new);
+void		sort_type(char *line, t_object *new);
+int		size_mtl_file(char *file);
+void    parse_mtl_loop(t_line *list, t_lst_mtl *new);
+/*------------------------------*/
+void 			print_parse1(t_poly *poly);
+/*-------------------------------*/
 
 #endif
 

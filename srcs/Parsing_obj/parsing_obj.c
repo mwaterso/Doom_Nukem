@@ -39,6 +39,9 @@ int			mall_file(t_file_obj *file, t_line *list)
 		return (0);
 	if (!(file->vn = (t_fdot *)malloc(sizeof(t_fdot) * file->size.k)))
 		return (0);
+	ft_bzero(file->v, sizeof(file->v));
+	ft_bzero(file->vt, sizeof(file->vt));
+	ft_bzero(file->vn, sizeof(file->vn));
 	return (1);
 }
 

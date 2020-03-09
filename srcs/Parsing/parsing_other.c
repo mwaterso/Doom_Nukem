@@ -47,23 +47,34 @@ int			loop_read(t_line *tmp, int *count, t_poly **poly, t_input *data)
 	return (1);
 }
 
-int			parse_loop(t_poly **poly, t_line *list, t_input *data, int fd)
+int			gnl_poly(int fd, t_line **list)
 {
-	int		n_line;
 	char	*line;
-	int		i;
+	int		n_line;
 
-	i = 0;
 	n_line = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (!(creat_elem_l(line, n_line, &list)))
+		if (!(creat_elem_l(line, n_line, list)))
 			return (0);
 		n_line++;
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
-	reverse_l(&list);
+	reverse_l(list);
+	return (1);
+}
+
+int			parse_loop(t_poly **poly, t_line *list, t_input *data, int fd)
+{
+	int		i;
+
+	i = 0;
+	if (!(gnl_poly(fd, &list)))
+	{
+		printf("COUOCUO\n");
+		return (0);
+	}
 	if (!(i = parse_file(list, poly, data)))
 	{
 		free_line(&list);

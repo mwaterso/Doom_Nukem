@@ -37,9 +37,12 @@ SRC_NAME += Engine/math.c\
 
 SRC_NAME += Event/hooks.c
 
-SRC_NAME += Parsing/parsing_poly.c Parsing/parsing_error.c \
-			Parsing/parsing_list.c Parsing/parsing_error2.c \
-			Parsing/parsing_other.c	Parsing/parsing_tex.c
+SRC_NAME += Parsing/parsing_poly.c		\
+			Parsing/parsing_error.c 	\
+			Parsing/parsing_list.c		\
+			Parsing/parsing_error2.c	\
+			Parsing/parsing_other.c		\
+			Parsing/parsing_tex.c		\
 	
 SRC_NAME += Parsing_obj/parse_obj.c		\
 			Parsing_obj/object_list.c	\

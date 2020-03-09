@@ -75,13 +75,8 @@ t_line		*read_obj(t_line *list, t_object **obj, t_input *data)
 	new->next = NULL;
 	while (list && list->line[0] != '}')
 	{
-		if (ft_strnequ_word(list->line, "type", 4))
-			sort_type(list->line, new);
-		if (ft_strnequ_word(list->line, "pos", 3))
-			ft_sort_pos(list->line, new);
-		else if (ft_strnequ_word(list->line, "rot", 3))
-			ft_sort_rot(list->line, new);
-		else if (ft_strnequ_word(list->line, "file", 4))
+		loop_read2(list, new);
+		if (ft_strnequ_word(list->line, "file", 4))
 		{
 			if (!(loop_read_obj(list, new, data)))
 			{
