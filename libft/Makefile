@@ -20,7 +20,7 @@ YELLOW	= \033[33m
 
 #Compil
 CC 		= gcc
-CFLAGS 	= -Wall -Werror -Wextra -g -I./include -O3 -flto -ffast-math -march=native
+CFLAGS 	= -g -I./include -O3 -flto -ffast-math -march=native
 
 #Dir
 OBJ_PATH = ./obj

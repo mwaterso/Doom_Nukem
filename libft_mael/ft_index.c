@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-size_t	ft_index(const char *str, int c)
+ssize_t	ft_index(const char *str, int c)
 {
-	size_t index;
+	ssize_t index;
 
 	index = 0;
 	while (str[index])

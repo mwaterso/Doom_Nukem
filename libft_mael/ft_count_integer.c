@@ -15,7 +15,7 @@
 
 int		ft_count_integer(int nb)
 {
-	size_t	counter;
+	ssize_t	counter;
 
 	counter = 0;
 	while (nb)

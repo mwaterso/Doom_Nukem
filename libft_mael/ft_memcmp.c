@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t len)
+int		ft_memcmp(const void *s1, const void *s2, ssize_t len)
 {
-	size_t i;
+	ssize_t i;
 
 	i = 0;
 	while (i < len)

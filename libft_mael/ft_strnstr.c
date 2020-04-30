@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *src, const char *s2, size_t len)
+char	*ft_strnstr(const char *src, const char *s2, ssize_t len)
 {
 	unsigned int i;
 	unsigned int j;

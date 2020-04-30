@@ -13,7 +13,7 @@
 
 #include "../include/libft.h"
 
-char	*ft_strnew(size_t size)
+char	*ft_strnew(ssize_t size)
 {
 	char *s;
 

@@ -13,7 +13,7 @@
 
 #include "../include/libft.h"
 
-void	*ft_memalloc(size_t size)
+void	*ft_memalloc(ssize_t size)
 {
 	void *tab;
 

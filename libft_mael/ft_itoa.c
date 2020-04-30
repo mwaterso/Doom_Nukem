@@ -16,8 +16,8 @@
 char	*ft_itoa(int nb)
 {
 	char	*tab;
-	size_t	count;
-	size_t	negative;
+	ssize_t	count;
+	ssize_t	negative;
 
 	negative = 0;
 	count = ft_count_integer(nb);

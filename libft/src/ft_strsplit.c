@@ -13,9 +13,9 @@
 
 #include "../include/libft.h"
 
-static size_t	count_len(char const *s, char c, size_t i)
+static ssize_t	count_len(char const *s, char c, ssize_t i)
 {
-	size_t j;
+	ssize_t j;
 
 	j = 0;
 	while (s[i] != c && s[i])
@@ -26,11 +26,11 @@ static size_t	count_len(char const *s, char c, size_t i)
 	return (j);
 }
 
-static size_t	count_word(char const *s, char c)
+static ssize_t	count_word(char const *s, char c)
 {
-	size_t i;
-	size_t cnt;
-	size_t word;
+	ssize_t i;
+	ssize_t cnt;
+	ssize_t word;
 
 	i = 0;
 	cnt = 0;
@@ -52,9 +52,9 @@ static size_t	count_word(char const *s, char c)
 char			**ft_strsplit(char const *s, char c)
 {
 	char	**tab;
-	size_t	i;
-	size_t	j;
-	size_t	k;
+	ssize_t	i;
+	ssize_t	j;
+	ssize_t	k;
 
 	i = 0;
 	j = 0;

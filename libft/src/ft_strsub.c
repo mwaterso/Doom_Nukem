@@ -13,9 +13,9 @@
 
 #include "../include/libft.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub(char const *s, unsigned int start, ssize_t len)
 {
-	size_t	i;
+	ssize_t	i;
 	char	*str;
 
 	if (s)

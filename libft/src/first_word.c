@@ -13,7 +13,7 @@
 
 #include "../include/libft.h"
 
-int		ft_strnequ_word(char const *s1, char const *s2, size_t n)
+int		ft_strnequ_word(char const *s1, char const *s2, ssize_t n)
 {
 	int		i;
 	int		len;

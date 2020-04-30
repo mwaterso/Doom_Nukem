@@ -62,10 +62,10 @@ SRC_NAME += hud/check_event.c 		\
 #SRC_NAME += Sound/init_s.c Sound/parsing_wav.c
 
 # mlx library
-MLX        = ./miniLibx_macos/
+MLX        = ./minilibx_macos/
 MLX_LIB    = $(addprefix $(MLX),libmlx.a)
-MLX_INC    = -I ./miniLibx_macos
-MLX_LNK    = -L ./miniLibx_macos -l mlx -framework OpenGL -framework AppKit -framework OpenAL #-fsanitize=address
+MLX_INC    = -I ./minilibx_macos
+MLX_LNK    = -L ./minilibx_macos -l mlx -framework OpenGL -framework AppKit -framework OpenAL #-fsanitize=address
 
 # ft library
 FT        = ./libft/

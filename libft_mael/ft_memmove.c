@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t len)
+void	*ft_memmove(void *dest, const void *src, ssize_t len)
 {
 	if (src > dest && dest && src)
 		ft_memcpy(dest, src, len);

@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-void	*ft_memalloc(size_t len)
+void	*ft_memalloc(ssize_t len)
 {
 	char *tmp;
 
