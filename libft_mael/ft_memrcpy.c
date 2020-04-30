@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-void	*ft_memrcpy(void *dest, const void *src, size_t len)
+void	*ft_memrcpy(void *dest, const void *src, ssize_t len)
 {
-	size_t i;
+	ssize_t i;
 
 	i = len;
 	while (i > 0)

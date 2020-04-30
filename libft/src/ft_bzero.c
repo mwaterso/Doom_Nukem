@@ -13,9 +13,9 @@
 
 #include "../include/libft.h"
 
-void		ft_bzero(void *s, size_t n)
+void		ft_bzero(void *s, ssize_t n)
 {
-	size_t	i;
+	ssize_t	i;
 	char	*tmp;
 
 	i = 0;

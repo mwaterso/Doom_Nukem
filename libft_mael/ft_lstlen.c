@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-size_t	ft_lstlen(t_list *lst)
+ssize_t	ft_lstlen(t_list *lst)
 {
-	size_t	len;
+	ssize_t	len;
 	t_list	*lstemp;
 
 	if (!lst)

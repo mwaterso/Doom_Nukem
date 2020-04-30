@@ -6,12 +6,12 @@
 /*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/05 14:17:42 by mwaterso     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 18:18:58 by mwaterso    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/03/09 18:01:03 by mwaterso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "doom.h" 
+#include "doom.h"
 
 /*void visual(int i, t_input *data, double rotx, double rotz)
 {
@@ -74,42 +74,6 @@
     }
 }*/
 
-/*void raycast(t_thread* thread)
-{
-    printf("thread\n");
-    printf("Thread : %d\n", thread->index);
-    printf("start = %d, end = %d, index = %d\n",thread->i_start, thread->i_end, thread->index);
-    if (!(thread->render = SDL_CreateRenderer(thread->inputs->window, -1, SDL_RENDERER_ACCELERATED)))
-        printf("Erreur render\n");
-	while(thread->i_start < thread->i_end)
-	{
-        visual(thread->i_start, thread->inputs, thread->inputs->dir.x + thread->fov->rotx, thread->inputs->dir.y + thread->fov->roty);
-        SDL_RenderDrawPoint(thread->render, thread->i_start % thread->inputs->win_w, thread->i_start / thread->inputs->win_w);
-        thread->i_start++;
-	}
-    SDL_RenderPresent(thread->render);
-    SDL_DestroyRenderer(thread->render);
-}*/
-
-/*void thread_start(t_input	*data)
-{
-	int i;
-	i = 0;
-	while(i < NB_THREAD)
-	{
-		data->thread_tab[i].i_start = i * (data->win_h * data->win_w / NB_THREAD);
-		data->thread_tab[i].i_end = (i + 1) * (data->win_h * data->win_w / NB_THREAD);
-		data->thread_tab[i].inputs = data;
-        data->thread_tab[i].index = i;
-		pthread_create(&data->thread_tab[i].thread, NULL,
-		&raycast, &data->thread_tab[i]);
-		i++; 
-	}
-    printf("end\n");
-	i = 0;
-	while (i <= NB_THREAD)
-		pthread_join(data->thread_tab[i++].thread, NULL);
-}*/
 
 t_ray *tab_ray(int nbrpix, t_input *data)
 {
@@ -124,214 +88,156 @@ t_ray *tab_ray(int nbrpix, t_input *data)
        //new[i].y = (X_VIEW / 2 - (double)(i % data->win_w / data->win_w) * X_VIEW);
         //[i].z = (Z_VIEW / 2 - ((data->win_h - (double)(i / data->win_h)) / data->win_h) * Z_VIEW);
         new[i].y = (-X_VIEW / 2 + i % data->win_w / (double)data->win_w * X_VIEW);
-        new[i].z = (Z_VIEW / 2 - i / data->win_h / (double)data->win_h * Z_VIEW);
+        new[i].z = (Z_VIEW / 2 - i / data->win_w / (double)data->win_h * Z_VIEW);
 	    //printf("--%lf	%lf	%lf\n", new[i].x, new[i].y, new[i].z);
+		new[i].distcolli = -1;
         i++;
     }
     return (new);
 }
 
-int		init_var(t_input *inputs)
+int cp_dots(t_poly *poly)
 {
-	inputs->win_w = 1980;
-	inputs->win_h = 1080;
+    int i;
+    int xmax;
+    int ymax;
+
+    xmax = poly->tex_tab.width - 1;
+    ymax = poly->tex_tab.height - 1;
+    while(poly)
+    {
+        i = -1;
+
+		poly->ab = get2dvect((t_2d){.x = poly->cord[0].x * xmax, .y = poly->cord[0].y * ymax}, (t_2d){.x = poly->cord[1].x * xmax, .y = poly->cord[1].y * ymax});
+		poly->bc = get2dvect((t_2d){.x = poly->cord[1].x * xmax, .y = poly->cord[1].y * ymax}, (t_2d){.x = poly->cord[2].x * xmax, .y = poly->cord[2].y * ymax});
+        poly->a2d.x = poly->cord[0].x * xmax;
+        poly->a2d.y = poly->cord[0].y * ymax;
+		poly->vAB = getvect(poly->dot[0], poly->dot[1]);
+		poly->vBC = getvect(poly->dot[1], poly->dot[2]);
+        while(++i < 4)
+            poly->rotx[i] = poly->dot[i];
+        poly = poly->next;
+    }
+    return(1);
+}
+
+void        init_var2(t_data *data)
+{
+    int i;
+
+    i = -1;
+    while (++i < 280)
+        data->keys[i] = -1;
+    data->inventory = (t_inventory){.slot_one = 7, .slot_two = 8,
+	.slot_three = 1, .slot_four = 0};
+	data->health_bar = (t_life){.x_min = 1400, .x_max = 1556, .y_min = 813,
+	.y_max = 831, .health = 20, .shield = 0};
+	data->current_ammo = 30;
+	data->total_ammo = 256;
+	data->healanim.index_heal_anim = -1;
+	data->shieldanim.index_shield_anim = -1;
+	data->weaponanim.index_wpn_anim = -1;
+	data->weaponanim.index_rld_anim = -1;
+	data->menu_state = 1;
+	data->first_frame = 0;
+}
+
+void		init_var(t_input *inputs, t_data *data)
+{
+	inputs->win_w = WIN_SIZE_W;
+	inputs->win_h = WIN_SIZE_H;
+    inputs->angley = 0;
+    inputs->debug = 0;
+    inputs->nbrtour = 0;
 	//fill_texture_tab(inputs);
+	inputs->rotz = define_zRotMat();
+	inputs->minrotz = define_minzRotMat();
 	inputs->mlx_ad = mlx_init();
 	inputs->win_ad = mlx_new_window(inputs->mlx_ad, inputs->win_w,
 	inputs->win_h, "Doom Nukem");
+    data->mlx_addrs = inputs->mlx_ad;
+    data->win_addrs = inputs->win_ad;
+    printf("%p\n", data->mlx_addrs);
 	inputs->im.ad = mlx_new_image(inputs->mlx_ad, inputs->win_w, inputs->win_h);
 	inputs->im.tab = (int *)mlx_get_data_addr(inputs->im.ad,
 	&(inputs->im.bits_per_pixel), &(inputs->im.size_line),
 	&(inputs->im.endian));
-	return (1);
+    init_var2(data);
 }
 
 /*int Debugfct(t_poly *poly)
 {    
-    t_fdot a = (t_fdot){.x = 1, .y = -2, .z = 2};
-    t_fdot b = (t_fdot){.x = 1, .y = -2, .z = -2};
-    t_fdot c = (t_fdot){.x = 5, .y = 2, .z = 0};
+    t_fdot a = (t_fdot){.x = 1, .y = 2, .z = 3};
+    t_fdot b = (t_fdot){.x = 1, .y = 7, .z = 2};
+    t_fdot c = (t_fdot){.x = 1, .y = 8, .z = 3};
     // t_fdot a = (t_fdot){.x = 1, .y = 1, .z = 2};
     // t_fdot b = (t_fdot){.x = 1, .y = -0.5, .z = 2};
     // t_fdot c = (t_fdot){.x = 1, .y = 0, .z = -2};
     t_fdot tab[NBR_PPOLY];
     poly->next = NULL;
     printf("seg?\n");
-    poly->finaldot3d[0] = a;
-    poly->finaldot3d[1] = b;
-    poly->finaldot3d[2] = c;
-    poly->nbrpoly = 3;
+    poly->dot[0] = a;
+    poly->dot[1] = b;
+    poly->dot[2] = c;
+    poly->nbr_p = 3;
     return(1);
 
 }*/
 
-/*
-**-------------------------------------------------PRINT OBJ PARSE---------------------------------------------------------
-**----------------------------------------------------------------------------------------------------------------------
-*/
 
-
-void print_parse_obj(t_object *obj)
-{
-	int i = 1;
-
-	dprintf(1, "OBJ\n\n");
-	while (obj)
-	{
-		printf("obj %d\n{\n", i++);
-		printf("\tpos = x:%f | y:%f | z:%f\n", obj->pos.x, obj->pos.y, obj->pos.z);
-		printf("\trot = x:%f | y:%f | z:%f\n", obj->rot.x, obj->rot.y, obj->rot.z);
-		printf("\tfile = [%s]\n", obj->file);
-        printf("\ttype = %d\n", obj->type);
-        printf("********************************************  POLY LIST ******************************************\n");
-       print_parse1(obj->poly);
-        printf("********************************************  END ************************************************\n");
-		printf("}\n");
-		obj = obj->next;
-	}
-}
-
-void print_parse1(t_poly *poly)
-{
-	int i = 1;
-
-	//dprintf(1, "COUOCU11\n");
-    while (poly){
-		printf("\tpoly %d\n\t{\n", i++);
-		printf("\t\tnb ply = %d\n", poly->nbr_p);
-		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[0].x, poly->dot[0].y, poly->dot[0].z);
-		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
-		printf("\t\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
-		printf("\n");
-        printf("\t\tnormal = x:%f | y:%f | z:%f\n", poly->normale.x, poly->normale.y, poly->normale.z);
-        printf("\n");
-		printf("\t\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
-		printf("\t\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
-		printf("\t\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
-        printf("\t\tr = %hhu g = %hhu b = %hhu\n", poly->mtl.ka.r, poly->mtl.ka.g, poly->mtl.ka.b);
-        printf("\t\tr = %hhu g = %hhu b = %hhu\n", poly->mtl.kd.r, poly->mtl.kd.g, poly->mtl.kd.b);
-		printf("\t}\n");
-        poly = poly->next;
-    }
-}
-
-
-/*
-**------------------------------------------------------POLY-------------------------------------------------------------
-*/
-
-
-void print_parse(t_poly *poly)
-{
-	int i = 1;
-
-	//dprintf(1, "COUOCU11\n");
-	while (poly)
-	{
-		printf("poly %d\n{\n", i++);
-		printf("\tnb ply = %d\n", poly->nbr_p);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[0].x, poly->dot[0].y, poly->dot[0].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[1].x, poly->dot[1].y, poly->dot[1].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[2].x, poly->dot[2].y, poly->dot[2].z);
-		printf("\tdot = x:%f | y:%f | z:%f\n", poly->dot[3].x, poly->dot[3].y, poly->dot[3].z);
-		printf("\n");
-		printf("\tX = %f | Y = %f\n", poly->cord[0].x, poly->cord[0].y);
-		printf("\tX = %f | Y = %f\n", poly->cord[1].x, poly->cord[1].y);
-		printf("\tX = %f | Y = %f\n", poly->cord[2].x, poly->cord[2].y);
-		printf("\tX = %f | Y = %f\n", poly->cord[3].x, poly->cord[3].y);
-		printf("\ttextur = [%s]\n", poly->tex);
-		printf("}\n");
-		poly = poly->next;
-	}
-}
-
-/*
-**------------------------------------------------------TEX-------------------------------------------------------------
-*/
-
-int	keyboard_test(int key, t_input *inputs)
-{
-    if (key == 49)
-    {
-        mlx_clear_window(inputs->im.ad, inputs->win_ad);
-        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->map->tex_tab.tab, 0, 0);
-        dprintf(1, "%s\n", inputs->map->tex);
-        if (inputs->map->next)
-            inputs->map = inputs->map->next;
-        else
-             return 0;
-    }
-    if (key == 83)
-    {
-        if (!inputs->obj->poly->mtl.tex.tab)
-        {
-            dprintf(1, "nop\n");
-            return 0;
-        }
-        mlx_clear_window(inputs->im.ad, inputs->win_ad);
-        mlx_put_image_to_window(inputs->im.ad, inputs->win_ad, inputs->obj->poly->mtl.tex.tab, 0, 0);
-        dprintf(1, "%s\n", "bla");
-        if (inputs->obj->poly->next)
-            inputs->obj->poly = inputs->obj->poly->next;
-        else if (inputs->obj->next)
-            inputs->obj = inputs->obj->next;
-        else
-             return 0;
-    }
-    return 0;
-}
-
-/*
-**--------------------------------------------------END-----------------------------------------------------------------
-**----------------------------------------------------------------------------------------------------------------------
-*/
 
 int main(int c, char **v)
 {
-    (void)c;
     t_input data;
+    t_data  input;
     //t_poly  *poly;
-
+    data.data_hud = &input;
+	int i = -1;
+    (void)c;
     //poly = (t_poly *)malloc(sizeof(t_poly));
     //data.nbrpoly = Debugfct(poly);
+    init_var(&data, &input);
+    if (load_texture_data(&input) == -1)
+	{
+		ft_putendl("Texture error");
+		return (0);
+	}
+    gettimeofday(&input.timer.save_time, NULL);
+    printf("PARSING\n");
+	if(!(data.map = parsing_poly(v[1], &data)))
+		return(0);
+	//mlx_put_image_to_window(data.map->tex_tab.tab, data.win_ad, data.im.ad, 0, 0);
+	mlx_put_image_to_window(data.mlx_ad, data.win_ad, data.map->tex_tab.tab, 0, 0);
+	/*-----------------------------------------*/
 
-
-    // printf("init vars\n");
-    init_var(&data);
-    //data.map = parsing_poly(v[1], &data);
-    if(!(data.map = parsing_poly(v[1], &data)))
-    {
-        printf("BLALALALALA\n");
-        sleep(10);
-    	return(0);
-    }
-  print_parse(data.map);
-  print_parse_obj(data.obj);
-
-// mlx_put_image_to_window(data.im.ad, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
-    mlx_hook(data.win_ad, 2, 0, keyboard_test, &data);
-   // mlx_put_image_to_window(data.map->tex_tab.im.tab, data.win_ad, data.map->tex_tab.im.ad, 0, 0);
+    /*data.map->next->texture.ad = data.map->tex_tab.tab;
+    data.map->next->texture.tab = (int *)mlx_get_data_addr(data.map->texture.ad, &(data.map->texture.bits_per_pixel), &(data.map->texture.size_line), &(data.map->texture.endian));
     
-
-    // while (data.map)
-    // {
-    //     display_window(&data, data.map);
-    //     data.map = data.map->next;
-    // }
-
-
-//     printf("ray init\n");
-//     data.rays = tab_ray(data.win_h * data.win_w, &data);
-//     printf("ray init end\n");
-//     get_plans(data.map);
-//     printf("plans init end\n");
-//    /*thread_start(&data);*/
-//     proj_2d(data.map, &data);
-//     printf("proj2d end\n");
- //	mlx_put_image_to_window(data.im.tab, data.win_ad, data.im.ad, 0, 0);
- 	//mlx_hook(data.win_ad, 2, 0, keyboard_move, &data);
-// 	/*mlx_hook(inputs.win_ad, 17, 0, &ft_close, &inputs);*/
- 	mlx_loop(data.mlx_ad);
-    free_poly(&(data.map));
+    data.map->next->next->texture.ad = data.map->tex_tab.tab;
+    data.map->next->next->texture.tab = (int *)mlx_get_data_addr(data.map->texture.ad, &(data.map->texture.bits_per_pixel), &(data.map->texture.size_line), &(data.map->texture.endian));*/
+	/*-----------------------------------------*/
+    printf("end parsing\n");
+	while(++i < 3)
+		printf("%lf  %lf  %lf\n", data.map->dot[i].x, data.map->dot[i].y, data.map->dot[i].z);
+    printf("init vars\n");
+    printf("h,w    %d      %d\n", data.map->tex_tab.height, data.map->tex_tab.width);
+    cp_dots(data.map);
+    printf("vect ab  x= %f      y = %f\n", data.map->ab.x, data.map->ab.y);
+    printf("vect bc  x= %f      y = %f\n", data.map->bc.x, data.map->bc.y);
+    printf("ray init\n");
+    data.rays = tab_ray(data.win_h * data.win_w, &data);
+    printf("ray init end\n");
+    get_plans(data.map);
+    printf("plans init end\n");
+   // thread_start(&data);
+    //proj_2d(data.map, &data);
+    printf("proj2d end\n");
+    mlx_hook(data.win_ad, 2, 0, key_press, &data);
+	mlx_hook(data.win_ad, 3, 0, key_release, &data);
+	mlx_hook(data.win_ad, 4, 0, mouse_press, &input);
+	mlx_hook(data.win_ad, 5, 0, mouse_release, &input);
+	mlx_loop_hook(data.mlx_ad, redraw, &data);
+	//mlx_hook(inputs.win_ad, 17, 0, &ft_close, &inputs);
+	mlx_loop(data.mlx_ad);
     return(0);
 }

@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-char	*ft_strncpy(char *dest, const char *src, size_t len)
+char	*ft_strncpy(char *dest, const char *src, ssize_t len)
 {
-	size_t i;
+	ssize_t i;
 
 	i = 0;
 	while (src[i] && i < len)

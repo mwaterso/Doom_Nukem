@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: beduroul <marvin@le-101.fr>                +:+   +:    +:    +:+      #
+#    By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/04 12:26:16 by beduroul     #+#   ##    ##    #+#        #
-#    Updated: 2018/10/24 22:31:25 by beduroul    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/03/06 17:52:52 by mwaterso    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,7 +20,7 @@ YELLOW	= \033[33m
 
 #Compil
 CC 		= gcc
-CFLAGS 	= -Wall -Werror -Wextra -g -I./include
+CFLAGS 	= -g -I./include -O3 -flto -ffast-math -march=native
 
 #Dir
 OBJ_PATH = ./obj
@@ -58,7 +58,8 @@ SRC_NAME =	ft_atoi.c			ft_strcmp.c			ft_strcpy.c 		\
 			ft_putstr_color.c 	ft_avswap.c 		ft_up_rounded.c		\
 			ft_2dstrdel.c		ft_tablen.c			first_word.c		\
 			ft_ispace.c			ft_strnchr.c		ft_putstr_hexa.c	\
-			ft_putendl_hexa.c	ft_putnbr_hexa.c	ft_atof.c
+			ft_putendl_hexa.c	ft_putnbr_hexa.c	ft_atof.c			\
+			ft_strjoin2.c
 
 INC = $(addprefix $(INC_PATH)/, $(INC_NAME))
 OBJ	= $(addprefix $(OBJ_PATH)/, $(SRC_NAME:.c=.o))

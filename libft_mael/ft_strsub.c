@@ -13,10 +13,10 @@
 
 #include "libft.h"
 
-char	*ft_strsub(char const *str, unsigned int start, size_t len)
+char	*ft_strsub(char const *str, unsigned int start, ssize_t len)
 {
 	char	*dest;
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	if (!str)

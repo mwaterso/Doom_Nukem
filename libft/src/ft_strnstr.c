@@ -13,11 +13,11 @@
 
 #include "../include/libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, ssize_t len)
 {
-	size_t i;
-	size_t j;
-	size_t find;
+	ssize_t i;
+	ssize_t j;
+	ssize_t find;
 
 	i = 0;
 	j = 0;

@@ -3,5 +3,3 @@
 2 0 0 0 0 -1 0 0 0 0 0 2
 2 0 0 0 0 0 0 0 0 0 0 2
 2 2 2 2 2 2 2 2 2 2 2 2
-
--Werror -Wextra -Wall -g -O3 -march=native -flto -ffast-math

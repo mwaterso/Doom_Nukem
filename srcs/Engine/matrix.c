@@ -6,44 +6,46 @@
 /*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/17 18:00:04 by mwaterso     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/28 14:25:02 by mwaterso    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/22 14:21:21 by mwaterso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-t_3x3matrix define_xRotMat()
-{
-    t_3x3matrix Rx;
-    Rx.a1 = 1;
-    Rx.a2 = 0;
-    Rx.a3 = 0;
 
-    Rx.b1 = 0;
-    Rx.b2 = cos(ROTX);
-    Rx.b3 = -sin(ROTX);
-
-    Rx.c1 = 0;
-    Rx.c2 = sin(ROTX);
-    Rx.c3 = cos(ROTX);
-    return  (Rx);
-}
-
-t_3x3matrix define_yRotMat()
+t_3x3matrix define_yRotMat(float a)
 {
     t_3x3matrix Ry;
-    Ry.a1 = cos(ROTY);
+
+    Ry.a1 = cos(a);
     Ry.a2 = 0;
-    Ry.a3 = sin(ROTY);
+    Ry.a3 = sin(a);
 
     Ry.b1 = 0;
     Ry.b2 = 1;
     Ry.b3 = 0;
 
-    Ry.c1 = - sin(ROTY);
+    Ry.c1 = - sin(a);
     Ry.c2 = 0;
-    Ry.c3 = cos(ROTY);
+    Ry.c3 = cos(a);
+    return  (Ry);
+}
+
+t_3x3matrix define_minyRotMat()
+{
+    t_3x3matrix Ry;
+    Ry.a1 = cos(-ROTZ);
+    Ry.a2 = 0;
+    Ry.a3 = sin(-ROTZ);
+
+    Ry.b1 = 0;
+    Ry.b2 = 1;
+    Ry.b3 = 0;
+
+    Ry.c1 = - sin(-ROTZ);
+    Ry.c2 = 0;
+    Ry.c3 = cos(-ROTZ);
     return  (Ry);
 }
 
@@ -63,6 +65,24 @@ t_3x3matrix define_zRotMat()
     Rz.c3 = 1;
     return  (Rz);
 }
+
+t_3x3matrix define_minzRotMat()
+{
+    t_3x3matrix Rz;
+    Rz.a1 = cos(-ROTZ);
+    Rz.a2 = -sin(-ROTZ);
+    Rz.a3 = 0;
+
+    Rz.b1 = sin(-ROTZ);
+    Rz.b2 = cos(-ROTZ);
+    Rz.b3 = 0;
+
+    Rz.c1 = 0;
+    Rz.c2 = 0;
+    Rz.c3 = 1;
+    return  (Rz);
+}
+
 
 t_fdot ApplyMatPoint(t_3x3matrix matrix, t_fdot point)
 {

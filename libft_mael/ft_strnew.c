@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-char	*ft_strnew(size_t len)
+char	*ft_strnew(ssize_t len)
 {
 	char *tmp;
 

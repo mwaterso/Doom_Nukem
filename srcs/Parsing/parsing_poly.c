@@ -1,23 +1,23 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_poly.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: beduroul <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 19:37:37 by beduroul          #+#    #+#             */
-/*   Updated: 2020/03/02 19:37:44 by beduroul         ###   ########lyon.fr   */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   parsing_poly.c                                   .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: mwaterso <mwaterso@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2020/01/09 17:15:11 by beduroul     #+#   ##    ##    #+#       */
+/*   Updated: 2020/02/05 17:43:00 by mwaterso    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "doom.h"
 
 char		*sort_file(char *line)
 {
-	int			i;
-	int			tmp;
-	char		*str;
-
+	int i;
+	int tmp;
+	char *str;
 	i = 0;
 	while (line[i] && line[i] != '=')
 		i++;
@@ -33,11 +33,11 @@ char		*sort_file(char *line)
 		tmp++;
 		i++;
 	}
-	str[tmp] = '\0';
+	str[tmp]= '\0';
 	return (str);
 }
 
-t_line		*poly_read(t_line *list, t_poly **poly)
+ t_line		*poly_read(t_line *list, t_poly **poly)
 {
 	t_index		index;
 	t_poly		*new;
@@ -61,28 +61,35 @@ t_line		*poly_read(t_line *list, t_poly **poly)
 				return (NULL);
 		list = list->next;
 	}
-	dot < 4 ? new->nbr_p = dot : 0;
+	if (dot < 4)
+		new->nbr_p = dot;
 	push_front_pol(new, poly);
 	return (list);
 }
 
-int			parse_file(t_line *list, t_poly **poly, t_input *data)
+int		parse_file(t_line *list, t_poly **poly, t_input *data)
 {
-	int			count;
-	t_line		*tmp;
+	int count;
+	t_line *tmp;
 
 	tmp = list;
 	count = 0;
 	if (!(check_error(list)))
 		return (0);
-	data->obj = NULL;
 	while (tmp)
 	{
 		if (ft_strnequ_word(tmp->line, "//Polygon", 9) ||
 		ft_strnequ_word(tmp->line, "//Object", 8))
 			tmp = tmp->next;
-		else if (!(loop_read(tmp, &count, poly, data)))
-			return (0);
+		else if (ft_strnequ_word(tmp->line, "Polygon", 7))
+		{
+			count++;
+			if (!(tmp = poly_read(tmp, poly)))
+				return (0); 
+		}
+		else if (ft_strnequ_word(tmp->line, "Object", 6))
+			if (!(tmp = read_obj(tmp, &(data->obj), data)))
+				return (0);
 		tmp = tmp->next;
 	}
 	reverse_p(poly);
@@ -90,26 +97,27 @@ int			parse_file(t_line *list, t_poly **poly, t_input *data)
 	return (count);
 }
 
-t_poly		*parsing_poly(char *file, t_input *data)
+t_poly			*parsing_poly(char *file, t_input *data)
 {
-	int			fd;
-	int			i;
-	t_line		*list;
-	t_poly		*poly;
+	int		fd;
+	int 	i; 
+	t_line	*list;
+	t_poly	*poly;
 
 	poly = NULL;
 	list = NULL;
 	if ((fd = open(file, O_RDONLY)) < 1)
 		return (NULL);
-	if (!(read(fd, NULL, 1)))
-		return (NULL);
+	if (!(read(fd, NULL, 1)))	// A CHANGER
+		return (NULL); 			// HIHI
 	error_file(fd, file);
 	if (!(i = parse_loop(&poly, list, data, fd)))
 	{
 		free_line(&list);
-		return (NULL);
+		return NULL;
 	}
 	print_s(i);
+	free_line(&list);
 	close(fd);
 	return (poly);
 }
